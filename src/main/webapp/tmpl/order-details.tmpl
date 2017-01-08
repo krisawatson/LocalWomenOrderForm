@@ -1,0 +1,49 @@
+<div>
+	<fieldset>
+		<legend>Order Part {{order.id}}</legend>
+		<div>
+			<label>Month:</label>
+			<select>
+				<option value="JANUARY">JANUARY</option>
+				<option value="FEBRUARY">FEBRUARY</option>
+				<option value="MARCH">MARCH</option>
+				<option value="APRIL">APRIL</option>
+				<option value="MAY">MAY</option>
+				<option value="JUNE">JUNE</option>
+				<option value="JULY">JULY</option>
+				<option value="AUGUST">AUGUST</option>
+				<option value="SEPTEMPBER">SEPTEMPBER</option>
+				<option value="OCTOBER">OCTOBER</option>
+				<option value="NOVEMBER">NOVEMBER</option>
+				<option value="DECEMBER">DECEMBER</option>
+			</select>
+			<select>
+				<option value="2017">2017</option>
+				<option value="2018">2018</option>
+				<option value="2019">2019</option>
+			</select>
+		</div>
+		<div class="publication" ng-repeat="publication in publications">
+			<div>
+				<label class="header">{{publication.value}}:</label>
+				<input type="radio" name="{{publication.id}}-publicationSelected" value="true" ng-model="publication.selected"/>Yes
+				<input type="radio" name="{{publication.id}}-publicationSelected" value="false" ng-model="publication.selected" checked="checked"/>No
+			</div>
+			<div ng-if="publication.selected == 'true'">
+				<label class="adType" ng-if="publication.selected == 'true'">Advert Type:</label>
+				<select ng-options="ad as ad.name for ad in adverts track by ad.id" ng-model="publication.adType">
+				</select>
+				<label>Advert Size:</label>
+				<select ng-options="adSize as adSize.name for adSize in advertSizes track by adSize.id" ng-model="publication.adSize">
+				</select>
+			</div>
+			<div>
+				<label>Notes:</label>
+			</div>
+			<div>
+				<textarea ng-model="publication.notes"></textarea>
+			</div>
+		</div>
+		</legend>
+	</fieldset>
+<div>

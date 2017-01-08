@@ -1,0 +1,61 @@
+form {
+	padding-left:15%;
+}
+
+body {
+	background: pink;
+}
+
+h2 {
+	text-align: center;
+}
+
+div.content {
+	background: white;
+	width: 600px;
+	border: 2px solid;
+	margin: 0 auto;
+}
+
+div.mainDetails, div.orderDetails {
+    padding: 10px 10px 20px 10px;
+}
+
+div.publication {
+	padding: 20px 10px 0px 10px;
+}
+
+div.publication label.header {
+	font-weight: bold;
+}
+
+.small {
+	width: 26%;
+}
+.medium {
+	width: 40%;
+}
+.large {
+	width: 80%;
+}
+
+label.adType {
+	margin-left: 20px;
+}
+
+div.buttons {
+	margin: 10px 10px;
+	text-align: right;
+}
+
+button {
+	height: 40px;
+}
+
+textarea {
+    resize: none;
+    width:80%;
+	box-sizing: border-box;         /* For IE and modern versions of Chrome */
+	-moz-box-sizing: border-box;    /* For Firefox                          */
+	-webkit-box-sizing: border-box; /* For Safari                           */
+}

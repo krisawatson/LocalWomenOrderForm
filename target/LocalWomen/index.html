@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>Local Women Order Form</title>
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<script src="js/angular.js" type="text/javascript"></script>
+	<script src="js/app.js" type="text/javascript"></script>
+</head>
+<body ng-app="localWomenApp">
+	<div class="outter-content">
+		<div class="content">
+			<h2>Local Women Order Form</h2>
+			<div ng-controller="OrderController">
+				<div ng-if="steps.step == 1" class="mainDetails" main-details></div>
+				<div ng-if="steps.step == steps.advertContentStep" class="orders" ng-repeat="order in orders track by id">
+					<div order-details class="orderDetails"></div>
+				</div>
+		
+				<div class="buttons">
+					<button ng-if="steps.step > 1" type="button" ng-click="goToPreviousStep()">&lt;Back</button>
+					<button ng-if="steps.step < steps.maxSteps" type="button" ng-click="goToNextStep()">Next&gt;</button>
+					<button ng-if="steps.step == steps.advertContentStep" type="button" ng-click="addMoreDetails()">Add More</button>
+					<button ng-if="steps.step == steps.maxSteps" type="button" ng-click="submitOrder()">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
