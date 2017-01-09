@@ -1,0 +1,27 @@
+[
+    {
+    	"id": 1,
+    	"type": "strap",
+    	"name": "Strap"
+	},
+	{
+		"id": 2,
+    	"type": "quarter",
+    	"name": "1/4"
+	},
+	{
+		"id": 3,
+    	"type": "half",
+    	"name": "1/2"
+	},
+	{
+		"id": 4,
+    	"type": "full",
+    	"name": "Full"
+	},
+	{
+		"id": 5,
+    	"type": "spread",
+    	"name": "Spread"
+	}
+]

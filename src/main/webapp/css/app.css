@@ -48,6 +48,10 @@ div.buttons {
 	text-align: right;
 }
 
+div.orderSuccess {
+	margin: 20px 50px;
+}
+
 button {
 	height: 40px;
 }

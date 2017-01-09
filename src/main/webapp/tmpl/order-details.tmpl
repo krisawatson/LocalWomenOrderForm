@@ -1,49 +1,48 @@
 <div>
 	<fieldset>
-		<legend>Order Part {{order.id}}</legend>
+		<legend>Order Part</legend>
 		<div>
 			<label>Month:</label>
-			<select>
-				<option value="JANUARY">JANUARY</option>
-				<option value="FEBRUARY">FEBRUARY</option>
-				<option value="MARCH">MARCH</option>
-				<option value="APRIL">APRIL</option>
-				<option value="MAY">MAY</option>
-				<option value="JUNE">JUNE</option>
-				<option value="JULY">JULY</option>
-				<option value="AUGUST">AUGUST</option>
-				<option value="SEPTEMPBER">SEPTEMPBER</option>
-				<option value="OCTOBER">OCTOBER</option>
-				<option value="NOVEMBER">NOVEMBER</option>
-				<option value="DECEMBER">DECEMBER</option>
+			<select ng-model="order.month">
+				<option value="1">JANUARY</option>
+				<option value="2">FEBRUARY</option>
+				<option value="3">MARCH</option>
+				<option value="4">APRIL</option>
+				<option value="5">MAY</option>
+				<option value="6">JUNE</option>
+				<option value="7">JULY</option>
+				<option value="8">AUGUST</option>
+				<option value="9">SEPTEMPBER</option>
+				<option value="10">OCTOBER</option>
+				<option value="11">NOVEMBER</option>
+				<option value="12">DECEMBER</option>
 			</select>
-			<select>
-				<option value="2017">2017</option>
-				<option value="2018">2018</option>
-				<option value="2019">2019</option>
+			<select ng-options="year for year in years"ng-model="order.year">
 			</select>
 		</div>
 		<div class="publication" ng-repeat="publication in publications">
 			<div>
 				<label class="header">{{publication.value}}:</label>
-				<input type="radio" name="{{publication.id}}-publicationSelected" value="true" ng-model="publication.selected"/>Yes
-				<input type="radio" name="{{publication.id}}-publicationSelected" value="false" ng-model="publication.selected" checked="checked"/>No
+				<input type="radio" name="{{publication.id}}-publicationSelected" value="true" ng-model="order.publications[publication.id].selected"/>Yes
+				<input type="radio" name="{{publication.id}}-publicationSelected" value="false" ng-model="order.publications[publication.id].selected" checked="checked"/>No
 			</div>
-			<div ng-if="publication.selected == 'true'">
-				<label class="adType" ng-if="publication.selected == 'true'">Advert Type:</label>
-				<select ng-options="ad as ad.name for ad in adverts track by ad.id" ng-model="publication.adType">
+			<div ng-if="order.publications[publication.id].selected == 'true'">
+				<label class="adType">Advert Type:</label>
+				<select ng-options="ad.id as ad.name for ad in adverts" ng-model="order.publications[publication.id].adType">
 				</select>
 				<label>Advert Size:</label>
-				<select ng-options="adSize as adSize.name for adSize in advertSizes track by adSize.id" ng-model="publication.adSize">
+				<select ng-options="adSize.id as adSize.name for adSize in advertSizes" ng-model="order.publications[publication.id].adSize">
 				</select>
 			</div>
 			<div>
 				<label>Notes:</label>
 			</div>
 			<div>
-				<textarea ng-model="publication.notes"></textarea>
+				<textarea ng-model="order.publications[publication.id].note"></textarea>
 			</div>
 		</div>
-		</legend>
+		<div class="buttons" ng-if="order.id > 1">
+			<button type="button" ng-click="removeOrder(order.id)">Remove</button>
+		</div>
 	</fieldset>
 <div>

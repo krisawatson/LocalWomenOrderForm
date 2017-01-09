@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"name": "North_West_Donegal",
+		"value": "North West / Donegal",
+		"selected": false
+	},
+	{
+    	"id": 2,
+		"name": "North_Coast",
+		"value": "North Coast",
+		"selected": false
+    },
+    {
+    	"id": 3,
+		"name": "Mid_Ulster",
+		"value": "Mid Ulster",
+		"selected": false
+    },
+    {
+    	"id": 4,
+		"name": "Belfast",
+		"value": "Belfast",
+		"selected": false
+    }
+]

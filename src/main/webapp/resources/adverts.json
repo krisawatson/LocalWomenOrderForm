@@ -1,0 +1,27 @@
+[
+    {
+    	"id": 1,
+    	"type": "advert",
+    	"name": "Advert"
+	},
+	{
+		"id": 2,
+    	"type": "feature",
+    	"name": "Feature"
+	},
+	{
+		"id": 3,
+    	"type": "editorial",
+    	"name": "Editorial"
+	},
+	{
+		"id": 4,
+    	"type": "photoshoot",
+    	"name": "Photo Shoot"
+	},
+	{
+		"id": 5,
+    	"type": "frontcover",
+    	"name": "Front Cover"
+	}
+]
