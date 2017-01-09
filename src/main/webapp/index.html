@@ -14,7 +14,7 @@
 			<div ng-if="steps.step == steps.advertContentStep" class="orders" ng-repeat="order in orders track by order.id">
 				<div order-details class="orderDetails"></div>
 			</div>
-			<div ng-if="steps.step == steps.maxSteps + 1" class="successMsg" order-success ordernumber="orderNumber"></div>
+			<order-success ng-if="steps.step == steps.maxSteps + 1" class="successMsg" ordernumber="orderNumber" ok-fn="reset()"></order-success>
 			<div class="error" ng-if="orderError">{{orderError}}</div>
 			<div class="buttons" ng-if="steps.step <= steps.maxSteps">
 				<button ng-if="steps.step > 1" type="button" ng-click="goToPreviousStep()">&lt;Back</button>

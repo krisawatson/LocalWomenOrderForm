@@ -7,21 +7,8 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
 	var id = 1;
 	var now = new Date();
 	var currentYear = now.getFullYear();
-	var order = {
-			"id":id,
-			"month": now.getMonth() + 1,
-			"year": currentYear,
-			"publications": []
-			};
-	$scope.business = {};
-	$scope.orders = [order];
 	
-	$scope.steps = {
-		"step": 1,
-		"advertContentStep": 2,
-		"maxSteps": 2
-	};
-	
+	setStart();
 	buildYears(currentYear);
 	getResources();
 	
@@ -66,6 +53,26 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
     	});
     };
     
+    $scope.reset = setStart;
+    
+    function setStart() {
+    	console.log("Setting startup details");
+    	var order = {
+    		"id":id,
+    		"month": now.getMonth() + 1,
+    		"year": currentYear,
+    		"publications": []
+    	};
+    	$scope.business = {};
+    	$scope.orders = [order];
+    	
+    	$scope.steps = {
+    		"step": 1,
+    		"advertContentStep": 2,
+    		"maxSteps": 2
+    	};
+    };
+    
     function getResources() {
     	$http.get("resources/publications.json").success(
     		function(data){
@@ -104,22 +111,29 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
 })
 .directive("mainDetails", function() {
     return {
-        restrict: "AE",
+        restrict: "A",
         templateUrl: "tmpl/main-details.tmpl"
     };
 })
 .directive("orderDetails", function() {
     return {
-        restrict: "AE",
+        restrict: "A",
         templateUrl: "tmpl/order-details.tmpl"
     };
 })
 .directive("orderSuccess", function() {
     return {
-        restrict: "AE",
+        restrict: "E",
         templateUrl: "tmpl/order-success.tmpl",
         scope: {
             ordernumber: '=',
+            okFn: '&'
+        },
+        link: function(scope, element, attrs)
+        {
+        	scope.reset = function() {
+                scope.okFn();
+        	}
         }
     };
 });
