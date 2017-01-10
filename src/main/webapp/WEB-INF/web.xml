@@ -3,11 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-  <display-name>Local Women Order Service</display-name>
-  <welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-	</welcome-file-list>
+  <display-name>LocalWomen</display-name>
 
   <!-- Auto scan REST service -->
   <context-param>
@@ -38,5 +34,13 @@
     <servlet-name>resteasy-servlet</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  <welcome-file-list>
+  	<welcome-file>index.html</welcome-file>
+  	<welcome-file>index.htm</welcome-file>
+  	<welcome-file>index.jsp</welcome-file>
+  	<welcome-file>default.html</welcome-file>
+  	<welcome-file>default.htm</welcome-file>
+  	<welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
 
 </web-app>

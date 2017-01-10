@@ -1,6 +1,6 @@
 var localWomenApp = angular.module('localWomenApp', []);
 
-localWomenApp.constant('orderURL','http://localhost:8080/order');
+localWomenApp.constant('orderURL','/order');
 
 localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
 
