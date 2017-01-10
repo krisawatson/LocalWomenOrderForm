@@ -1,8 +1,0 @@
-[DEBUG] 2017-01-10 09:05:11.710 [http-nio-8081-exec-1] OrderController - Submitting order
-[DEBUG] 2017-01-10 09:10:21.431 [main] LocalWomenApplication - Spring Boot runner
-[INFO ] 2017-01-10 09:10:22.115 [main] LocalWomenApplication - Starting LocalWomenApplication on KWATSON450 with PID 21788 (C:\Users\kwatson\GitRepos\LocalWomen\target\classes started by kwatson in C:\Users\kwatson\GitRepos\LocalWomen)
-[DEBUG] 2017-01-10 09:10:22.115 [main] LocalWomenApplication - Running with Spring Boot v1.3.2.RELEASE, Spring v4.2.4.RELEASE
-[INFO ] 2017-01-10 09:10:22.117 [main] LocalWomenApplication - No active profile set, falling back to default profiles: default
-[INFO ] 2017-01-10 09:10:27.106 [main] LocalWomenApplication - Started LocalWomenApplication in 5.505 seconds (JVM running for 12.586)
-[DEBUG] 2017-01-10 09:10:56.600 [http-nio-8081-exec-1] OrderController - Submitting order
-[DEBUG] 2017-01-10 09:11:17.104 [http-nio-8081-exec-2] OrderController - Submitting order
