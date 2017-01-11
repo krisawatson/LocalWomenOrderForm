@@ -14,22 +14,23 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
 	
     $scope.addMoreDetails = function() {
     	// For new order set the month to the next one
-    	var lastMonth = $scope.orders[$scope.orders.length - 1].month;
-    	var lastYear = $scope.orders[$scope.orders.length - 1].year;
+    	var lastMonth = $scope.orderParts[$scope.orderParts.length - 1].month;
+    	var lastYear = $scope.orderParts[$scope.orderParts.length - 1].year;
 		if(lastMonth == 12) {
     		lastMonth = 0;
     		++lastYear;
     	}
     	var newOrder = {"id": ++id, "month": ++lastMonth, "year": lastYear, "publications": []};
-    	$scope.orders.push(newOrder);
+    	$scope.orderParts.push(newOrder);
     }
     
     $scope.submitOrder = function() {
     	$scope.orderError = null;
-    	fixPublications();
+    	fixOrderDetails();
+    	console.log($scope.orderParts);
     	var order = {
     		"business": $scope.business,
-    		"orders": $scope.orders
+    		"orderParts": $scope.orderParts
     	}
     	$http.post(orderURL, order).success(function(orderNumber){
     		$scope.orderNumber = orderNumber;
@@ -48,7 +49,7 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
     };
     
     $scope.removeOrder = function(id) {
-    	$scope.orders = $scope.orders.filter(function(order) {
+    	$scope.orderParts = $scope.orderParts.filter(function(order) {
     	    return order.id !== id;
     	});
     };
@@ -56,7 +57,6 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
     $scope.reset = setStart;
     
     function setStart() {
-    	console.log("Setting startup details");
     	var order = {
     		"id":id,
     		"month": now.getMonth() + 1,
@@ -64,7 +64,7 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
     		"publications": []
     	};
     	$scope.business = {};
-    	$scope.orders = [order];
+    	$scope.orderParts = [order];
     	
     	$scope.steps = {
     		"step": 1,
@@ -74,19 +74,22 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
     };
     
     function getResources() {
-    	$http.get("resources/publications.json").success(
+    	$http.get("/details/publications").success(
     		function(data){
     			$scope.publications = data;
+    			console.log($scope.publications);
     		}
     	);
-    	$http.get("resources/adverts.json").success(
+    	$http.get("/details/adtypes").success(
     		function(data){
     			$scope.adverts = data;
+    			console.log($scope.adverts);
     		}
     	);
-    	$http.get("resources/advertSizes.json").success(
+    	$http.get("/details/adsizes").success(
     		function(data){
     			$scope.advertSizes = data;
+    			console.log($scope.advertSizes);
     		}
     	);
     }
@@ -99,8 +102,9 @@ localWomenApp.controller('OrderController', function (orderURL, $scope,$http) {
     	$scope.years = years;
     }
     
-    function fixPublications() {
-    	angular.forEach($scope.orders,function(order){
+    function fixOrderDetails() {
+    	angular.forEach($scope.orderParts,function(order){
+    		delete order.id;
     		var publications = []
     		angular.forEach(order.publications, function(publication){
     			publications.push(publication);

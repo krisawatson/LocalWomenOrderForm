@@ -11,7 +11,7 @@
 		<h2>Local Women Order Form</h2>
 		<div ng-controller="OrderController">
 			<div ng-if="steps.step == 1" class="mainDetails" main-details></div>
-			<div ng-if="steps.step == steps.advertContentStep" class="orders" ng-repeat="order in orders track by order.id">
+			<div ng-if="steps.step == steps.advertContentStep" class="orders" ng-repeat="order in orderParts track by order.id">
 				<div order-details class="orderDetails"></div>
 			</div>
 			<order-success ng-if="steps.step == steps.maxSteps + 1" class="successMsg" ordernumber="orderNumber" ok-fn="reset()"></order-success>

@@ -22,7 +22,7 @@
 		</div>
 		<div class="publication" ng-repeat="publication in publications">
 			<div>
-				<label class="header">{{publication.value}}:</label>
+				<label class="header">{{publication.name}}:</label>
 				<input type="radio" name="{{publication.id}}-publicationSelected" value="true" ng-model="order.publications[publication.id].selected"/>Yes
 				<input type="radio" name="{{publication.id}}-publicationSelected" value="false" ng-model="order.publications[publication.id].selected" checked="checked"/>No
 			</div>
