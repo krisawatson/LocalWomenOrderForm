@@ -19,7 +19,7 @@ import com.kricko.repository.PublicationRepository;
 @RestController
 public class DetailsController {
 
-	private static Logger logger = LogManager.getLogger();
+	private static final Logger LOGGER = LogManager.getLogger();
 	
 	@Autowired
 	public AdvertSizeRepository adSizeRepo;
@@ -32,21 +32,21 @@ public class DetailsController {
 
     @RequestMapping(value = "/details/adtypes", method = RequestMethod.GET)
     public List<AdvertType> getAdvertTypes() {
-        logger.debug("Getting the list of advert types");
+        LOGGER.debug("Getting the list of advert types");
         List<AdvertType> adTypes = adTypeRepo.findAll();
         return adTypes;
     }
     
     @RequestMapping(value = "/details/adsizes", method = RequestMethod.GET)
     public List<AdvertSize> getAdvertSizes() {
-        logger.debug("Getting the list of advert sizes");
+        LOGGER.debug("Getting the list of advert sizes");
         List<AdvertSize> adSizes = adSizeRepo.findAll();
         return adSizes;
     }
     
     @RequestMapping(value = "/details/publications", method = RequestMethod.GET)
     public List<Publication> getPublications() {
-        logger.debug("Getting the list of publications");
+        LOGGER.debug("Getting the list of publications");
         List<Publication> publications = publicationRepo.findAll();
         return publications;
     }

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kricko.domain.Business;
-import com.kricko.domain.Orders;
 import com.kricko.domain.OrderPart;
 import com.kricko.domain.OrderPublication;
+import com.kricko.domain.Orders;
 import com.kricko.model.WebOrder;
 import com.kricko.repository.BusinessRepository;
 import com.kricko.repository.OrderPartRepository;
@@ -24,7 +24,7 @@ import com.kricko.repository.OrderRepository;
 @RestController
 public class OrderController {
 
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
     BusinessRepository businessRepo;
@@ -38,7 +38,7 @@ public class OrderController {
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public int index(@RequestBody WebOrder webOrder) {
-        logger.debug("Submitting order");
+        LOGGER.debug("Submitting order");
 
         Business business = webOrder.getBusiness();
         businessRepo.save(business);
