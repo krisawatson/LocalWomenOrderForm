@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import com.kricko.constants.Role;
 
 @Entity
-@Table(name = "user_account")
-public class Account {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

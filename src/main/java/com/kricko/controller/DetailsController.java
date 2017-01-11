@@ -17,6 +17,7 @@ import com.kricko.repository.AdvertTypeRepository;
 import com.kricko.repository.PublicationRepository;
 
 @RestController
+@RequestMapping("details")
 public class DetailsController {
 
 	private static final Logger LOGGER = LogManager.getLogger();
@@ -30,21 +31,21 @@ public class DetailsController {
 	@Autowired
 	public PublicationRepository publicationRepo;
 
-    @RequestMapping(value = "/details/adtypes", method = RequestMethod.GET)
+    @RequestMapping(value = "/adtypes", method = RequestMethod.GET)
     public List<AdvertType> getAdvertTypes() {
         LOGGER.debug("Getting the list of advert types");
         List<AdvertType> adTypes = adTypeRepo.findAll();
         return adTypes;
     }
     
-    @RequestMapping(value = "/details/adsizes", method = RequestMethod.GET)
+    @RequestMapping(value = "/adsizes", method = RequestMethod.GET)
     public List<AdvertSize> getAdvertSizes() {
         LOGGER.debug("Getting the list of advert sizes");
         List<AdvertSize> adSizes = adSizeRepo.findAll();
         return adSizes;
     }
     
-    @RequestMapping(value = "/details/publications", method = RequestMethod.GET)
+    @RequestMapping(value = "/publications", method = RequestMethod.GET)
     public List<Publication> getPublications() {
         LOGGER.debug("Getting the list of publications");
         List<Publication> publications = publicationRepo.findAll();

@@ -22,6 +22,7 @@ import com.kricko.repository.OrderRepository;
 
 
 @RestController
+@RequestMapping("order")
 public class OrderController {
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -36,8 +37,8 @@ public class OrderController {
     OrderPublicationRepository orderPublicationRepo;
     
 
-    @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public int index(@RequestBody WebOrder webOrder) {
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public int createOrder(@RequestBody WebOrder webOrder) {
         LOGGER.debug("Submitting order");
 
         Business business = webOrder.getBusiness();
