@@ -1,54 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Local Women Order Form</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/app.css">
-</head>
-<body ng-app="localWomenApp">
-      <div class="generic-container" ng-controller="AuthController as ctrl">
-          <div class="panel panel-default">
-              <div class="panel-heading"><span class="lead">Login</span></div>
-              <div class="formcontainer">
-                  <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
-                      <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="username">Userame</label>
-                              <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.user.username" id="username" class="username form-control input-sm" placeholder="Username" required ng-minlength="3"/>
-                                  <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="myForm.username.$error.required">This is a required field</span>
-                                      <span ng-show="myForm.username.$error.minlength">Minimum length required is 3</span>
-                                      <span ng-show="myForm.username.$invalid">This field is invalid </span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="password">Userame</label>
-                              <div class="col-md-7">
-                                  <input type="password" ng-model="ctrl.user.password" id="password" class="password form-control input-sm" required/>
-                                  <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="myForm.password.$error.required">This is a required field</span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="form-actions floatRight">
-                              <input type="submit"  value="Login" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
-                          </div>
-                      </div>
-                 </form>
-            </div>
-        </div>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+  <head>
+    <title tiles:fragment="title">Messages : Create</title>
+  </head>
+  <body>
+    <div tiles:fragment="content">
+        <form name="f" th:action="@{/login}" method="post">
+            <fieldset>
+                <legend>Please Login</legend>
+                <div th:if="${param.error}" class="alert alert-error">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    You have been logged out.
+                </div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"/> 
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"/>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Log in</button>
+                </div>
+            </fieldset>
+        </form>
     </div>
-    <script src="js/angular.js"></script>  
-    <script src="js/app.js"></script>
-    <script src="js/factory/authInterceptor.js"></script>
-    <script src="js/service/auth.service.js"></script>
-    <script src="js/controller/auth.controller.js"></script>
-</body>
+  </body>
 </html>
