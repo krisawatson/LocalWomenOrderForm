@@ -1,12 +1,8 @@
 package com.kricko.repository;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kricko.domain.AdvertType;
 
-public interface AdvertTypeRepository extends CrudRepository<AdvertType, Integer>{
-	
-	List<AdvertType> findAll();
+public interface AdvertTypeRepository extends JpaRepository<AdvertType, Integer>{
 }

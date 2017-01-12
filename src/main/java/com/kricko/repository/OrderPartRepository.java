@@ -1,9 +1,9 @@
 package com.kricko.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kricko.domain.OrderPart;
 
-public interface OrderPartRepository extends CrudRepository<OrderPart, Integer> {
+public interface OrderPartRepository extends JpaRepository<OrderPart, Integer> {
 	
 }

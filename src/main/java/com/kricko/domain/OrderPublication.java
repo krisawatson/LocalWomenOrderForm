@@ -14,59 +14,48 @@ import javax.validation.constraints.NotNull;
 @Table(name = "order_publication")
 public class OrderPublication {
 
-	private int id;
-	private int adType;
-	private int adSize;
-	private String note;
-	private OrderPart orderPart;
-	
-	protected OrderPublication(){
-	}
-	
-	public OrderPublication(OrderPart orderPart, int adType, 
-			int adSize, String note){
-		this.orderPart = orderPart;
-		this.adType = adType;
-		this.adSize = adSize;
-		this.note = note;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	@NotNull
-	public int getAdType() {
-		return adType;
-	}
-	public void setAdType(int adType) {
-		this.adType = adType;
-	}
-	@NotNull
-	public int getAdSize() {
-		return adSize;
-	}
-	public void setAdSize(int adSize) {
-		this.adSize = adSize;
-	}
-	public String getNote() {
-		return note;
-	}
-	public void setNote(String note) {
-		this.note = note;
-	}
+    private Long id;
+    private int adType;
+    private int adSize;
+    private String note;
+    private OrderPart orderPart;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "order_part_id", nullable = false)
-	public OrderPart getOrderPart() {
-		return orderPart;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    @NotNull
+    public int getAdType() {
+        return adType;
+    }
+    public void setAdType(int adType) {
+        this.adType = adType;
+    }
+    @NotNull
+    public int getAdSize() {
+        return adSize;
+    }
+    public void setAdSize(int adSize) {
+        this.adSize = adSize;
+    }
+    public String getNote() {
+        return note;
+    }
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setOrderPart(OrderPart orderPart) {
-		this.orderPart = orderPart;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_part_id", nullable = false)
+    public OrderPart getOrderPart() {
+        return orderPart;
+    }
+
+    public void setOrderPart(OrderPart orderPart) {
+        this.orderPart = orderPart;
+    }
 }

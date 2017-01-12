@@ -1,12 +1,8 @@
 package com.kricko.repository;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kricko.domain.Publication;
 
-public interface PublicationRepository extends CrudRepository<Publication, Integer>{
-	
-	List<Publication> findAll();
+public interface PublicationRepository extends JpaRepository<Publication, Integer>{
 }

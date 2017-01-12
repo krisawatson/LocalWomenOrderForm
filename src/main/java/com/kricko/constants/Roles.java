@@ -1,6 +1,6 @@
 package com.kricko.constants;
 
-public enum Role
+public enum Roles
 {
     USER,
     ADMIN

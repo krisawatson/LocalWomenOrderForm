@@ -10,45 +10,54 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "orders")
 public class Orders {
-	private int id;
-	private int businessId;
-	private List<OrderPart> orderParts = new ArrayList<>(0);
-	
-	protected Orders(){
-	}
-	
-	public Orders(int busnessId) {
-		this.businessId = busnessId;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public int getBusinessId() {
-		return businessId;
-	}
+    private Long id;
+    private Long businessId;
+    private Long userId;
+    private List<OrderPart> orderParts = new ArrayList<>(0);
 
-	public void setBusinessId(int businessId) {
-		this.businessId = businessId;
-	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
-	public List<OrderPart> getOrderParts() {
-		return orderParts;
-	}
+    public Orders(Long businessId, Long userId){
+        this.businessId = businessId;
+        this.userId = userId;
+    }
 
-	public void setOrderParts(List<OrderPart> orderParts) {
-		this.orderParts = orderParts;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @NotNull
+    public Long getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(Long businessId) {
+        this.businessId = businessId;
+    }
+    
+    @NotNull
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
+    public List<OrderPart> getOrderParts() {
+        return orderParts;
+    }
+
+    public void setOrderParts(List<OrderPart> orderParts) {
+        this.orderParts = orderParts;
+    }
 }

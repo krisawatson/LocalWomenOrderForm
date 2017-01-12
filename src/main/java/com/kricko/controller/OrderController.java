@@ -38,26 +38,38 @@ public class OrderController {
     
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public int createOrder(@RequestBody WebOrder webOrder) {
+    public Long createOrder(@RequestBody WebOrder webOrder) {
         LOGGER.debug("Submitting order");
 
         Business business = webOrder.getBusiness();
         businessRepo.save(business);
         
-        Orders orders = new Orders(business.getId());
+        // TODO Set the userId of the logged in user
+        Orders orders = new Orders(business.getId(), 1L);
         orderRepo.save(orders);
         
         List<OrderPart> orderParts = webOrder.getOrderParts();
         
-        orderParts.forEach(orderPart -> {
-        	orderPart.setOrders(orders);
-        	orderPartRepo.save(orderPart);
-        	List<OrderPublication> publications = orderPart.getPublications();
-        	publications.forEach(publication -> {
-        		publication.setOrderPart(orderPart);
-        	});
-        	orderPublicationRepo.save(publications);
-        });
+        // For Java 1.8 and after
+//        orderParts.forEach(orderPart -> {
+//            orderPart.setOrders(orders);
+//            orderPartRepo.save(orderPart);
+//            List<OrderPublication> publications = orderPart.getPublications();
+//            publications.forEach(publication -> {
+//                publication.setOrderPart(orderPart);
+//            });
+//            orderPublicationRepo.save(publications);
+//        });
+        // For Java 1.7 and before
+        for(OrderPart orderPart : orderParts) {
+            orderPart.setOrders (orders);
+            orderPartRepo.save(orderPart);
+            List<OrderPublication> publications = orderPart.getPublications();
+            for(OrderPublication publication : publications) {
+                publication.setOrderPart(orderPart);
+            }
+            orderPublicationRepo.save(publications);
+        }
         
     	return orders.getId();
     }

@@ -1,9 +1,9 @@
 package com.kricko.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kricko.domain.Business;
 
-public interface BusinessRepository extends CrudRepository<Business, Integer> {
+public interface BusinessRepository extends JpaRepository<Business, Integer> {
 	
 }

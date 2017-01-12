@@ -17,61 +17,50 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "order_part")
 public class OrderPart {
-	private int id;
-	private int month;
-	private int year;
-	private List<OrderPublication> publications = new ArrayList<>(0);
-	private Orders orders;
-	
-	protected OrderPart(){
-	}
-	
-	protected OrderPart(Orders orders, int month, int year, 
-			List<OrderPublication> publications){
-		this.orders = orders;
-		this.month = month;
-		this.year = year;
-		this.publications = publications;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	@NotNull
-	public int getMonth() {
-		return month;
-	}
-	public void setMonth(int month) {
-		this.month = month;
-	}
-	public int getYear() {
-		return year;
-	}
-	public void setYear(int year) {
-		this.year = year;
-	}
+    private Long id;
+    private int month;
+    private int year;
+    private List<OrderPublication> publications = new ArrayList<>(0);
+    private Orders orders;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orderPart")
-	public List<OrderPublication> getPublications() {
-		return publications;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    @NotNull
+    public int getMonth() {
+        return month;
+    }
+    public void setMonth(int month) {
+        this.month = month;
+    }
+    public int getYear() {
+        return year;
+    }
+    public void setYear(int year) {
+        this.year = year;
+    }
 
-	public void setPublications(List<OrderPublication> publications) {
-		this.publications = publications;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderPart")
+    public List<OrderPublication> getPublications() {
+        return publications;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "orders_id", nullable = false)
-	public Orders getOrders() {
-		return orders;
-	}
+    public void setPublications(List<OrderPublication> publications) {
+        this.publications = publications;
+    }
 
-	public void setOrders(Orders orders) {
-		this.orders = orders;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orders_id", nullable = false)
+    public Orders getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+    }
 }
