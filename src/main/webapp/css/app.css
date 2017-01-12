@@ -39,6 +39,10 @@ div.publication label.header {
 	width: 80%;
 }
 
+.error {
+	color: red;
+}
+
 label.adType {
 	margin-left: 20px;
 }
