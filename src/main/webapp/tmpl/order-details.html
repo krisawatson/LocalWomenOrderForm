@@ -17,10 +17,10 @@
 				<option value="11">NOVEMBER</option>
 				<option value="12">DECEMBER</option>
 			</select>
-			<select ng-options="year for year in years"ng-model="order.year">
+			<select ng-options="year for year in orderCtrl.years" ng-model="order.year">
 			</select>
 		</div>
-		<div class="publication" ng-repeat="publication in publications">
+		<div class="publication" ng-repeat="publication in orderCtrl.publications">
 			<div>
 				<label class="header">{{publication.name}}:</label>
 				<input type="radio" name="{{publication.id}}-publicationSelected" value="true" ng-model="order.publications[publication.id].selected"/>Yes
@@ -28,10 +28,10 @@
 			</div>
 			<div ng-if="order.publications[publication.id].selected == 'true'">
 				<label class="adType">Advert Type:</label>
-				<select ng-options="ad.id as ad.name for ad in adverts" ng-model="order.publications[publication.id].adType">
+				<select ng-options="ad.id as ad.name for ad in orderCtrl.adverts" ng-model="order.publications[publication.id].adType">
 				</select>
 				<label>Advert Size:</label>
-				<select ng-options="adSize.id as adSize.name for adSize in advertSizes" ng-model="order.publications[publication.id].adSize">
+				<select ng-options="adSize.id as adSize.name for adSize in orderCtrl.advertSizes" ng-model="order.publications[publication.id].adSize">
 				</select>
 			</div>
 			<div>
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		<div class="buttons" ng-if="order.id > 1">
-			<button type="button" ng-click="removeOrder(order.id)">Remove</button>
+			<button type="button" ng-click="orderCtrl.removeOrder(order.id)">Remove</button>
 		</div>
 	</fieldset>
 <div>
