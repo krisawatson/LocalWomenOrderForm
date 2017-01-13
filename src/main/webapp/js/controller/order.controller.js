@@ -58,9 +58,10 @@
 	    	});
 	    }
 	    
-	    function goToNextStep() {
-	    	self.steps.step = ++self.steps.step;
-	    	console.log(self.publications);
+	    function goToNextStep(valid) {
+	    	if(valid) {
+	    		self.steps.step = ++self.steps.step;
+	    	}
 	    }
 	    
 	    function goToPreviousStep () {

@@ -7,8 +7,7 @@
 	<div class="error" ng-if="orderCtrl.orderError">{{orderError}}</div>
 	<div class="buttons" ng-if="orderCtrl.steps.step <= orderCtrl.steps.maxSteps">
 		<button ng-if="orderCtrl.steps.step > 1" type="button" ng-click="orderCtrl.goToPreviousStep()">Back</button>
-		<button ng-if="orderCtrl.steps.step < orderCtrl.steps.maxSteps" type="button" ng-click="orderCtrl.goToNextStep()">Next</button>
 		<button ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep" type="button" ng-click="orderCtrl.addMoreDetails()">Add More</button>
-		<button ng-if="orderCtrl.steps.step == orderCtrl.steps.maxSteps" type="button" ng-click="orderCtrl.submitOrder()">Submit</button>
+		<button ng-if="orderCtrl.steps.step == orderCtrl.steps.maxSteps" type="submit">Submit</button>
 	</div>
 </div>

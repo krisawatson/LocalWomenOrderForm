@@ -114,3 +114,8 @@ div.login-username label, div.login-password label {
 .ui-grid-row {
     height: auto !important;
 }
+
+.form-error {
+	color: red;
+	font-size: 8em;
+}

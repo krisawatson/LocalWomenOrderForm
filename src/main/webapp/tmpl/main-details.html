@@ -1,39 +1,45 @@
-<div>
-	<label>Business Name:</label>
-</div>
-<div>
-	<input type="text" class="businessNameInput large" placeholder="Business Name" ng-model="orderCtrl.business.name"/></td>
-</div>
-<div>
-	<label>Contact Name:</label>
-</div>
-<div>
-	<input type="text" class="medium" placeholder="First" ng-model="orderCtrl.business.firstname"/>
-	<input type="text" class="medium" placeholder="Last" ng-model="orderCtrl.business.lastname"/>
-</div>
-<div>
-	<label>Address:</label>
-</div>
-<div>
-	<input type="text" class="large" placeholder="Address Line 1" ng-model="orderCtrl.business.address1"/>
-</div>
-<div>
-	<input type="text" class="large" placeholder="Address Line 2" ng-model="orderCtrl.business.address2"/>
-</div>
-<div>
-	<input type="text" class="small" placeholder="City" ng-model="orderCtrl.business.city"/>
-	<input type="text" class="small" placeholder="County" ng-model="orderCtrl.business.county"/>
-	<input type="text" class="small" placeholder="Postcode" ng-model="orderCtrl.business.postcode"/>
-</div>
-<div>
-	<table>
-		<tr>
-			<td><label>Email:</label></td>
-			<td><label>Phone:</label></td>
-		</tr>
-		<tr>
-			<td class="medium"><input type="text" placeholder="name@email.com" ng-model="orderCtrl.business.email"/></td>
-			<td class="medium"><input type="text" placeholder="02890 123456" ng-model="orderCtrl.business.tel"/></td>
-		</tr>
-	</table>
-</div>
+<form name="mainDetailsForm" ng-submit="orderCtrl.goToNextStep(mainDetailsForm.$valid)" novalidate>
+	<div>
+		<label>Business Name:</label>
+	</div>
+	<div>
+		<input type="text" class="businessNameInput large" placeholder="Business Name" name="businessName" ng-model="orderCtrl.business.name" required/>
+		<div ng-show="mainDetailsForm.businessName.$invalid" class="form-error">Business Name is required.</div>
+	</div>
+	<div>
+		<label>Contact Name:</label>
+	</div>
+	<div>
+		<input type="text" class="medium" placeholder="First" ng-model="orderCtrl.business.firstname"/>
+		<input type="text" class="medium" placeholder="Last" ng-model="orderCtrl.business.lastname"/>
+	</div>
+	<div>
+		<label>Address:</label>
+	</div>
+	<div>
+		<input type="text" class="large" placeholder="Address Line 1" ng-model="orderCtrl.business.address1"/>
+	</div>
+	<div>
+		<input type="text" class="large" placeholder="Address Line 2" ng-model="orderCtrl.business.address2"/>
+	</div>
+	<div>
+		<input type="text" class="small" placeholder="City" ng-model="orderCtrl.business.city"/>
+		<input type="text" class="small" placeholder="County" ng-model="orderCtrl.business.county"/>
+		<input type="text" class="small" placeholder="Postcode" ng-model="orderCtrl.business.postcode"/>
+	</div>
+	<div>
+		<table>
+			<tr>
+				<td><label>Email:</label></td>
+				<td><label>Phone:</label></td>
+			</tr>
+			<tr>
+				<td class="medium"><input type="text" placeholder="name@email.com" ng-model="orderCtrl.business.email"/></td>
+				<td class="medium"><input type="text" placeholder="02890 123456" ng-model="orderCtrl.business.tel"/></td>
+			</tr>
+		</table>
+	</div>
+	<div class="buttons" ng-if="orderCtrl.steps.step <= orderCtrl.steps.maxSteps">
+        <button ng-if="orderCtrl.steps.step < orderCtrl.steps.maxSteps" type="submit">Next</button>
+    </div>
+</form>
