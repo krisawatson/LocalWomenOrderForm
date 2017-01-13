@@ -27,14 +27,14 @@
 		<input type="text" class="small" ng-class="mainDetailsForm.$submitted && mainDetailsForm.postcode.$invalid ? 'validation-error' : ''" placeholder="Postcode" name="postcode" ng-model="orderCtrl.business.postcode" required/>
 	</div>
 	<div>
-		<table>
+		<table class="large">
 			<tr>
 				<td><label>Email:</label></td>
 				<td><label>Phone:</label></td>
 			</tr>
 			<tr>
-				<td class="medium"><input type="text" ng-class="mainDetailsForm.$submitted && mainDetailsForm.email.$invalid ? 'validation-error' : ''" placeholder="name@email.com" name="email" ng-model="orderCtrl.business.email" required/></td>
-				<td class="medium"><input type="text" placeholder="02890 123456" name="tel" ng-model="orderCtrl.business.tel"/></td>
+				<td><input type="text" class="large" ng-class="mainDetailsForm.$submitted && mainDetailsForm.email.$invalid ? 'validation-error' : ''" placeholder="name@email.com" name="email" ng-model="orderCtrl.business.email" required/></td>
+				<td><input type="text" class="large" placeholder="02890 123456" name="tel" ng-model="orderCtrl.business.tel"/></td>
 			</tr>
 		</table>
 	</div>

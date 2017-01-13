@@ -5,4 +5,9 @@
 	</div>
 	<order-success ng-if="orderCtrl.steps.step == orderCtrl.steps.maxSteps + 1" class="successMsg" ordernumber="orderCtrl.orderNumber" ok-fn="orderCtrl.reset()"></order-success>
 	<div class="error" ng-if="orderCtrl.orderError">{{orderError}}</div>
+	<div class="buttons" ng-if="orderCtrl.steps.step == 2">
+		<button type="button" ng-click="orderCtrl.goToPreviousStep()">Back</button>
+		<button type="button" ng-click="orderCtrl.addMoreDetails()">Add More</button>
+		<button type="submit">Submit</button>
+	</div>
 </div>

@@ -1,5 +1,6 @@
 form {
-	padding-left:15%;
+	padding-left: 5%;
+    padding-right: 5%;
 }
 
 body {
@@ -12,7 +13,7 @@ h2 {
 
 div.content {
 	background: white;
-	width: 600px;
+	width: 700px;
 	border: 2px solid;
 	margin: 0 auto;
 }
@@ -30,13 +31,13 @@ div.publication label.header {
 }
 
 .small {
-	width: 26%;
+	width: 29%;
 }
 .medium {
-	width: 40%;
+	width: 44%;
 }
 .large {
-	width: 80%;
+	width: 90%;
 }
 
 .error {
@@ -129,4 +130,8 @@ input.validation-error, select.validation-error {
 .appGrid {
 	width: 100%;
 	height: 440px;
+}
+
+.ui-grid-row {
+	font-size: 0.75em;
 }
