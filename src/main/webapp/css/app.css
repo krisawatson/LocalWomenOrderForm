@@ -125,3 +125,8 @@ input.validation-error, select.validation-error {
     border-color: red;
     box-shadow: 0 0 10px red;
 }
+
+.appGrid {
+	width: 100%;
+	height: 440px;
+}

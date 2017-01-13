@@ -1,7 +1,8 @@
 'use strict';
 angular.module('localWomenApp', [
 	'ngRoute',
-	'ui.grid'])
+	'ui.grid',
+	'ui.grid.pagination'])
 	.config(['$routeProvider',
 	    function($routeProvider) {
 			

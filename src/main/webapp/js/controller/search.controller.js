@@ -19,10 +19,13 @@
 		self.gridOptions = {
 			appScopeProvider: self,
 			enableColumnMenus: false,
+		    enableFiltering: true,
 		    excludeProperties: '__metadata',
 		    onRegisterApi: function(gridApi){
 		    	self.gridApi = gridApi;
 		    },
+		    paginationPageSizes: [9, 25, 50, 100],
+		    paginationPageSize: 9,
 		    rowHeight:44,
 		    columnDefs: [{ field: 'orderId', 
 		    			   displayName: 'ID',
