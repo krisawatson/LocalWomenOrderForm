@@ -47,17 +47,8 @@ label.adType {
 	margin-left: 20px;
 }
 
-div.buttons {
-	margin: 10px 10px;
-	text-align: right;
-}
-
 div.orderSuccess {
 	margin: 20px 50px;
-}
-
-button {
-	height: 40px;
 }
 
 textarea {
@@ -66,4 +57,49 @@ textarea {
 	box-sizing: border-box;         /* For IE and modern versions of Chrome */
 	-moz-box-sizing: border-box;    /* For Firefox                          */
 	-webkit-box-sizing: border-box; /* For Safari                           */
+}
+
+div.buttons {
+	margin: 10px 10px;
+	text-align: right;
+	background: #f5f5f5;
+    margin: 0 auto;
+    padding-top: 2px;
+    padding-left: 2px;
+    border: 10px solid #fff;
+    border-radius: 2px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.17512156);
+}
+
+button {
+	/* Normal State */
+    padding: 4px 15px 7px 15px;
+    width: auto;
+    height: auto;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    -ms-font-smoothing: antialiased;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.50);
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.50);
+    border-top: 1px solid rgba(0,0,0,0.001);
+    box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -o-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    -ms-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
+    cursor: pointer;
+	background: #EA4C89;
 }

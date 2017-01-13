@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kricko.domain.OrderPart;
 
-public interface OrderPartRepository extends JpaRepository<OrderPart, Integer> {
+public interface OrderPartRepository extends JpaRepository<OrderPart, Long> {
 	
 }

@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-	<title>Local Women Order Form</title>
+	<title>Local Women</title>
 	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" type="text/css" href="css/nav.css">
+	<script src="js/angular/angular.js" type="text/javascript"></script>
+	<script src="js/angular/angular-route.js" type="text/javascript"></script>
 </head>
 <body ng-app="localWomenApp">
 	<div class="outter-content">
 		<div class="content">
 			<h2>Local Women Order Form</h2>
-			<div ng-controller="OrderController">
-				<div ng-if="steps.step == 1" class="mainDetails" main-details></div>
-				<div ng-if="steps.step == steps.advertContentStep" class="orders" ng-repeat="order in orderParts track by order.id">
-					<div order-details class="orderDetails"></div>
-				</div>
-				<order-success ng-if="steps.step == steps.maxSteps + 1" class="successMsg" ordernumber="orderNumber" ok-fn="reset()"></order-success>
-				<div class="error" ng-if="orderError">{{orderError}}</div>
-				<div class="buttons" ng-if="steps.step <= steps.maxSteps">
-					<button ng-if="steps.step > 1" type="button" ng-click="goToPreviousStep()">Back</button>
-					<button ng-if="steps.step < steps.maxSteps" type="button" ng-click="goToNextStep()">Nex</button>
-					<button ng-if="steps.step == steps.advertContentStep" type="button" ng-click="addMoreDetails()">Add More</button>
-					<button ng-if="steps.step == steps.maxSteps" type="button" ng-click="submitOrder()">Submit</button>
-				</div>
+			<div class="col-md-3" ng-controller="NavController">
+				<ul class="nav">
+					<li class="navlinks"><a href="/#!/orderform.do">Order</a></li>
+					<li class="navlinks" ng-if="role === 'ADMIN'"><a href="/#!/search.do">Search</a></li>
+				</ul>
+			</div>
+			<div class="col-md-9">
+			  	<div ng-view></div>
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	<script src="js/angular.js" type="text/javascript"></script>
+	<script src="js/app.js" type="text/javascript"></script>
+	<script src="js/controller/auth.controller.js" type="text/javascript"></script>
+	<script src="js/controller/nav.controller.js" type="text/javascript"></script>
 	<script src="js/controller/order.controller.js" type="text/javascript"></script>
+	<script src="js/controller/search.controller.js" type="text/javascript"></script>
+	<script src="js/directive/main-details.directive.js" type="text/javascript"></script>
+	<script src="js/directive/order-details.directive.js" type="text/javascript"></script>
+	<script src="js/directive/order-success.directive.js" type="text/javascript"></script>
 </body>
 </html>

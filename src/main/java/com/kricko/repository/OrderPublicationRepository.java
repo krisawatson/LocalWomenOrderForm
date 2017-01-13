@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kricko.domain.OrderPublication;
 
-public interface OrderPublicationRepository extends JpaRepository<OrderPublication, Integer> {
+public interface OrderPublicationRepository extends JpaRepository<OrderPublication, Long> {
 	
 }

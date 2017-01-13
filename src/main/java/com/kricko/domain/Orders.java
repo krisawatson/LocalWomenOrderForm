@@ -20,6 +20,10 @@ public class Orders {
     private Long userId;
     private List<OrderPart> orderParts = new ArrayList<>(0);
 
+    public Orders() {
+    	
+    }
+    
     public Orders(Long businessId, Long userId){
         this.businessId = businessId;
         this.userId = userId;
