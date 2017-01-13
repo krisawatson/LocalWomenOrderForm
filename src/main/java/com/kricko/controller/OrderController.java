@@ -2,6 +2,8 @@ package com.kricko.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.kricko.domain.OrderPart;
 import com.kricko.domain.OrderPublication;
 import com.kricko.domain.Orders;
 import com.kricko.domain.User;
+import com.kricko.mail.SmtpMailer;
 import com.kricko.model.WebOrder;
 import com.kricko.repository.BusinessRepository;
 import com.kricko.repository.OrderPartRepository;
@@ -43,6 +46,8 @@ public class OrderController {
     OrderPublicationRepository orderPublicationRepo;
     @Autowired
     UserRepository userRepo;
+    @Autowired
+    SmtpMailer mailer;
     
     Authentication auth;
     
@@ -70,6 +75,7 @@ public class OrderController {
             });
             orderPublicationRepo.save(publications);
         });
+        
         // For Java 1.7 and before
 //        for(OrderPart orderPart : orderParts) {
 //            orderPart.setOrders (orders);
@@ -80,6 +86,14 @@ public class OrderController {
 //            }
 //            orderPublicationRepo.save(publications);
 //        }
+        Long orderId = orders.getId();
+        String businessEmail = business.getEmail();
+        String[] bccEmails = {user.getEmail()};
+        try {
+			mailer.sendOrderConfirmation(orderId, businessEmail, bccEmails);
+		} catch (MessagingException e) {
+			LOGGER.error("Failed to send email to " + businessEmail, e);
+		}
         
     	return orders.getId();
     }
