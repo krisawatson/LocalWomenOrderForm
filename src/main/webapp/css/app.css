@@ -110,3 +110,7 @@ div.login-username label, div.login-password label {
 	width: 70px;
 	display:inline-block;
 }
+
+.ui-grid-row {
+    height: auto !important;
+}

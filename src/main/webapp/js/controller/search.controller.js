@@ -16,8 +16,6 @@
 		var self = this;
 		self.orders = [];
 		
-		getResources();
-		
 		self.gridOptions = {
 			appScopeProvider: self,
 			enableColumnMenus: false,
@@ -26,33 +24,42 @@
 		    	self.gridApi = gridApi;
 		    },
 		    rowHeight:44,
-		    columnDefs: [{ field: 'id', 
+		    columnDefs: [{ field: 'orderId', 
 		    			   displayName: 'ID',
 		    			   width: 50
 		    			 },
-		    			 { field: 'businessId', 
+		    			 { field: 'businessName', 
 		    			   displayName: 'Business Name',
-		    			   width: 200,
-		    			   cellTemplate: '<div>{{grid.appScope.getBusinessName(row.entity.businessId)}}</div>'
+		    			   width: 200
 		    			 },
-		    			 { field: 'orderParts', 
-			    		   displayName: 'Order Details'
+		    			 { field: 'adSize', 
+			    		   displayName: 'Size'
+			    		 },
+		    			 { field: 'adType', 
+			    		   displayName: 'Type'
+			    		 },
+		    			 { field: 'month', 
+			    		   displayName: 'Month'
+			    		 },
+		    			 { field: 'year', 
+			    		   displayName: 'Year'
 			    		 },
 		    			 { field: 'userId', 
-			    		   displayName: 'User',
-		    			   width: 120
-			    		 }]
+			    		   displayName: 'User'
+		    			 }]
 	    };
 		
-		$q.all([DetailsService.publications(), 
+		$q.all([BusinessService.list(),
+			DetailsService.publications(), 
 			DetailsService.adtypes(), 
 			DetailsService.adsizes(),
 			OrderService.list()])
 			.then(function(data) {
-				var publications = data[0];
-				var adtypes = data[1];
-				var adsizes = data[2];
-				self.orders = data[3];
+				self.businesses = data[0];
+				self.publications = data[1];
+				self.adverts = data[2];
+				self.advertSizes = data[3];
+				self.orders = data[4];
 				self.orderList = [];
 				
 				console.log(self.orders);
@@ -60,14 +67,17 @@
 					var orders = [];
 					var orderItems = {
 							orderId: order.id,
-							businessName: self.getNameById(self.businesses, order.businessId)
+							businessName: self.getNameById(self.businesses, order.businessId),
+							userId: order.userId
 					}
 					angular.forEach(order.orderParts, function(orderPart){
 						var part = angular.copy(orderItems);
-						part.month = orderPart.month;
+						part.month = self.getMonthByInt(orderPart.month);
 						part.year = orderPart.year;
 						angular.forEach(orderPart.publications, function(publication){
 							var pub = angular.copy(part);
+							console.log(self.advertSizes);
+							console.log(publication.adSize);
 							pub.adSize = self.getNameById(self.advertSizes, publication.adSize);
 							pub.adType = self.getNameById(self.adverts, publication.adType);
 							pub.note = publication.note;
@@ -76,6 +86,7 @@
 					});
 				});
 				console.log(self.orderList);
+				self.gridOptions.data = self.orderList;
 			});
 		
 		self.getNameById = function (arrayItems , id) {
@@ -85,21 +96,11 @@
 			return item[0].name;
 		};
 		
-		function getResources() {
-	    	DetailsService.publications().then(function(data){
-	    		self.publications = data;
-	    	});
-	    	
-	    	DetailsService.adtypes().then(function (data) {
-	    		self.adverts = data;
-	    	});
-	    	
-	    	DetailsService.adsizes().then(function (data) {
-	    		self.advertSizes = data;
-	    	});
-	    	BusinessService.list().then(function(data){
-				self.businesses = data;
-			});
-	    }
+		self.getMonthByInt = function (month) {
+			var monthNames = ["January", "February", "March", "April", "May", "June",
+				  "July", "August", "September", "October", "November", "December"
+				];
+			return monthNames[month-1];
+		};
 	};
 })(window);
