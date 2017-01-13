@@ -1,48 +1,55 @@
-<div>
-	<fieldset>
-		<legend>Order Part</legend>
-		<div>
-			<label>Month:</label>
-			<select ng-model="order.month">
-				<option value="1">JANUARY</option>
-				<option value="2">FEBRUARY</option>
-				<option value="3">MARCH</option>
-				<option value="4">APRIL</option>
-				<option value="5">MAY</option>
-				<option value="6">JUNE</option>
-				<option value="7">JULY</option>
-				<option value="8">AUGUST</option>
-				<option value="9">SEPTEMPBER</option>
-				<option value="10">OCTOBER</option>
-				<option value="11">NOVEMBER</option>
-				<option value="12">DECEMBER</option>
-			</select>
-			<select ng-options="year for year in orderCtrl.years" ng-model="order.year">
-			</select>
-		</div>
-		<div class="publication" ng-repeat="publication in orderCtrl.publications">
+<form name="orderDetailsForm" ng-submit="orderCtrl.submitOrder(orderDetailsForm.$valid)" novalidate>
+	<div>
+		<fieldset>
+			<legend>Order Part</legend>
 			<div>
-				<label class="header">{{publication.name}}:</label>
-				<input type="radio" name="{{publication.id}}-publicationSelected" value="true" ng-model="order.publications[publication.id].selected"/>Yes
-				<input type="radio" name="{{publication.id}}-publicationSelected" value="false" ng-model="order.publications[publication.id].selected" checked="checked"/>No
-			</div>
-			<div ng-if="order.publications[publication.id].selected == 'true'">
-				<label class="adType">Advert Type:</label>
-				<select ng-options="ad.id as ad.name for ad in orderCtrl.adverts" ng-model="order.publications[publication.id].adType">
+				<label>Month:</label>
+				<select ng-model="order.month">
+					<option value="1">JANUARY</option>
+					<option value="2">FEBRUARY</option>
+					<option value="3">MARCH</option>
+					<option value="4">APRIL</option>
+					<option value="5">MAY</option>
+					<option value="6">JUNE</option>
+					<option value="7">JULY</option>
+					<option value="8">AUGUST</option>
+					<option value="9">SEPTEMPBER</option>
+					<option value="10">OCTOBER</option>
+					<option value="11">NOVEMBER</option>
+					<option value="12">DECEMBER</option>
 				</select>
-				<label>Advert Size:</label>
-				<select ng-options="adSize.id as adSize.name for adSize in orderCtrl.advertSizes" ng-model="order.publications[publication.id].adSize">
+				<select ng-options="year for year in orderCtrl.years" ng-model="order.year">
 				</select>
 			</div>
-			<div>
-				<label>Notes:</label>
+			<div class="publication" ng-repeat="publication in orderCtrl.publications">
+				<div>
+					<label class="header">{{publication.name}}:</label>
+					<input type="radio" name="publication-{{order.id}}-{{publication.id}}-select" value="true" ng-model="order.publications[publication.id].selected"/>Yes
+					<input type="radio" name="publication-{{order.id}}-{{publication.id}}-select" value="false" ng-model="order.publications[publication.id].selected" selected="selected"/>No
+				</div>
+				<div ng-if="order.publications[publication.id].selected == 'true'">
+					<label class="adType">Advert Type:</label>
+					<select name="adtype-{{order.id}}-{{publication.id}}-select" ng-class="orderDetailsForm.$submitted && orderDetailsForm.adtype-{{order.id}}-{{publication.id}}-select.$invalid ? 'validation-error' : ''" ng-options="ad.id as ad.name for ad in orderCtrl.adverts" ng-model="order.publications[publication.id].adType" required></select>
+					<label>Advert Size:</label>
+					<select name="adsize-{{order.id}}-{{publication.id}}-select" ng-class="orderDetailsForm.$submitted && orderDetailsForm.adsize-{{order.id}}-{{publication.id}}-select.$invalid ? 'validation-error' : ''" ng-options="adSize.id as adSize.name for adSize in orderCtrl.advertSizes" ng-model="order.publications[publication.id].adSize" required>
+					</select>
+				</div>
+				<div>
+					<label>Notes:</label>
+				</div>
+				<div>
+					<textarea ng-model="order.publications[publication.id].note"></textarea>
+				</div>
 			</div>
-			<div>
-				<textarea ng-model="order.publications[publication.id].note"></textarea>
+			<div class="buttons" ng-if="order.id > 1">
+				<button type="button" ng-click="orderCtrl.removeOrder(order.id)">Remove</button>
 			</div>
-		</div>
-		<div class="buttons" ng-if="order.id > 1">
-			<button type="button" ng-click="orderCtrl.removeOrder(order.id)">Remove</button>
-		</div>
-	</fieldset>
-<div>
+		</fieldset>
+	</div>
+	<div class="form-error" ng-if="orderCtrl.errorMsg">{{orderCtrl.errorMsg}}</div>
+	<div class="buttons">
+		<button type="button" ng-click="orderCtrl.goToPreviousStep()">Back</button>
+		<button type="button" ng-click="orderCtrl.addMoreDetails()">Add More</button>
+		<button type="submit">Submit</button>
+	</div>
+</form>

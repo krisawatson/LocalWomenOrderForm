@@ -3,7 +3,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kricko</groupId>
     <artifactId>LocalWomen</artifactId>
-    <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>LocalWomen Webapp</name>
     <parent>

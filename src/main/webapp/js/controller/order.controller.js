@@ -42,7 +42,15 @@
 	    	self.orderParts.push(newOrder);
 	    }
 	    
-	    function submitOrder() {
+	    function submitOrder(valid) {
+	    	var atLeastOneOrder = validateOrderParts();
+	    	if(!atLeastOneOrder) {
+	    		self.errorMsg = "At least one advert must be entered in the first 'Order Part'";
+	    	} else {
+	    		delete self.errorMsg;
+	    	}
+	    	valid = valid && atLeastOneOrder;
+	    	if(!valid) return;
 	    	self.orderError = null;
 	    	fixOrderDetails();
 	    	console.log(self.orderParts);
@@ -52,7 +60,7 @@
 	    	}
 	    	OrderService.create(order).then(function(orderNumber){
 	    		self.orderNumber = orderNumber;
-	    		self.goToNextStep();
+	    		self.goToNextStep(valid);
 	    	},function(error){
 	    		self.orderError = "Something went wrong with your order, please review details and try again";
 	    	});
@@ -117,11 +125,24 @@
 	    	angular.forEach(self.orderParts,function(order){
 	    		delete order.id;
 	    		var publications = []
-	    		angular.forEach(order.publications, function(publication){
+	    		angular.forEach(order.publications, function(publication, index){
+	    			publication.publicationId = index;
 	    			publications.push(publication);
 	    		});
 	    		order.publications = publications;
 	        });
+	    }
+	    
+	    function validateOrderParts() {
+	    	var valid = false;
+	    	if(self.orderParts[0].publications.length > 0) {
+	    		angular.forEach(self.orderParts[0].publications, function(pub){
+	    			if(pub.selected) {
+	    				valid = true;
+	    			}
+	    		});
+	    	}
+	    	return valid;
 	    }
 	}
 })(window);

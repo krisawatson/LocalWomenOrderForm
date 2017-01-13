@@ -17,8 +17,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class OrderPublication {
 
     private Long id;
-    private int adType;
-    private int adSize;
+    private Long adType;
+    private Long adSize;
+    private Long publicationId;
     private String note;
     private OrderPart orderPart;
 
@@ -31,18 +32,25 @@ public class OrderPublication {
         this.id = id;
     }
     @NotNull
-    public int getAdType() {
+    public Long getAdType() {
         return adType;
     }
-    public void setAdType(int adType) {
+    public void setAdType(Long adType) {
         this.adType = adType;
     }
     @NotNull
-    public int getAdSize() {
+    public Long getAdSize() {
         return adSize;
     }
-    public void setAdSize(int adSize) {
+    public void setAdSize(Long adSize) {
         this.adSize = adSize;
+    }
+    @NotNull
+    public Long getPublicationId() {
+        return publicationId;
+    }
+    public void setPublicationId(Long publicationId) {
+        this.publicationId = publicationId;
     }
     public String getNote() {
         return note;

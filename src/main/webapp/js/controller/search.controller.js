@@ -30,13 +30,17 @@
 		    			 },
 		    			 { field: 'businessName', 
 		    			   displayName: 'Business Name',
-		    			   width: 200
+		    			   width: 150
 		    			 },
-		    			 { field: 'adSize', 
-			    		   displayName: 'Size'
+		    			 { field: 'name', 
+			    		   displayName: 'Publication',
+			    		   width: 120
 			    		 },
 		    			 { field: 'adType', 
 			    		   displayName: 'Type'
+			    		 },
+		    			 { field: 'adSize', 
+			    		   displayName: 'Size'
 			    		 },
 		    			 { field: 'month', 
 			    		   displayName: 'Month'
@@ -62,24 +66,22 @@
 				self.orders = data[4];
 				self.orderList = [];
 				
-				console.log(self.orders);
 				angular.forEach(self.orders, function(order){
 					var orders = [];
 					var orderItems = {
 							orderId: order.id,
-							businessName: self.getNameById(self.businesses, order.businessId),
+							businessName: getNameById(self.businesses, order.businessId),
 							userId: order.userId
 					}
 					angular.forEach(order.orderParts, function(orderPart){
 						var part = angular.copy(orderItems);
-						part.month = self.getMonthByInt(orderPart.month);
+						part.month = getMonthByInt(orderPart.month);
 						part.year = orderPart.year;
 						angular.forEach(orderPart.publications, function(publication){
 							var pub = angular.copy(part);
-							console.log(self.advertSizes);
-							console.log(publication.adSize);
-							pub.adSize = self.getNameById(self.advertSizes, publication.adSize);
-							pub.adType = self.getNameById(self.adverts, publication.adType);
+							pub.name = getNameById(self.publications, publication.publicationId);
+							pub.adSize = getNameById(self.advertSizes, publication.adSize);
+							pub.adType = getNameById(self.adverts, publication.adType);
 							pub.note = publication.note;
 							self.orderList.push(pub);
 						});
@@ -89,14 +91,14 @@
 				self.gridOptions.data = self.orderList;
 			});
 		
-		self.getNameById = function (arrayItems , id) {
+		var getNameById = function (arrayItems , id) {
 			var item = $filter('filter')(arrayItems, function (item) {
 				return item.id === id;
 			});
 			return item[0].name;
 		};
 		
-		self.getMonthByInt = function (month) {
+		var getMonthByInt = function (month) {
 			var monthNames = ["January", "February", "March", "April", "May", "June",
 				  "July", "August", "September", "October", "November", "December"
 				];

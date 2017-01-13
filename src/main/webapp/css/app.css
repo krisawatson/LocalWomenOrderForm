@@ -117,5 +117,11 @@ div.login-username label, div.login-password label {
 
 .form-error {
 	color: red;
-	font-size: 8em;
+	font-size: 0.8em;
+}
+
+input.validation-error, select.validation-error {
+	outline: none;
+    border-color: red;
+    box-shadow: 0 0 10px red;
 }
