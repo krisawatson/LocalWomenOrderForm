@@ -1,11 +1,12 @@
-(function(angular){
-    'use strict';
+'use strict';
 
-    var app = angular.module('localWomenApp');
-    app.directive("mainDetails", function() {
-	    return {
-	        restrict: "A",
-	        templateUrl: "tmpl/main-details.html"
-	    };
-    })
-})(window.angular);
+angular
+.module('localWomenApp')
+.directive("mainDetails", MainDirective);
+
+function MainDirective() {
+	return {
+		restrict: "A",
+		templateUrl: "tmpl/main-details.html"
+	};
+}

@@ -1,5 +1,6 @@
 package com.kricko.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class User {
         this.id = id;
     }
 
-    @NotNull
+    @Column(name="username", unique=true)
     public String getUsername ()
     {
         return username;

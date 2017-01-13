@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "order_publication")
 public class OrderPublication {
@@ -51,6 +53,7 @@ public class OrderPublication {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_part_id", nullable = false)
+    @JsonBackReference
     public OrderPart getOrderPart() {
         return orderPart;
     }

@@ -8,15 +8,15 @@ angular.module('localWomenApp', ['ngRoute'])
 				templateUrl: 'tmpl/order.html',
 				controller: 'OrderController'
 			})
-			.when('/orderform.do', {
+			.when('/orderform', {
 				templateUrl: 'tmpl/order.html',
 				controller: 'OrderController'
 			})
-			.when('/search.do', {
+			.when('/search', {
 				templateUrl: 'tmpl/search.html',
 				controller: 'SearchController'
 			})
-			.when('/login.do', {
+			.when('/login', {
 				templateUrl: 'tmpl/login.html',
 				controller: 'AuthController'
 			})

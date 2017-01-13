@@ -1,8 +1,9 @@
 (function(window){
     'use strict';
 
-    var app = angular.module('localWomenApp');
-    app.controller('AuthController', ['$scope', 'AuthService', 
+    angular
+    .module('localWomenApp')
+    .controller('AuthController', ['$scope', 'AuthService', 
 	    function($scope, AuthService) {
 		    var self = this;
 		    self.user={username:'',password:''};

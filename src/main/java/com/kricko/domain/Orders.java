@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "orders")
 public class Orders {
@@ -57,6 +59,7 @@ public class Orders {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
+    @JsonManagedReference
     public List<OrderPart> getOrderParts() {
         return orderParts;
     }

@@ -1,17 +1,22 @@
 (function(window){
     'use strict';
 
-    var app = angular.module('localWomenApp');
-    app.controller('NavController', ['$scope','$http', 
-	    function($scope,$http) {
+    angular
+    .module('localWomenApp')
+    .controller('NavController', [
+    	'$http',
+    	'$scope',
+    	'UserService',
+	    function($http,
+	    		$scope,
+	    		UserService) {
 		    $scope.role = "USER";
-		    $http.get("/user").then(function successCallback(response) {
-	    		response.data.authorities.find(function(auth){
+		    UserService.get().then(function(data){
+		    	$scope.user = data;
+		    	data.authorities.find(function(auth){
 	    			$scope.role = auth.authority;
 	    		});
-	    	}, function errorCallback(response) {
-	    		console.error(response);
-	    	});
+		    });
 		}
 	])
 })(window);

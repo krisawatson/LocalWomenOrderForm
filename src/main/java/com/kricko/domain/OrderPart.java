@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "order_part")
 public class OrderPart {
@@ -46,6 +49,7 @@ public class OrderPart {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderPart")
+    @JsonManagedReference
     public List<OrderPublication> getPublications() {
         return publications;
     }
@@ -56,6 +60,7 @@ public class OrderPart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orders_id", nullable = false)
+    @JsonBackReference
     public Orders getOrders() {
         return orders;
     }

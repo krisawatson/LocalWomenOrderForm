@@ -1,6 +1,11 @@
-angular.module('localWomenApp')
-.directive("orderSuccess", function() {
-    return {
+'use strict';
+
+angular
+.module('localWomenApp')
+.directive("orderSuccess", SuccessDirective);
+
+function SuccessDirective() {
+	return {
         restrict: "E",
         templateUrl: "tmpl/order-success.html",
         scope: {
@@ -14,4 +19,4 @@ angular.module('localWomenApp')
         	}
         }
     };
-});
+}

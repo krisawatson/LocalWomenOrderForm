@@ -1,14 +1,21 @@
 (function(window){
     'use strict';
 
-    var app = angular.module('localWomenApp');
-    app.controller('OrderController', [
+    angular
+    .module('localWomenApp')
+    .controller('OrderController', [
+    	'$http',
 	    '$scope',
-	    '$http',
-	    function ($scope,$http) {
+	    'DetailsService',
+	    'OrderService',
+	    function ($http,
+	    		$scope,
+	    		DetailsService,
+	    		OrderService) {
 	    	var id = 1;
 			var now = new Date();
 			var currentYear = now.getFullYear();
+			$scope.currentMonth = now.getMonth() + 1;
 			
 			setStart();
 			buildYears(currentYear);
@@ -22,7 +29,8 @@
 		    		lastMonth = 0;
 		    		++lastYear;
 		    	}
-		    	var newOrder = {"id": ++id, "month": ++lastMonth, "year": lastYear, "publications": []};
+				++lastMonth;
+		    	var newOrder = {"id": ++id, "month": lastMonth.toString(), "year": lastYear, "publications": []};
 		    	$scope.orderParts.push(newOrder);
 		    }
 		    
@@ -34,16 +42,17 @@
 		    		"business": $scope.business,
 		    		"orderParts": $scope.orderParts
 		    	}
-		    	$http.post('/order/create', order).success(function(orderNumber){
+		    	OrderService.create(order).then(function(orderNumber){
 		    		$scope.orderNumber = orderNumber;
 		    		$scope.goToNextStep();
-		    	}).error(function(){
+		    	},function(error){
 		    		$scope.orderError = "Something went wrong with your order, please review details and try again";
 		    	});
 		    };
 		    
 		    $scope.goToNextStep = function() {
 		    	$scope.steps.step = ++$scope.steps.step;
+		    	console.log($scope.publications);
 		    };
 		    
 		    $scope.goToPreviousStep = function() {
@@ -61,7 +70,7 @@
 		    function setStart() {
 		    	var order = {
 		    		"id":id,
-		    		"month": now.getMonth() + 1,
+		    		"month": $scope.currentMonth.toString(),
 		    		"year": currentYear,
 		    		"publications": []
 		    	};
@@ -76,20 +85,16 @@
 		    };
 		    
 		    function getResources() {
-		    	$http.get("/details/publications").then(function successCallback(response) {
-		    		$scope.publications = response.data;
-		    	}, function errorCallback(response) {
-		    		console.error(response);
+		    	DetailsService.publications().then(function(data){
+		    		$scope.publications = data;
 		    	});
-		    	$http.get("/details/adtypes").then(function successCallback(response) {
-		    		$scope.adverts = response.data;
-		    	}, function errorCallback(response) {
-		    		console.error(response);
+		    	
+		    	DetailsService.adtypes().then(function (data) {
+		    		$scope.adverts = data;
 		    	});
-		    	$http.get("/details/adsizes").then(function successCallback(response) {
-		    		$scope.advertSizes = response.data;
-		    	}, function errorCallback(response) {
-		    		console.error(response);
+		    	
+		    	DetailsService.adsizes().then(function (data) {
+		    		$scope.advertSizes = data;
 		    	});
 		    }
 		    
