@@ -27,6 +27,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", unique=true)
     public Long getId() {
         return id;
     }
@@ -35,7 +36,7 @@ public class User {
         this.id = id;
     }
 
-    @Column(name="username", unique=true)
+    @Column(name="username", nullable=false, unique=true)
     public String getUsername ()
     {
         return username;
@@ -88,6 +89,7 @@ public class User {
         this.email = email;
     }
     
+    @NotNull
     public boolean getEnabled() {
         return enabled;
     }

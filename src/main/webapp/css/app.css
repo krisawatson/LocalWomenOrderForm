@@ -44,6 +44,10 @@ div.publication label.header {
 	color: red;
 }
 
+.success {
+	color: green;
+}
+
 label.adType {
 	margin-left: 20px;
 }

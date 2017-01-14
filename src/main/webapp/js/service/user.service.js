@@ -24,7 +24,7 @@ angular
 	    function create(user) {
 	    	var deferred = $q.defer();
 	    	$http.post('/user/create', user).then(function successCallback(response) {
-	    		deferred.resolve(response.data);
+	    		deferred.resolve(response);
 	    	}, function(errResponse){
                 deferred.reject(errResponse);
             });
