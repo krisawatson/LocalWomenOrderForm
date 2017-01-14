@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,5 +63,11 @@ public class UserController {
 		}
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+	
+	@RequestMapping(value = "/user/{id}/update", method = RequestMethod.POST)
+    public void updateUser(@PathVariable(value="id") Long id, User user) {
+		userRepo.setUserInfoById(user.getId(), user.getFirstname(), user.getLastname(), 
+				user.getEmail(), user.getRoleId(), user.getEnabled());
     }
 }
