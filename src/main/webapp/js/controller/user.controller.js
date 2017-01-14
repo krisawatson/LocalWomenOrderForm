@@ -2,15 +2,17 @@
     'use strict';
 
     angular.module('localWomenApp').controller('UserController', [
-    	'$scope', 
+    	'$filter',
     	'$q',
+    	'$scope', 
     	'UserService',
     	User]);
     
-	function User($scope, $q, UserService) {
+	function User($filter, $q, $scope, UserService) {
 	    var self = this;
 	    self.users = [];
 	    var newUser = {username:'',password:''};
+	    var createdUser = {};
 	    angular.copy(newUser, self.user);
 	    self.create = create;
 	    
@@ -27,11 +29,12 @@
 	    		return;
 	    	}
 	    	self.user.enabled = true;
-	    	UserService.create(self.user).then(
+	    	angular.copy(self.user, createdUser);
+    		UserService.create(self.user).then(
 	        	function(response) {
 	        		self.successMsg = "Successfully created account '" + self.user.username + "'";
-	        		self.users.push(self.user);
-	        		self.gridOptions.data = self.users;
+	        		setRoleName(createdUser);
+	        		self.users.push(createdUser);
 	        		angular.copy(newUser, self.user);
 	            },
 	            function(errResponse){
@@ -72,7 +75,7 @@
 			    		   displayName: 'Email',
 			    		   width: 170
 			    		 },
-		    			 { field: 'role', 
+		    			 { field: 'roleName', 
 			    		   displayName: 'Role',
 			    		   width: 70
 			    		 },
@@ -83,18 +86,25 @@
 			    		 }]
 	    };
 		
-		$q.all([UserService.roles()])
+		$q.all([UserService.list(),
+		        UserService.roles()])
 			.then(function(data) {
 				console.log(data[0]);
-				self.roles = data[0];
-				self.users = [];
-				angular.forEach(self.roles, function(role){
-					angular.forEach(role.users, function(user){
-						user.role = role.name;
-						self.users.push(user);
-					});
+				self.users = data[0];
+				self.roles = data[1];
+				angular.forEach(self.users, function(user){
+					setRoleName(user);
 				});
 				self.gridOptions.data = self.users;
 			});
+		
+		function setRoleName(user) {
+			var role = $filter('filter')(self.roles, function (role) {
+				if(role.id === user.roleId){
+					return role.name;
+				}
+			});
+			user.roleName = role[0].name;
+		}
 	}
 })(window);

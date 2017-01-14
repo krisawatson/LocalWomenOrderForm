@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Role {
     private Long id;
     private String name;
-    private Set<User> users;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,15 +35,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @OneToMany(mappedBy = "role")
-    @JsonManagedReference
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }

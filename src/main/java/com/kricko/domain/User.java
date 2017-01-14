@@ -24,7 +24,7 @@ public class User {
     private String lastname;
     private String email;
     private boolean enabled;
-    private Role role;
+    private Long roleId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +49,6 @@ public class User {
     }
 
     @NotNull
-    @JsonIgnore
     public String getPassword ()
     {
         return password;
@@ -100,14 +99,12 @@ public class User {
         this.enabled = enabled;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = false)
-    @JsonBackReference
-    public Role getRole() {
-        return role;
+    @NotNull
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 }

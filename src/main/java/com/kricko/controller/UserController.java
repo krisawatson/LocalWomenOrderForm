@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +27,7 @@ public class UserController {
 	private static final Logger LOGGER = LogManager.getLogger();
 	
 	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	UserRepository userRepo;
@@ -46,7 +46,7 @@ public class UserController {
     }
 	
 	@RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody com.kricko.domain.User user) {
+    public ResponseEntity<Void> createUser(@RequestBody User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		try{
 			userRepo.save(user);

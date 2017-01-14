@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<td><label for="role">Role:</label></td>
-				<td><select name="role" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.role.$invalid ? 'validation-error' : ''" ng-options="role as role.name for role in mainCtrl.roles" name="role" ng-model="userCtrl.user.role" required></select></td>
+				<td><select name="role" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.role.$invalid ? 'validation-error' : ''" ng-options="role.id as role.name for role in mainCtrl.roles" name="role" ng-model="userCtrl.user.roleId" required></select></td>
 			</tr>
 		</table>
 		<div class="buttons">
