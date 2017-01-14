@@ -8,7 +8,8 @@ angular
 	    var services = {
 	        publications: publications,
 	        adtypes: adtypes,
-	        adsizes: adsizes
+	        adsizes: adsizes,
+	        roles: roles
 	    };
 	 
 	    return services;
@@ -36,6 +37,16 @@ angular
 	    function adsizes() {
 	        var deferred = $q.defer();
 		    $http.get("/details/adsizes").then(function successCallback(response) {
+		    	deferred.resolve(response.data);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+		    return deferred.promise;
+	    }
+	    
+	    function roles() {
+	        var deferred = $q.defer();
+		    $http.get("/details/roles").then(function successCallback(response) {
 		    	deferred.resolve(response.data);
 	    	}, function(errResponse){
                 deferred.reject(errResponse);

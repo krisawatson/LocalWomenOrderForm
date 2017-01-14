@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "role")
 public class Role {
@@ -37,6 +39,7 @@ public class Role {
     }
 
     @OneToMany(mappedBy = "role")
+    @JsonManagedReference
     public Set<User> getUsers() {
         return users;
     }

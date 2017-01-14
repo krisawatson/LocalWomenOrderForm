@@ -135,3 +135,14 @@ input.validation-error, select.validation-error {
 .ui-grid-row {
 	font-size: 0.75em;
 }
+
+div.permission-denied {
+	text-align: center;
+    margin: 30px;
+}
+
+.user-control {
+	font-size: 0.8em;
+	text-align: right;
+    color: darkblue;
+}

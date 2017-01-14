@@ -8,12 +8,17 @@
 </head>
 <body ng-app="localWomenApp">
 	<div class="outter-content">
-		<div class="content">
+		<div class="content" ng-controller="MainController as mainCtrl">
 			<h2>Local Women Order Form</h2>
-			<div class="col-md-3" ng-controller="NavController">
+			<div class="user-control">
+				Welcome {{mainCtrl.user.username}}
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="col-md-3" ng-controller="NavController as navCtrl">
 				<ul class="nav">
 					<li class="navlinks"><a href="/#!/orderform">Order</a></li>
 					<li class="navlinks"><a href="/#!/search">Search</a></li>
+					<li class="navlinks" ng-if="mainCtrl.role === 'ADMIN'"><a href="/#!/user/create">Create User</a></li>
 				</ul>
 			</div>
 			<div class="col-md-9">
@@ -25,7 +30,8 @@
 	<script src="js/angular/angular-route.js" type="text/javascript"></script>
 	<script src="js/angular/ui-grid.js" type="text/javascript"></script>
 	<script src="js/app.js" type="text/javascript"></script>
-	<script src="js/controller/auth.controller.js" type="text/javascript"></script>
+	<script src="js/controller/user.controller.js" type="text/javascript"></script>
+	<script src="js/controller/main.controller.js" type="text/javascript"></script>
 	<script src="js/controller/nav.controller.js" type="text/javascript"></script>
 	<script src="js/controller/order.controller.js" type="text/javascript"></script>
 	<script src="js/controller/search.controller.js" type="text/javascript"></script>
