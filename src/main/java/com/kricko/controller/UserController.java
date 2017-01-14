@@ -1,5 +1,7 @@
 package com.kricko.controller;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.exception.ConstraintViolationException;
@@ -7,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kricko.domain.Role;
+import com.kricko.domain.User;
+import com.kricko.repository.RoleRepository;
 import com.kricko.repository.UserRepository;
 
 
@@ -30,10 +32,17 @@ public class UserController {
 	@Autowired
 	UserRepository userRepo;
 	
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-    public User getUser() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return (User)auth.getPrincipal();
+	@Autowired
+	RoleRepository roleRepo;
+	
+	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
+    public List<User> getUsers() {
+		return userRepo.findAll();
+    }
+	
+	@RequestMapping(value = "/user/roles", method = RequestMethod.GET)
+    public List<Role> getRoles() {
+		return roleRepo.findAll();
     }
 	
 	@RequestMapping(value = "/user/create", method = RequestMethod.POST)

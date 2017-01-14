@@ -40,11 +40,11 @@ div.publication label.header {
 	width: 90%;
 }
 
-.error {
+.error, .acc-inactive {
 	color: red;
 }
 
-.success {
+.success, .acc-active {
 	color: green;
 }
 
@@ -149,4 +149,11 @@ div.permission-denied {
 	font-size: 0.8em;
 	text-align: right;
     color: darkblue;
+}
+
+.section-header {
+	font-size: 1.3em;
+	font-weight: bold;
+	background-color: #fb03c3;
+	padding: 10px 10px 10px 30px;
 }

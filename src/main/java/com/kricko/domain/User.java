@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
@@ -48,6 +49,7 @@ public class User {
     }
 
     @NotNull
+    @JsonIgnore
     public String getPassword ()
     {
         return password;
@@ -98,7 +100,7 @@ public class User {
         this.enabled = enabled;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     @JsonBackReference
     public Role getRole() {

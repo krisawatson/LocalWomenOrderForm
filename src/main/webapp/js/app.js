@@ -23,8 +23,8 @@ angular.module('localWomenApp', [
 				templateUrl: 'tmpl/login.html',
 				controller: 'AuthController as authCtrl'
 			})
-			.when('/user/create', {
-				templateUrl: 'tmpl/user/create.html',
+			.when('/user', {
+				templateUrl: 'tmpl/user/main.html',
 				controller: 'UserController as userCtrl'
 			})
 			.otherwise({

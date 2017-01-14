@@ -9,6 +9,5 @@
     function Nav($http,
 	    		$scope) {
     	var self = this;
-	    
 	}
 })(window);

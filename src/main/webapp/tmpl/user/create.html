@@ -1,40 +1,43 @@
-<form name="createUserForm" ng-if="mainCtrl.role == 'ADMIN'" ng-submit="userCtrl.create(createUserForm.$valid)" novalidate>
-    <div class="success" ng-if="userCtrl.successMsg">{{userCtrl.successMsg}}</div>
-    <div class="error" ng-if="userCtrl.errorMsg">{{userCtrl.errorMsg}}</div>
-	<table>
-		<tr>
-			<td><label for="username">Username:</label></td>
-			<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.username.$invalid ? 'validation-error' : ''" name="username" ng-model="userCtrl.user.username" required/></td>
-		</tr>
-		<tr>
-			<td><label for="password">Password:</label></td>
-			<td><input type="password" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.password.$invalid ? 'validation-error' : ''" name="password" ng-model="userCtrl.user.password" required/></td>
-		</tr>
-		<tr>
-			<td><label for="confirmPass">Confirm Password:</label></td>
-			<td><input type="password" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.confirmPass.$invalid ? 'validation-error' : ''" name="confirmPass" ng-model="userCtrl.confirmPass" required/></td>
-		</tr>
-		<tr>
-			<td><label for="firstname">First Name:</label></td>
-			<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.firstname.$invalid ? 'validation-error' : ''" name="firstname" ng-model="userCtrl.user.firstname" required/></td>
-		</tr>
-		<tr>
-			<td><label for="lastname">Last Name:</label></td>
-			<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.lastname.$invalid ? 'validation-error' : ''" name="lastname" ng-model="userCtrl.user.lastname" required/></td>
-		</tr>
-		<tr>
-			<td><label for="email">Email:</label></td>
-			<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.email.$invalid ? 'validation-error' : ''" name="email" ng-model="userCtrl.user.email" required/></td>
-		</tr>
-		<tr>
-			<td><label for="role">Role:</label></td>
-			<td><select name="role" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.role.$invalid ? 'validation-error' : ''" ng-options="role as role.name for role in mainCtrl.roles" name="role" ng-model="userCtrl.user.role" required></select></td>
-		</tr>
-	</table>
-	<div class="buttons">
-        <button type="submit">Create</button>
-    </div>
-</form>
+<div ng-if="mainCtrl.role == 'ADMIN'" >
+	<div class="section-header">Create User</div>
+	<form name="createUserForm" class="createUserForm" ng-submit="userCtrl.create(createUserForm.$valid)" novalidate>
+	    <div class="success" ng-if="userCtrl.successMsg">{{userCtrl.successMsg}}</div>
+	    <div class="error" ng-if="userCtrl.errorMsg">{{userCtrl.errorMsg}}</div>
+		<table>
+			<tr>
+				<td><label for="username">Username:</label></td>
+				<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.username.$invalid ? 'validation-error' : ''" name="username" ng-model="userCtrl.user.username" required/></td>
+			</tr>
+			<tr>
+				<td><label for="password">Password:</label></td>
+				<td><input type="password" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.password.$invalid ? 'validation-error' : ''" name="password" ng-model="userCtrl.user.password" required/></td>
+			</tr>
+			<tr>
+				<td><label for="confirmPass">Confirm Password:</label></td>
+				<td><input type="password" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.confirmPass.$invalid ? 'validation-error' : ''" name="confirmPass" ng-model="userCtrl.confirmPass" required/></td>
+			</tr>
+			<tr>
+				<td><label for="firstname">First Name:</label></td>
+				<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.firstname.$invalid ? 'validation-error' : ''" name="firstname" ng-model="userCtrl.user.firstname" required/></td>
+			</tr>
+			<tr>
+				<td><label for="lastname">Last Name:</label></td>
+				<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.lastname.$invalid ? 'validation-error' : ''" name="lastname" ng-model="userCtrl.user.lastname" required/></td>
+			</tr>
+			<tr>
+				<td><label for="email">Email:</label></td>
+				<td><input type="text" class="large" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.email.$invalid ? 'validation-error' : ''" name="email" ng-model="userCtrl.user.email" required/></td>
+			</tr>
+			<tr>
+				<td><label for="role">Role:</label></td>
+				<td><select name="role" ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.role.$invalid ? 'validation-error' : ''" ng-options="role as role.name for role in mainCtrl.roles" name="role" ng-model="userCtrl.user.role" required></select></td>
+			</tr>
+		</table>
+		<div class="buttons">
+	        <button type="submit">Create</button>
+	    </div>
+	</form>
+</div>
 <div ng-if="mainCtrl.role != 'ADMIN'" class="permission-denied">
 	<img src="img/denied.png" alt="PERMISSION DENIED"/>
 </div>

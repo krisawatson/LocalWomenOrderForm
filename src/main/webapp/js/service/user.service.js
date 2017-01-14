@@ -6,6 +6,8 @@ angular
     function($http, $q){
 		var services = {
 	        get: get,
+	        list: list,
+	        roles: roles,
 	        create: create
 	    };
 	 
@@ -13,7 +15,27 @@ angular
 	    
 	    function get() {
 	    	var deferred = $q.defer();
-	    	$http.get('/user').then(function successCallback(response) {
+	    	$http.get('/auth').then(function successCallback(response) {
+	    		deferred.resolve(response.data);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+	        return deferred.promise;
+	    }
+	    
+	    function list() {
+	    	var deferred = $q.defer();
+	    	$http.get('/user/list').then(function successCallback(response) {
+	    		deferred.resolve(response.data);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+	        return deferred.promise;
+	    }
+	    
+	    function roles() {
+	    	var deferred = $q.defer();
+	    	$http.get('/user/roles').then(function successCallback(response) {
 	    		deferred.resolve(response.data);
 	    	}, function(errResponse){
                 deferred.reject(errResponse);
