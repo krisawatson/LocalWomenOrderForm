@@ -10,6 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public User findByUsername(String username);
     
     @Modifying
-    @Query("update User u set u.firstname = ?2, u.lastname = ?3, u.email = ?4, u.role_id = ?5, u.enabled = ?6 where u.id = ?1")
+    @Query("UPDATE User u SET u.firstname = ?2, u.lastname = ?3, u.email = ?4, u.roleId = ?5, u.enabled = ?6 WHERE u.id = ?1")
     void setUserInfoById(Long id, String firstname, String lastname, String email, Long roleId, boolean enabled);
 }

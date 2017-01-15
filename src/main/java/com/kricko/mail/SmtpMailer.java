@@ -1,12 +1,22 @@
 package com.kricko.mail;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+
+import com.kricko.constants.MailTemplating;
 
 
 @Component
@@ -14,14 +24,24 @@ public class SmtpMailer
 {
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private VelocityEngine velocityEngine;
     
-    private void send(String to, String subject, String body, String[] bcc) throws MessagingException {
+    private void send(String to, String subject, String template, Map<String, Object> model, String[] bcc) throws MessagingException {
+    	addCommonModelProperties(model);
+    	
+    	// Get the template and replace the variables with the model details
+        String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, 
+    			template, StandardCharsets.UTF_8.toString(), model);
+        
         MimeMessage message = javaMailSender.createMimeMessage();
         message.setContent(body, "text/html");
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         
         helper.setTo(to);
-        helper.setBcc(bcc);
+        if(null != bcc) {
+        	helper.setBcc(bcc);
+    	}
         helper.setSubject(subject);
         helper.setText(body, true);
         
@@ -29,9 +49,18 @@ public class SmtpMailer
     }
     
     public void sendOrderConfirmation(Long orderId, String to, String... bcc) throws MessagingException {
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("orderNumber", orderId);
+    	model.put("disclaimer", MailTemplating.DISCLAIMER);
+    	
     	String subject = "Local Women Advert Order Confirmation";
-    	String body = "<h2>Order Completed</h2>";
-        body += "<h3>Order Number: " + orderId + "</h3>";
-        send(to,subject, body, bcc);
+        send(to,subject, MailTemplating.TMPL_ORDER_CONFIRMATION, model, bcc);
+    }
+    
+    private void addCommonModelProperties(Map<String, Object> model) {
+    	// Adding copyright and year to the model for the copyright
+    	Calendar calendar = new GregorianCalendar();
+    	String copyright = MailTemplating.COPYRIGHT.replaceAll("\\$\\{year\\}", Integer.toString(calendar.get(Calendar.YEAR)));
+    	model.put("copyright", copyright);
     }
 }
