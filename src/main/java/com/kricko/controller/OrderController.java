@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kricko.constants.EmailType;
 import com.kricko.constants.Roles;
 import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
@@ -27,6 +28,7 @@ import com.kricko.repository.BusinessRepository;
 import com.kricko.repository.OrderPartRepository;
 import com.kricko.repository.OrderPublicationRepository;
 import com.kricko.repository.OrderRepository;
+import com.kricko.repository.PublicationRepository;
 import com.kricko.repository.UserRepository;
 
 
@@ -44,6 +46,8 @@ public class OrderController {
     OrderPartRepository orderPartRepo;
     @Autowired
     OrderPublicationRepository orderPublicationRepo;
+    @Autowired
+    PublicationRepository pubRepo;
     @Autowired
     UserRepository userRepo;
     @Autowired
@@ -88,11 +92,12 @@ public class OrderController {
 //        }
         Long orderId = orders.getId();
         String businessEmail = business.getEmail();
-        String[] bccEmails = {user.getEmail()};
         try {
-			mailer.sendOrderConfirmation(orderId, businessEmail, bccEmails);
+			mailer.sendOrderConfirmation(orderId, businessEmail, EmailType.BUSINESS, orders);
+			mailer.sendOrderConfirmation(orderId, user.getEmail(), EmailType.USER, orders);
+			// TODO Implement sending mail to the publications 
 		} catch (MessagingException e) {
-			LOGGER.error("Failed to send email to " + businessEmail, e);
+			LOGGER.error("Failed to send email", e);
 		}
         
     	return orders.getId();
