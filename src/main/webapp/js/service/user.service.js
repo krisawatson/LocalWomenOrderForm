@@ -8,7 +8,8 @@ angular
 	        get: get,
 	        list: list,
 	        roles: roles,
-	        create: create
+	        create: create,
+	        update: update
 	    };
 	 
 	    return services;
@@ -46,6 +47,17 @@ angular
 	    function create(user) {
 	    	var deferred = $q.defer();
 	    	$http.post('/user/create', user).then(function successCallback(response) {
+	    		deferred.resolve(response);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+	        return deferred.promise;
+	    }
+	    
+	    function update(user) {
+	    	var deferred = $q.defer();
+	    	console.log(user);
+	    	$http.put('/user/' + user.id + '/update', user).then(function successCallback(response) {
 	    		deferred.resolve(response);
 	    	}, function(errResponse){
                 deferred.reject(errResponse);

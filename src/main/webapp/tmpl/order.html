@@ -1,13 +1,22 @@
 <div>
-	<div ng-if="orderCtrl.steps.step == 1" class="mainDetails" main-details></div>
-	<div ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep" class="orders" ng-repeat="order in orderCtrl.orderParts track by order.id">
-		<div order-details class="orderDetails"></div>
-	</div>
-	<order-success ng-if="orderCtrl.steps.step == orderCtrl.steps.maxSteps + 1" class="successMsg" ordernumber="orderCtrl.orderNumber" ok-fn="orderCtrl.reset()"></order-success>
-	<div class="error" ng-if="orderCtrl.orderError">{{orderError}}</div>
-	<div class="buttons" ng-if="orderCtrl.steps.step == 2">
-		<button type="button" ng-click="orderCtrl.goToPreviousStep()">Back</button>
-		<button type="button" ng-click="orderCtrl.addMoreDetails()">Add More</button>
-		<button type="submit">Submit</button>
-	</div>
+    <div ng-if="orderCtrl.steps.step == 1" class="mainDetails" main-details></div>
+    <form name="orderDetailsForm" ng-submit="orderCtrl.submitOrder(orderDetailsForm.$valid)" novalidate>
+        <div ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep" class="orders" ng-repeat="order in orderCtrl.orderParts track by order.id">
+            <div order-details class="orderDetails"></div>
+        </div>
+        <div class="error" ng-if="orderCtrl.orderError">{{orderError}}</div>
+        <div class="buttons" ng-if="orderCtrl.steps.step == 2">
+            <button class="formButton" type="button" ng-click="orderCtrl.goToPreviousStep()">Back</button>
+            <button class="formButton" type="button" ng-click="orderCtrl.addMoreDetails()">Add More</button>
+            <button class="formButton" type="submit">Submit</button>
+        </div>
+    </form>
+    <order-success ng-if="orderCtrl.steps.step == orderCtrl.steps.maxSteps + 1" class="successMsg" ordernumber="orderCtrl.orderNumber" ok-fn="orderCtrl.reset()"></order-success>
 </div>
+
+<script type="text/ng-template" id="processingOrder">
+    <div class="ngdialog-message">
+        <h3>Order Submission</h3>
+        <p><i class="fa fa-cog fa-spin" style="font-size:48px"></i>Processing Order</p>
+    </div>
+</script>

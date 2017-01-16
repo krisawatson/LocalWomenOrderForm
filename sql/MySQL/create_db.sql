@@ -1,5 +1,6 @@
 CREATE DATABASE localwomen;
 
+USE localwomen;
 
 CREATE TABLE `localwomen`.`advert_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -17,6 +18,7 @@ CREATE TABLE `localwomen`.`advert_size` (
 CREATE TABLE `localwomen`.`publication` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
@@ -40,6 +42,7 @@ CREATE TABLE `localwomen`.`business` (
 CREATE TABLE `localwomen`.`orders` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `business_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
   `created` DATETIME NOT NULL DEFAULT now(),
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),

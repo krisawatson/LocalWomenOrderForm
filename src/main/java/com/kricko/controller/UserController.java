@@ -2,14 +2,9 @@ package com.kricko.controller;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,56 +13,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kricko.domain.Role;
 import com.kricko.domain.User;
-import com.kricko.repository.RoleRepository;
-import com.kricko.repository.UserRepository;
+import com.kricko.service.UserService;
 
 
 @RestController
+@RequestMapping(value = "/user")
 public class UserController {
 
-	private static final Logger LOGGER = LogManager.getLogger();
-	
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	UserService userService;
 	
-	@Autowired
-	UserRepository userRepo;
-	
-	@Autowired
-	RoleRepository roleRepo;
-	
-	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<User> getUsers() {
-		return userRepo.findAll();
+		return userService.getUsers();
     }
 	
-	@RequestMapping(value = "/user/roles", method = RequestMethod.GET)
+	@RequestMapping(value = "/roles", method = RequestMethod.GET)
     public List<Role> getRoles() {
-		return roleRepo.findAll();
+	    return userService.getRoles();
     }
 	
-	@RequestMapping(value = "/user/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(@RequestBody User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		try{
-			userRepo.save(user);
-		} catch (DataIntegrityViolationException e) {
-			if(e.contains(ConstraintViolationException.class)) {
-				LOGGER.warn("Constaint violated while trying to create an account, "
-						+ "attempting to create account with same username", e);
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-		} catch (Exception e) {
-			LOGGER.error("Exception while trying to create an account", e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		return new ResponseEntity<>(HttpStatus.CREATED);
+	    return userService.createUser(user);
     }
 	
-	@RequestMapping(value = "/user/{id}/update", method = RequestMethod.POST)
-    public void updateUser(@PathVariable(value="id") Long id, User user) {
-		userRepo.setUserInfoById(user.getId(), user.getFirstname(), user.getLastname(), 
-				user.getEmail(), user.getRoleId(), user.getEnabled());
+	@RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
+	@Transactional
+    public void updateUser(@PathVariable(value="id") Long userId, @RequestBody User user) {
+	    userService.updateUser(userId, user);
     }
 }

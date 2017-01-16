@@ -70,26 +70,26 @@ public class OrderController {
         List<OrderPart> orderParts = webOrder.getOrderParts();
         
         // For Java 1.8 and after
-        orderParts.forEach(orderPart -> {
-            orderPart.setOrders(orders);
-            orderPartRepo.save(orderPart);
-            List<OrderPublication> publications = orderPart.getPublications();
-            publications.forEach(publication -> {
-                publication.setOrderPart(orderPart);
-            });
-            orderPublicationRepo.save(publications);
-        });
-        
-        // For Java 1.7 and before
-//        for(OrderPart orderPart : orderParts) {
-//            orderPart.setOrders (orders);
+//        orderParts.forEach(orderPart -> {
+//            orderPart.setOrders(orders);
 //            orderPartRepo.save(orderPart);
 //            List<OrderPublication> publications = orderPart.getPublications();
-//            for(OrderPublication publication : publications) {
+//            publications.forEach(publication -> {
 //                publication.setOrderPart(orderPart);
-//            }
+//            });
 //            orderPublicationRepo.save(publications);
-//        }
+//        });
+        
+        // For Java 1.7 and before
+        for(OrderPart orderPart : orderParts) {
+            orderPart.setOrders (orders);
+            orderPartRepo.save(orderPart);
+            List<OrderPublication> publications = orderPart.getPublications();
+            for(OrderPublication publication : publications) {
+                publication.setOrderPart(orderPart);
+            }
+            orderPublicationRepo.save(publications);
+        }
         Long orderId = orders.getId();
         String businessEmail = business.getEmail();
         try {

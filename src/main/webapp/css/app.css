@@ -75,6 +75,9 @@ div.buttons {
 }
 
 button {
+    background: #EA4C89;
+}
+button.formButton {
 	/* Normal State */
     padding: 4px 15px 7px 15px;
     width: auto;
@@ -104,7 +107,6 @@ button {
     -o-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
     -ms-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
     cursor: pointer;
-	background: #EA4C89;
 }
 
 div.login-username, div.login-password {

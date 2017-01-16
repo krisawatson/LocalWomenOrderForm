@@ -1,3 +1,61 @@
 .createUserForm {
 	padding-left: 200px;
 }
+
+.card {
+    background-color:#fff;
+    border: 1px solid #d4d4d4;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.cardHeader {
+	background-color:#fb03c3;
+    font-size:14pt;
+    color:white;
+    padding:5px;
+}
+
+.cardHeader a {
+    color: black;
+}
+
+.cardClose, .cardEdit {
+    background-color: transparent;
+    font-weight:bold;
+    margin-right:5px;
+    float: right;
+}
+
+.cardContainer {
+    width:85%;
+}
+
+.cardBody {
+    padding-left: 5px;
+}
+
+.cardBodyLeft {
+    margin-top: -5px;
+}
+
+.cardBodyRight {
+    margin-left: 20px;
+    margin-top: 2px;
+}
+
+.cardBodyContent {
+    width: 190px;
+}
+
+.cardImage {
+    height:50px;width:50px;margin-top:10px;
+}
+
+.cardContainer .col-md-3 {
+    padding-left: 0px;
+}
+
+button.edit {
+	padding-top: 5px;
+}

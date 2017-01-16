@@ -1,50 +1,58 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-	<title>Local Women</title>
-	<link rel="stylesheet" type="text/css" href="css/app.css">
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="css/nav.css">
-	<link rel="stylesheet" type="text/css" href="css/ui-grid.css">
-	<link rel="stylesheet" type="text/css" href="css/user.css">
+    <title>Local Women</title>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/ngDialog-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="css/ngDialog.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/animations.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
+    <link rel="stylesheet" type="text/css" href="css/ui-grid.css">
+    <link rel="stylesheet" type="text/css" href="css/user.css">
+    <link rel="stylesheet" type="text/css" href="css/dialog.css">
 </head>
 <body ng-app="localWomenApp">
-	<div class="outter-content">
-		<div class="content" ng-controller="MainController as mainCtrl">
-			<h2>Local Women Order Form</h2>
-			<div class="user-control">
-				Welcome {{mainCtrl.user.username}}
-				<a href="/logout">Logout</a>
-			</div>
-			<div class="col-md-3" ng-controller="NavController as navCtrl">
-				<ul class="nav">
-					<li class="navlinks"><a href="/#!/orderform">Order</a></li>
-					<li class="navlinks"><a href="/#!/search">Search</a></li>
-					<li class="navlinks" ng-if="mainCtrl.role === 'ADMIN'"><a href="/#!/user">Users</a></li>
-				</ul>
-			</div>
-			<div class="col-md-9">
-			  	<div ng-view></div>
-			</div>
-		</div>
-	</div>
-	<script src="js/angular/angular.js" type="text/javascript"></script>
-	<script src="js/angular/angular-route.js" type="text/javascript"></script>
-	<script src="js/angular/ui-grid.js" type="text/javascript"></script>
-	<script src="js/app.js" type="text/javascript"></script>
-	<script src="js/controller/main.controller.js" type="text/javascript"></script>
-	<script src="js/controller/nav.controller.js" type="text/javascript"></script>
-	<script src="js/controller/order.controller.js" type="text/javascript"></script>
-	<script src="js/controller/search.controller.js" type="text/javascript"></script>
-	<script src="js/controller/user.controller.js" type="text/javascript"></script>
-	<script src="js/directive/main-details.directive.js" type="text/javascript"></script>
-	<script src="js/directive/order-details.directive.js" type="text/javascript"></script>
-	<script src="js/directive/order-success.directive.js" type="text/javascript"></script>
-	<script src="js/directive/user-create.directive.js" type="text/javascript"></script>
-	<script src="js/directive/user-list.directive.js" type="text/javascript"></script>
-	<script src="js/service/business.service.js" type="text/javascript"></script>
-	<script src="js/service/details.service.js" type="text/javascript"></script>
-	<script src="js/service/order.service.js" type="text/javascript"></script>
-	<script src="js/service/user.service.js" type="text/javascript"></script>
+    <div class="outter-content">
+        <div class="content" ng-controller="MainController as mainCtrl">
+            <h2>Local Women Order Form</h2>
+            <div class="user-control">
+                Welcome {{mainCtrl.user.username}}
+                <a href="/logout">Logout</a>
+            </div>
+            <div class="col-md-3" ng-controller="NavController as navCtrl">
+                <ul class="nav">
+                    <li class="navlinks"><a href="/#!/orderform">Order</a></li>
+                    <li class="navlinks"><a href="/#!/search">Search</a></li>
+                    <li class="navlinks" ng-if="mainCtrl.role === 'ADMIN'"><a href="/#!/user">Users</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                  <div ng-view></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/angular/angular.js" type="text/javascript"></script>
+    <script src="js/angular/angular-route.js" type="text/javascript"></script>
+    <script src="js/angular/ui-grid.js" type="text/javascript"></script>
+    <script src="js/angular/ngDialog.js" type="text/javascript"></script>
+    <script src="js/angular/ui-bootstrap.js" type="text/javascript"></script>
+    <script src="js/angular/angular-animate.min.js" type="text/javascript"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    <script src="js/controller/main.controller.js" type="text/javascript"></script>
+    <script src="js/controller/nav.controller.js" type="text/javascript"></script>
+    <script src="js/controller/order.controller.js" type="text/javascript"></script>
+    <script src="js/controller/search.controller.js" type="text/javascript"></script>
+    <script src="js/controller/user.controller.js" type="text/javascript"></script>
+    <script src="js/directive/main-details.directive.js" type="text/javascript"></script>
+    <script src="js/directive/order-details.directive.js" type="text/javascript"></script>
+    <script src="js/directive/order-success.directive.js" type="text/javascript"></script>
+    <script src="js/directive/user-create.directive.js" type="text/javascript"></script>
+    <script src="js/directive/user-list.directive.js" type="text/javascript"></script>
+    <script src="js/service/business.service.js" type="text/javascript"></script>
+    <script src="js/service/details.service.js" type="text/javascript"></script>
+    <script src="js/service/order.service.js" type="text/javascript"></script>
+    <script src="js/service/user.service.js" type="text/javascript"></script>
 </body>
 </html>

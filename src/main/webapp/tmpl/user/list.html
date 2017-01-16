@@ -1,4 +1,36 @@
-<div">
-	<div class="section-header">User List</div>
-	<div ui-grid="userCtrl.gridOptions" ui-grid-pagination class="grid"></div>
+<!-- <div"> -->
+<!-- 	<div class="section-header">User List</div> -->
+<!-- 	<div ui-grid="userCtrl.gridOptions" ui-grid-pagination class="grid"></div> -->
+<!-- </div> -->
+
+<div class="container">
+    <div class="row cardContainer show-hide-animation">
+        <div class="col-sm-6 col-md-4 col-lg-3"
+             data-ng-repeat="user in userCtrl.users | orderBy:'lastname'">
+             <div class="error" ng-if="userCtrl.user[user.id].updateErrorMsg">{{userCtrl.updateErrorMsg}}</div>
+            <div class="card">
+                <button class="btn edit cardEdit" title="Edit User" data-ng-click="userCtrl.editeUser(user)"><i class="fa fa-pencil"></i></button>
+                <div class="cardHeader">{{user.firstname + ' ' + user.lastname}} ({{user.roleName}})</div>
+                <div class="cardBody">
+                    <div class="clearfix">
+                        <div class="pull-left cardBodyLeft">
+                            <a href="#/useredit/{{user.id}}" class="white"><img data-ng-src="img/person.png" class="cardImage" /></a>
+                        </div>
+                        <div class="pull-left cardBodyRight">
+                            <div class="cardBodyContent">Username: {{user.username}}</div>
+                            <div class="cardBodyContent">Email: {{user.email}}</div>
+                            <div class="cardBodyContent" data-ng-if="user.enabled" class="acc-active">
+                                Enabled
+                                <i class="fa fa-times acc-inactive" title="Deactivate" data-ng-click="userCtrl.disableUser(user)"></i>
+                            </div>
+                            <div class="cardBodyContent" data-ng-if="!user.enabled" class="acc-inactive">
+                                Disabled
+                                <i class="fa fa-check acc-active" title="Deactivate" data-ng-click="userCtrl.enableUser(user)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
