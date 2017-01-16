@@ -2,6 +2,10 @@
 	padding-left: 200px;
 }
 
+.cardListItem {
+	height: 140px;
+}
+
 .card {
     background-color:#fff;
     border: 1px solid #d4d4d4;
