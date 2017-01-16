@@ -17,9 +17,11 @@
         var self = this;
         self.orders = [];
         self.editBusiness = editBusiness;
+        self.editOrder = editOrder;
         
         self.gridOptions = {
             appScopeProvider: self,
+            autoResize: true,
             enableColumnMenus: false,
             enableFiltering: true,
             excludeProperties: '__metadata',
@@ -54,8 +56,10 @@
                          { field: 'year', 
                            displayName: 'Year'
                          },
-                         { field: 'userId', 
-                           displayName: 'User'
+                         { field: 'orderId', 
+                           displayName: 'Edit',
+                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
+                           enableFiltering: false
                          }]
         };
         
@@ -94,12 +98,15 @@
                         });
                     });
                 });
-                console.log(self.orderList);
                 self.gridOptions.data = self.orderList;
             });
         
         function editBusiness(businessId) {
         	$location.path('/business/' + businessId + '/edit');
+        }
+        
+        function editOrder(orderId) {
+        	$location.path('/order/' + orderId + '/edit');
         }
         
         var getNameById = function (arrayItems , id) {

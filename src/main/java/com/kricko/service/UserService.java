@@ -20,4 +20,6 @@ public interface UserService
     
     @Transactional
     public void updateUser(Long userId, User user);
+    
+    public User getUserByUsername(String username);
 }

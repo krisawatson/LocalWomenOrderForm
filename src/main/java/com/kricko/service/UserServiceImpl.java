@@ -67,4 +67,8 @@ public class UserServiceImpl implements UserService
                 user.getEmail(), user.getRoleId(), user.getEnabled());
     }
     
+    @Override
+    public User getUserByUsername(String username) {
+    	return userRepo.findByUsername(username);
+    }
 }

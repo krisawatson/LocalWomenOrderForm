@@ -1,0 +1,45 @@
+<form name="editOrderForm" ng-submit="editOrderCtrl.update(editOrderForm.$valid)" novalidate>
+    <div class="success" ng-if="editOrderCtrl.successMsg">{{editOrderCtrl.successMsg}}</div>
+    <div class="error" ng-if="editOrderCtrl.errorMsg">{{editOrderCtrl.errorMsg}}</div>
+    <div class="orders" ng-repeat="orderPart in editOrderCtrl.orderParts track by $index">
+    	<div>
+		    <fieldset>
+		        <legend>Order Part</legend>
+		        <div>
+		            <label>Month:</label>
+		            <select ng-options="month.id as month.name for month in editOrderCtrl.months" ng-model="orderPart.month">
+		            </select>
+		            <select ng-options="year for year in editOrderCtrl.years" ng-model="orderPart.year">
+		            </select>
+		        </div>
+		        <div class="publication" ng-repeat="publication in editOrderCtrl.publications track by $index">
+		            <div>
+		                <label class="header">{{publication.name}}:</label>
+		                <input type="radio" name="publication-{{order.id}}-{{$index}}-select" ng-value="true" ng-model="orderPart.publications[$index].selected" />Yes
+		                <input type="radio" name="publication-{{order.id}}-{{$index}}-select" ng-value="false" ng-model="orderPart.publications[$index].selected"/>No
+		            </div>
+		            <div ng-if="orderPart.publications[$index].selected == true">
+		                <label class="adType">Advert Type:</label>
+		                <select name="adtype-{{order.id}}-{{$index}}-select" ng-class="orderDetailsForm.$submitted && orderDetailsForm.adtype-{{order.id}}-{{$index}}-select.$invalid ? 'validation-error' : ''" ng-options="ad.id as ad.name for ad in editOrderCtrl.adverts" ng-model="orderPart.publications[$index].adType" required></select>
+		                <label>Advert Size:</label>
+		                <select name="adsize-{{order.id}}-{{$index}}-select" ng-class="orderDetailsForm.$submitted && orderDetailsForm.adsize-{{order.id}}-{{$index}}-select.$invalid ? 'validation-error' : ''" ng-options="adSize.id as adSize.name for adSize in editOrderCtrl.advertSizes" ng-model="orderPart.publications[$index].adSize" required>
+		                </select>
+		            </div>
+		            <div>
+		                <label>Notes:</label>
+		            </div>
+		            <div>
+		                <textarea ng-model="orderPart.publications[$index].note"></textarea>
+			        </div>
+			    </div>
+		        <div class="buttons" ng-if="!$first">
+		            <button class="formButton" type="button" ng-click="editOrderCtrl.removeOrder(orderPart.id)">Remove</button>
+		        </div>
+		    </fieldset>
+		</div>
+    </div>
+    <div class="buttons">
+    	<button class="formButton" type="button" ng-click="editOrderCtrl.addMoreDetails()">Add More</button>
+        <button class="formButton" type="submit">Update</button>
+    </div>
+</form>

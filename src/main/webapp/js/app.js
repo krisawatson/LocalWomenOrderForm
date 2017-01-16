@@ -16,6 +16,10 @@ angular.module('localWomenApp', [
                 templateUrl: 'tmpl/order.html',
                 controller: 'OrderController as orderCtrl'
             })
+            .when('/order/:id/edit', {
+            	templateUrl: 'tmpl/order/edit.html',
+                controller: 'EditOrderController as editOrderCtrl'
+            })
             .when('/search', {
                 templateUrl: 'tmpl/search.html',
                 controller: 'SearchController as searchCtrl'
