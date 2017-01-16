@@ -148,6 +148,7 @@ div.permission-denied {
 }
 
 .user-control {
+	padding-right: 20px;
 	font-size: 0.8em;
 	text-align: right;
     color: darkblue;
