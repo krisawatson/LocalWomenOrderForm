@@ -27,10 +27,12 @@
 	    );
     	
     	function update(valid){
+    		delete self.successMsg;
+    		delete self.errorMsg;
     		if(!valid) return;
     		BusinessService.update(self.business).then(
     			function(response) {
-                    console.log("Successfully updated business")
+    				self.successMsg ="Successfully updated business";
                 },
                 function(errResponse){
                     self.errorMsg = "Failed to update the business";

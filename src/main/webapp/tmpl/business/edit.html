@@ -1,4 +1,6 @@
 <form name="editBusinessForm" ng-submit="editBusinessCtrl.update(editBusinessForm.$valid)" novalidate>
+	<div class="success" data-ng-if="editBusinessCtrl.successMsg">{{editBusinessCtrl.successMsg}}</div>
+	<div class="error" data-ng-if="editBusinessCtrl.errorMsg">{{editBusinessCtrl.errorMsg}}</div>
 	<div>
 		<label>Business Name:</label>
 	</div>
