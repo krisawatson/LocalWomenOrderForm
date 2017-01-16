@@ -3,24 +3,26 @@
 
     angular.module('localWomenApp').controller('EditBusinessController', [
     	'$http',
+    	'$location',
     	'$routeParams',
     	'$scope',
     	'BusinessService',
     	Edit]);
     
     function Edit($http,
+    			$location,
 	    		$scope,
 	    		$routeParams,
 	    		BusinessService) {
     	var self = this;
-    	var businessId = $routeParams.$id;
+    	var businessId = $location.path().split("/")[2];
     	self.update = update;
     	
     	BusinessService.get(businessId).then(function(data){
     			self.business = data;
 	        },
 	        function(errResponse){
-	        	console.err("Failed to get business");
+	        	console.log("Failed to get business");
 	        }
 	    );
     	
