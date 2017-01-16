@@ -2,37 +2,37 @@ package com.kricko.controller;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kricko.domain.Business;
-import com.kricko.repository.BusinessRepository;
+import com.kricko.service.BusinessService;
 
 @RestController
 @RequestMapping("business")
 public class BusinessController {
 
-	private static final Logger LOGGER = LogManager.getLogger();
-	
-	@Autowired
-	public BusinessRepository businessRepo;
-
+    @Autowired
+    BusinessService businessService;
+    
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Business getBusinesses( @PathVariable(value="id") Long id) {
-        LOGGER.debug("Getting the details of businesses with id " + id);
-        Business business = businessRepo.findOne(id);
-        return business;
+    public Business getBusiness( @PathVariable(value="id") Long id) {
+        return businessService.getBusiness (id);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Business> getBusinesses() {
-        LOGGER.debug("Getting the list of businesses");
-        List<Business> businesses = businessRepo.findAll();
-        return businesses;
+        return businessService.getBusinesses();
+    }
+    
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
+    @Transactional
+    public void updateBusiness(@PathVariable(value="id") Long id, @RequestBody Business business) {
+        businessService.updateBusiness(id, business);
     }
 }

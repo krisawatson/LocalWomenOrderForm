@@ -2,12 +2,13 @@
     'use strict';
 
     angular.module('localWomenApp').controller('SearchController', [
-        '$filter','$http','$q','$scope',
+        '$filter','$http','$location', '$q','$scope',
         'BusinessService','DetailsService','OrderService',
         Search]);
     
     function Search($filter,
-                     $http,
+                    $http,
+                    $location,
                     $q,
                     $scope,
                     BusinessService,
@@ -15,6 +16,7 @@
                     OrderService) {
         var self = this;
         self.orders = [];
+        self.editBusiness = editBusiness;
         
         self.gridOptions = {
             appScopeProvider: self,
@@ -33,6 +35,7 @@
                          },
                          { field: 'businessName', 
                            displayName: 'Business Name',
+                           cellTemplate: '<div class="tbl-cell-business">{{row.entity.businessName}}<i class="fa fa-pencil right" title="Edit {{row.entity.businessName}}" data-ng-click="grid.appScope.editBusiness(row.entity.businessId)"></i></div>',
                            width: 150
                          },
                          { field: 'name', 
@@ -73,6 +76,7 @@
                     var orders = [];
                     var orderItems = {
                             orderId: order.id,
+                            businessId: order.businessId,
                             businessName: getNameById(self.businesses, order.businessId),
                             userId: order.userId
                     }
@@ -93,6 +97,10 @@
                 console.log(self.orderList);
                 self.gridOptions.data = self.orderList;
             });
+        
+        function editBusiness(businessId) {
+        	$location.path('/business/' + businessId + '/edit');
+        }
         
         var getNameById = function (arrayItems , id) {
             var item = $filter('filter')(arrayItems, function (item) {

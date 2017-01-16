@@ -48,6 +48,10 @@ div.publication label.header {
 	color: green;
 }
 
+.right {
+	float: right;
+}
+
 label.adType {
 	margin-left: 20px;
 }

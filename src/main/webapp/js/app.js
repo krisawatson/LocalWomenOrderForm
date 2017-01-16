@@ -28,6 +28,10 @@ angular.module('localWomenApp', [
                 templateUrl: 'tmpl/user/main.html',
                 controller: 'UserController as userCtrl'
             })
+            .when('/business/:id/edit', {
+                templateUrl: 'tmpl/business/edit.html',
+                controller: 'EditBusinessController as editBusinessCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

@@ -1,0 +1,44 @@
+<form name="editBusinessForm" ng-submit="editBusinessCtrl.update(editBusinessForm.$valid)" novalidate>
+	<div>
+		<label>Business Name:</label>
+	</div>
+	<div>
+		<input type="text" class="businessNameInput large" ng-class="editBusinessForm.$submitted && editBusinessForm.businessName.$invalid ? 'validation-error' : ''" placeholder="Business Name" name="businessName" ng-model="editBusinessCtrl.business.name" required/>
+	</div>
+	<div>
+		<label>Contact Name:</label>
+	</div>
+	<div>
+		<input type="text" class="medium" ng-class="editBusinessForm.$submitted && editBusinessForm.firstname.$invalid ? 'validation-error' : ''" placeholder="First" name="firstname" ng-model="editBusinessCtrl.business.firstname" required/>
+		<input type="text" class="medium" ng-class="editBusinessForm.$submitted && editBusinessForm.lastname.$invalid ? 'validation-error' : ''" placeholder="Last" name="lastname" ng-model="editBusinessCtrl.business.lastname" required/>
+	</div>
+	<div>
+		<label>Address:</label>
+	</div>
+	<div>
+		<input type="text" class="large" ng-class="editBusinessForm.$submitted && editBusinessForm.address1.$invalid ? 'validation-error' : ''" placeholder="Address Line 1" name="address1" ng-model="editBusinessCtrl.business.address1" required/>
+	</div>
+	<div>
+		<input type="text" class="large" placeholder="Address Line 2" ng-model="editBusinessCtrl.business.address2"/>
+	</div>
+	<div>
+		<input type="text" class="small" ng-class="editBusinessForm.$submitted && editBusinessForm.city.$invalid ? 'validation-error' : ''" placeholder="City" name="city" ng-model="editBusinessCtrl.business.city" required/>
+		<input type="text" class="small" placeholder="County" name="county" ng-model="editBusinessCtrl.business.county"/>
+		<input type="text" class="small" ng-class="editBusinessForm.$submitted && editBusinessForm.postcode.$invalid ? 'validation-error' : ''" placeholder="Postcode" name="postcode" ng-model="editBusinessCtrl.business.postcode" required/>
+	</div>
+	<div>
+		<table class="large">
+			<tr>
+				<td><label>Email:</label></td>
+				<td><label>Phone:</label></td>
+			</tr>
+			<tr>
+				<td><input type="text" class="large" ng-class="editBusinessForm.$submitted && editBusinessForm.email.$invalid ? 'validation-error' : ''" placeholder="name@email.com" name="email" ng-model="editBusinessCtrl.business.email" required/></td>
+				<td><input type="text" class="large" placeholder="02890 123456" name="tel" ng-model="editBusinessCtrl.business.tel"/></td>
+			</tr>
+		</table>
+	</div>
+	<div class="buttons">
+        <button class="formButton" type="submit">Update</button>
+    </div>
+</form>
