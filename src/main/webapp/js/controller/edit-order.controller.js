@@ -159,17 +159,18 @@
         function setSelectedPublications() {
             angular.forEach(self.orderParts,function(orderPart){
                 var pubs = [];
-                angular.forEach(orderPart.publications, function(orderPub, index){
-                    angular.forEach(self.publications, function(pub){
-                        if(orderPub.publicationId == pub.id){
-                            orderPub.selected = true;
-                            pubs.push(orderPub);
-                        } else {
-                            pubs.push(pub);
-                        }
+                angular.forEach(self.publications, function(pub){
+                	var filtered = orderPart.publications.filter(function(orderPartPub) {
+                        return orderPartPub.publicationId == pub.id;
                     });
-                    orderPart.publications = pubs;
+                	if(null != filtered && filtered.length > 0) {
+                		filtered[0].selected = true;
+                		pubs.push(filtered[0]);
+                	} else {
+                		pubs.push(pub);
+                	}
                 });
+                orderPart.publications = pubs;
             });
         }
 
