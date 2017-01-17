@@ -4,14 +4,16 @@
         '$location',
         '$scope',
         'ngDialog',
+        'BusinessService',
         'DetailsService',
         'OrderService',
         EditOrder]);
     
     function EditOrder($http,
-    			$location,
+                $location,
                 $scope,
                 ngDialog,
+                BusinessService,
                 DetailsService,
                 OrderService) {
         var self = this;
@@ -53,30 +55,36 @@
             }
             ++lastMonth;
             var newOrder = {"id": ++lastPartId, 
-            		"month": lastMonth, 
-            		"year": lastYear, 
-            		"publications": [],
-            		"isNew": true};
+                    "month": lastMonth, 
+                    "year": lastYear, 
+                    "publications": [],
+                    "isNew": true};
             self.orderParts.push(newOrder);
         }
         
         function update(valid) {
-        	delete self.successMsg;
-        	delete self.errorMsg;
-        	if(!valid) return;
-        	self.updateOrder = angular.copy(self.order)
-        	fixOrderDetails();
-        	OrderService.update(self.order).then(function(){
-                self.successMsg("Successfully updated order");
+            delete self.successMsg;
+            delete self.errorMsg;
+            if(!valid) return;
+            self.updateOrder = angular.copy(self.order)
+            fixOrderDetails();
+            console.log(self.updateOrder);
+            OrderService.update(self.updateOrder.id, self.updateOrder).then(function(){
+                self.successMsg = "Successfully updated order";
             },function(error){
-                self.errorMsg;
+                self.errorMsg = "Failed to update order";
             });
         }
         
         function removeOrder(id) {
-        	self.orderParts = self.orderParts.filter(function(orderPart) {
-                return orderPart.id !== id;
-            });
+        	OrderService.remove(orderId, id).then(function(){
+        		self.orderParts = self.orderParts.filter(function(orderPart) {
+                    return orderPart.id !== id;
+                });
+        	}, function(){
+        		self.errorMsg = "Failed to remove the order part";
+        	});
+            
         }
         
         function getResources() {
@@ -94,31 +102,44 @@
         }
         
         function getOrderDetails() {
-        	OrderService.get(orderId).then(
-    			function(data){
-    				self.order = data;
-    				self.orderParts = self.order.orderParts;
-    				self.idx = self.orderParts.length;
-    				setSelectedPublications();
-    			},
-    			function(){
-    				console.log("Failed to get order");
-    			}
-    		);
+            OrderService.get(orderId).then(
+                function(data){
+                    self.order = data;
+                    self.orderParts = self.order.orderParts;
+                    self.idx = self.orderParts.length;
+                    setSelectedPublications();
+                    getBusinessDetails(self.order.businessId);
+                },
+                function(){
+                    console.log("Failed to get order");
+                }
+            );
+        }
+
+        function getBusinessDetails(businessId) {
+            BusinessService.get(businessId).then(
+                function(data){
+                    self.business = data;
+                },
+                function(){
+                    console.log("Failed to get business");
+                }
+            );
         }
         
         function fixOrderDetails() {
-        	console.log(self.updateOrder.orderParts);
+            console.log(self.updateOrder.orderParts);
             angular.forEach(self.updateOrder.orderParts,function(orderPart){
-            	if(orderPart.isNew) {
-            		delete orderPart.id;
-            	}
+                if(orderPart.isNew) {
+                    delete orderPart.id;
+                }
+                orderPart.ordersId = self.order.id;
                 var pubs = []
                 angular.forEach(orderPart.publications, function(publication, index){
-                	if(publication && publication.selected) {
-                		publication.publicationId = ++index;
-	                    pubs.push(publication);
-                	}
+                    if(publication && publication.selected) {
+                        publication.publicationId = ++index;
+                        pubs.push(publication);
+                    }
                 });
                 orderPart.publications = pubs;
             });
@@ -137,18 +158,18 @@
         }
         
         function setSelectedPublications() {
-        	angular.forEach(self.orderParts,function(orderPart){
-        		var pubs = [];
-        		angular.forEach(orderPart.publications, function(orderPub, index){
-        			angular.forEach(self.publications, function(pub){
-        				if(orderPub.publicationId == pub.id){
-        					orderPub.selected = true;
-        					pubs.push(orderPub);
-        				} else {
-        					pubs.push(pub);
-        				}
-        			});
-        			orderPart.publications = pubs;
+            angular.forEach(self.orderParts,function(orderPart){
+                var pubs = [];
+                angular.forEach(orderPart.publications, function(orderPub, index){
+                    angular.forEach(self.publications, function(pub){
+                        if(orderPub.publicationId == pub.id){
+                            orderPub.selected = true;
+                            pubs.push(orderPub);
+                        } else {
+                            pubs.push(pub);
+                        }
+                    });
+                    orderPart.publications = pubs;
                 });
             });
         }

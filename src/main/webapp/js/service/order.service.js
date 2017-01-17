@@ -9,7 +9,8 @@ angular
 			get: get,
 			create: create,
 	        list: list,
-	        update: update
+	        update: update,
+	        remove: remove
 	    };
 	 
 	    return services;
@@ -44,9 +45,19 @@ angular
 	        return deferred.promise;
 	    }
 	    
-	    function update(order) {
+	    function update(orderId, order) {
 	    	var deferred = $q.defer();
-	    	$http.put('/order/'+order.id+'/update').then(function successCallback(response) {
+	    	$http.put('/order/'+ orderId, order).then(function successCallback(response) {
+	    		deferred.resolve(response.data);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+	        return deferred.promise;
+	    }
+	    
+	    function remove(orderId, orderPartId) {
+	    	var deferred = $q.defer();
+	    	$http.delete('/order/'+ orderId + '/orderpart/' + orderPartId).then(function successCallback(response) {
 	    		deferred.resolve(response.data);
 	    	}, function(errResponse){
                 deferred.reject(errResponse);

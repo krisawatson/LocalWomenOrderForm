@@ -1,8 +1,6 @@
 package com.kricko.service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,17 +65,6 @@ public class OrderServiceImpl implements OrderService
         
         List<OrderPart> orderParts = webOrder.getOrderParts();
         
-        // For Java 1.8 and after
-//        orderParts.forEach(orderPart -> {
-//            orderPart.setOrders(orders);
-//            orderPartRepo.save(orderPart);
-//            List<OrderPublication> publications = orderPart.getPublications();
-//            publications.forEach(publication -> {
-//                publication.setOrderPart(orderPart);
-//            });
-//            orderPublicationRepo.save(publications);
-//        });
-        
         // For Java 1.7 and before
         for(OrderPart orderPart : orderParts) {
             orderPart.setOrders (orders);
@@ -114,9 +101,19 @@ public class OrderServiceImpl implements OrderService
     }
     
     @Override
-    public void updateOrder(WebOrder webOrder) {
+    public void updateOrder(Orders webOrder, User user) {
+        Orders orders = orderRepo.getOne(webOrder.getId());
     	List<OrderPart> webOrderParts = webOrder.getOrderParts();
-    	updateOrderParts(webOrderParts);
+    	updateOrderParts(webOrderParts, orders);
+    }
+    
+    @Override
+    public void removeOrderPart(Long orderId, Long orderPartId) {
+        Orders order = orderRepo.findOne(orderId);
+        OrderPart orderPart = orderPartRepo.findOne(orderPartId);
+        if(order.getOrderParts().contains(orderPart)) {
+            orderPartRepo.delete(orderPartId);
+        }
     }
     
     private User getUser() {
@@ -125,9 +122,55 @@ public class OrderServiceImpl implements OrderService
         return userRepo.findByUsername(username);
     }
     
-    private void updateOrderParts(List<OrderPart> webOrderParts) {
-    	webOrderParts.forEach(orderPart -> {
-    		orderPartRepo.save(orderPart);
-    	});
+    private void updateOrderParts(List<OrderPart> webOrderParts, Orders orders) {
+        for(OrderPart orderPart : webOrderParts) {
+            orderPart.setOrders(orders);
+            if(null != orderPart.getId () && orderPartRepo.exists(orderPart.getId())) {
+                LOGGER.debug ("Order part exists, updating with new values");
+                OrderPart dbOrderPart = orderPartRepo.getOne(orderPart.getId());
+                updateOrderPart(dbOrderPart, orderPart);
+                updateOrderPublication(dbOrderPart);
+            } else {
+                LOGGER.debug ("Order part does not exists, creating new");
+                saveOrderPart(orderPart);
+                updateOrderPublication(orderPart);
+            }
+        }
+    }
+    
+    private void updateOrderPart(OrderPart dbOrderPart, OrderPart webOrderPart) {
+        dbOrderPart.setMonth(webOrderPart.getMonth());
+        dbOrderPart.setYear(webOrderPart.getYear());
+        dbOrderPart.setPublications(webOrderPart.getPublications());
+        saveOrderPart(dbOrderPart);
+    }
+    
+    private void updateOrderPublication(OrderPart orderPart) {
+        List<OrderPublication> webOrderPublications = orderPart.getPublications();
+        for(OrderPublication orderPub : webOrderPublications) {
+            if(null != orderPub.getId() && orderPublicationRepo.exists(orderPub.getId())) {
+                LOGGER.debug ("Order publication exists, updating with new values");
+                OrderPublication dbOrderPub = orderPublicationRepo.findOne(orderPub.getId());
+                dbOrderPub.setOrderPart(orderPart);
+                dbOrderPub.setAdSize(orderPub.getAdSize());
+                dbOrderPub.setAdType(orderPub.getAdType());
+                dbOrderPub.setNote(orderPub.getNote());
+                dbOrderPub.setOrderPart(orderPart);
+                dbOrderPub.setPublicationId(orderPub.getPublicationId());
+                saveOrderPublication(dbOrderPub);
+            } else {
+                LOGGER.debug ("Order publication does not exists, cerating new");
+                orderPub.setOrderPart(orderPart);
+                saveOrderPublication(orderPub);
+            }
+        }
+    }
+    
+    private void saveOrderPart(OrderPart orderPart) {
+        orderPartRepo.save(orderPart);
+    }
+    
+    private void saveOrderPublication(OrderPublication orderPub) {
+        orderPublicationRepo.save(orderPub);
     }
 }
