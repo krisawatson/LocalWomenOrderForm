@@ -58,7 +58,7 @@ public class OrderController {
     
     @RequestMapping(value = "/{orderId}/orderpart/{orderPartId}", method = RequestMethod.DELETE)
     public void getOrder(@PathVariable(value="orderId") Long orderId, @PathVariable(value="orderPartId") Long orderPartId) {
-        orderService.removeOrderPart (orderId, orderPartId);
+        orderService.removeOrderPart(orderId, orderPartId);
     }
     
     private User getUser() {

@@ -1,6 +1,18 @@
 package com.kricko.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +28,7 @@ import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
 import com.kricko.domain.OrderPublication;
 import com.kricko.domain.Orders;
+import com.kricko.domain.Publication;
 import com.kricko.domain.User;
 import com.kricko.mail.SmtpMailer;
 import com.kricko.model.WebOrder;
@@ -25,6 +38,7 @@ import com.kricko.repository.OrderPublicationRepository;
 import com.kricko.repository.OrderRepository;
 import com.kricko.repository.PublicationRepository;
 import com.kricko.repository.UserRepository;
+import com.kricko.threads.OrderConfirmationMailer;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService
@@ -75,17 +89,16 @@ public class OrderServiceImpl implements OrderService
             }
             orderPublicationRepo.save(publications);
         }
+        
         Long orderId = orders.getId();
         String businessEmail = business.getEmail();
-        try {
-			mailer.sendOrderConfirmation(orderId, businessEmail, EmailType.BUSINESS, orders);
-			mailer.sendOrderConfirmation(orderId, user.getEmail(), EmailType.USER, orders);
-			// TODO Implement sending mail to the publications 
-		} catch (Exception e) {
-			LOGGER.error("Failed to send email", e);
-			// Catching the exception so order doesn't fail
-		}
-        
+        List<OrderConfirmationMailer> mails  = new ArrayList<>(0);
+        mails.add(new OrderConfirmationMailer(mailer, orders, businessEmail, EmailType.BUSINESS));
+        mails.add(new OrderConfirmationMailer(mailer, orders, user.getEmail(), EmailType.USER));
+        Map<Long, Set<OrderPublication>> pubSet = getPublicationSet(orders.getOrderParts());
+        addPubSetToMails(mails, pubSet);
+        // TODO Send mail to each publication
+        sendMails(mails);
     	return orderId;
     }
 
@@ -172,5 +185,42 @@ public class OrderServiceImpl implements OrderService
     
     private void saveOrderPublication(OrderPublication orderPub) {
         orderPublicationRepo.save(orderPub);
+    }
+    
+    private void sendMails(List<OrderConfirmationMailer> mails) {
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
+        ThreadPoolExecutor executorPool = new ThreadPoolExecutor(2, 4, 10, TimeUnit.SECONDS,new ArrayBlockingQueue<Runnable>(2), 
+                                                                 threadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
+        
+        for(OrderConfirmationMailer mail : mails){
+            executorPool.execute(mail);
+        }
+        executorPool.shutdown();
+    }
+    
+    private Map<Long, Set<OrderPublication>> getPublicationSet( List<OrderPart> orderParts) {
+        Map<Long, Set<OrderPublication>> publicationSet = new HashMap<>(0);
+        for(OrderPart orderPart: orderParts) {
+            for(OrderPublication orderPub : orderPart.getPublications()){
+                if(publicationSet.containsKey(orderPub.getPublicationId())) {
+                    Set<OrderPublication> ops = publicationSet.get(orderPub.getPublicationId());
+                    ops.add(orderPub);
+                } else {
+                    Set<OrderPublication> set = new HashSet<>();
+                    set.add(orderPub);
+                    publicationSet.put(orderPub.getPublicationId(), set);
+                }
+            }
+        }
+        return publicationSet;
+    }
+    
+    private void addPubSetToMails(List<OrderConfirmationMailer> mails, Map<Long, Set<OrderPublication>> pubSet) {
+        Iterator<Entry <Long, Set <OrderPublication>>> it = pubSet.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Long, Set<OrderPublication>> pair = it.next();
+            Publication pub = pubRepo.findOne(pair.getKey());
+            mails.add (new OrderConfirmationMailer(mailer, null, pub.getEmail(), EmailType.PUBLICATION));
+        }
     }
 }

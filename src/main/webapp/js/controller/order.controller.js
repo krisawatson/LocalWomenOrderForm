@@ -51,8 +51,7 @@
                 lastMonth = 0;
                 ++lastYear;
             }
-            ++lastMonth;
-            var newOrder = {"id": ++self.id, "month": lastMonth.toString(), "year": lastYear, "publications": []};
+            var newOrder = {"id": ++self.id, "month": ++lastMonth, "year": lastYear, "publications": []};
             self.orderParts.push(newOrder);
         }
         
