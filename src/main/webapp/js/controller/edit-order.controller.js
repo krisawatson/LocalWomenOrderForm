@@ -19,7 +19,6 @@
         var self = this;
         var pathParts = $location.path().split("/");
         var orderId = pathParts[2];
-        getOrderDetails();
         var now = new Date();
         self.months = [{id:1, name:"January"},
                         {id:2, name:"February"},
@@ -181,5 +180,7 @@
             }
             self.years = years;
         }
+        
+        getOrderDetails();
     }
 })(window);
