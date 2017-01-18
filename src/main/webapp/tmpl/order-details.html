@@ -10,11 +10,10 @@
         </div>
         <div class="publication" ng-repeat="publication in orderCtrl.publications">
             <div>
-                <label class="header">{{publication.name}}:</label>
-                <input type="radio" name="publication-{{order.id}}-{{publication.id}}-select" value="true" ng-model="order.publications[publication.id].selected"/>Yes
-                <input type="radio" name="publication-{{order.id}}-{{publication.id}}-select" value="false" ng-model="order.publications[publication.id].selected" selected="selected"/>No
+                <input type="checkbox" data-ng-value="true" data-ng-model="order.publications[publication.id].selected"/>
+		        <label class="header">{{publication.name}}:</label>
             </div>
-            <div ng-if="order.publications[publication.id].selected == 'true'">
+            <div ng-if="order.publications[publication.id].selected == true">
                 <label class="adType">Advert Type:</label>
                 <select name="adtype-{{order.id}}-{{publication.id}}-select" ng-class="orderDetailsForm.$submitted && orderDetailsForm.adtype-{{order.id}}-{{publication.id}}-select.$invalid ? 'validation-error' : ''" ng-options="ad.id as ad.name for ad in orderCtrl.adverts" ng-model="order.publications[publication.id].adType" required></select>
                 <label>Advert Size:</label>

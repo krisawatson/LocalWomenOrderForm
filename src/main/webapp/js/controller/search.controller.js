@@ -77,7 +77,6 @@
                 self.orderList = [];
                 
                 angular.forEach(self.orders, function(order){
-                    var orders = [];
                     var orderItems = {
                             orderId: order.id,
                             businessId: order.businessId,
