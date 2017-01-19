@@ -1,14 +1,39 @@
 <div>
     <p>
-    <div>Business Name: ${businessname}</div>
-    <div>Contact Name: ${firstname} ${lastname}</div>
-    <div>Address: ${address1}, ${address2}, ${city}, ${county}, ${postcode}</div>
-    <div>Tel: ${tel}</div>
-    <div>Email: ${email}</div>
-    <div>Order Number: ${orderId}</div>
+    <table>
+    	<tbody>
+    		<tr>
+    			<td>Business Name:</td>
+    			<td>$business.name</td>
+    		</tr>
+    		<tr>
+    			<td>Contact Name:</td>
+    			<td>$business.firstname $business.lastname</td>
+    		</tr>
+    		<tr>
+    			<td>Address:</td>
+    			<td>$business.address1, #if($business.address2)$business.address2,#end 
+    				$business.city, #if($business.county)$business.county#end, 
+    				$business.postcode
+    			</td>
+    		</tr>
+    		<tr>
+    			<td>Tel:</td>
+    			<td>#if($business.tel)$business.tel#end</td>
+    		</tr>
+    		<tr>
+    			<td>Email:</td>
+    			<td>$business.email</td>
+    		</tr>
+    		<tr>
+    			<td>Order Number:</td>
+    			<td>$orderNumber</td>
+    		</tr>
+    	</tbody>
+    </table>
     </p>
     
-    <p>Hello ${firstname} ${lastname}</p>
+    <p>Hello $business.firstname $business.lastname</p>
     
     <p>
         Thanks for your recent order with Local Women Magazine. Your order has now been sent 
@@ -20,18 +45,28 @@
         Please review the following details and contact us if you have any queries.
     </p>
     
-    #foreach( $order in $orders)
+    #foreach($order in $orders.orderParts)
     <p>
-        <div style="font-weight:bold;">${month} ${year}</div>
-        <table>
-        #foreach($advert in $order.adverts)
-            <tr>
-                <td>${advert.publication}</td>
-                <td>${advert.type}</td>
-                <td>${advert.size}</td>
-                <td>${advert.note}</td>
+    	<div style="font-weight:bold;">$order.month $order.year</div>
+        <table style="border-collapse: collapse; border: 1px solid black; width:750px;">
+        	<thead style="background:#000000; color: #FFFFFF">
+        		<tr style="border: 1px solid black;">
+        			<td style="border: 1px solid black;">PUBLICATION NAME</td>
+	        		<td style="border: 1px solid black;">ADVERT TYPE</td>
+	        		<td style="border: 1px solid black;">SIZE</td>
+	        		<td style="border: 1px solid black;">ADDITIONAL INFO</td>
+	        	</tr>
+        	</thead>
+        	<tbody>
+        	#foreach($publication in $order.publications)
+            <tr style="border: 1px solid black;">
+                <td style="border: 1px solid black;">$publication.publication.name</td>
+                <td style="border: 1px solid black;">$publication.adType</td>
+                <td style="border: 1px solid black;">$publication.adSize</td>
+                <td style="border: 1px solid black;">#if($publication.note)$publication.note#end</td>
             </tr>
-        #end
+        	#end
+            </tbody>
         </table>
     </p>
     #end

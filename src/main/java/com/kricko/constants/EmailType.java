@@ -1,9 +1,11 @@
 package com.kricko.constants;
 
 public enum EmailType {
+	ACCOUNTS("accounts"),
 	BUSINESS("business"),
-	USER("user"),
-	PUBLICATION("publication");
+	ORDERS("orders"),
+	PUBLICATION("publication"),
+	USER("user");
 	
 	private final String value;
 	

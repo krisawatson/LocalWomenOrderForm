@@ -17,12 +17,14 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.kricko.constants.EmailType;
+import com.kricko.constants.MailTemplating;
 import com.kricko.constants.Roles;
 import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
@@ -61,6 +63,11 @@ public class OrderServiceImpl implements OrderService
     SmtpMailer mailer;
 
     Authentication auth;
+    
+    @Value("${orders.email.account.orders}")
+    private String ordersEmail;
+    @Value("${orders.email.account.accounts}")
+    private String accountsEmail;
 
     @Override
     public Orders getOrder(Long id) {
@@ -95,9 +102,9 @@ public class OrderServiceImpl implements OrderService
         List<OrderConfirmationMailer> mails  = new ArrayList<>(0);
         mails.add(new OrderConfirmationMailer(mailer, orders, businessEmail, EmailType.BUSINESS));
         mails.add(new OrderConfirmationMailer(mailer, orders, user.getEmail(), EmailType.USER));
-        Map<Long, Set<OrderPublication>> pubSet = getPublicationSet(orders.getOrderParts());
-        addPubSetToMails(mails, pubSet);
-        // TODO Send mail to each publication
+        mails.add(new OrderConfirmationMailer(mailer, orders, ordersEmail, EmailType.ORDERS));
+        mails.add(new OrderConfirmationMailer(mailer, orders, accountsEmail, EmailType.ACCOUNTS));
+        mails.add(new OrderConfirmationMailer(mailer, orders, null, EmailType.PUBLICATION));
         sendMails(mails);
     	return orderId;
     }

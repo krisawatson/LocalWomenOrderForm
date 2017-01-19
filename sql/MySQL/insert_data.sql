@@ -16,10 +16,10 @@ INSERT INTO advert_size (name) VALUES ('Full');
 INSERT INTO advert_size (name) VALUES ('Spread');
 
 -- Insert values into the publication table
-INSERT INTO publication (name) VALUES ('North West / Donegal');
-INSERT INTO publication (name) VALUES ('North Coast');
-INSERT INTO publication (name) VALUES ('Mid Ulster');
-INSERT INTO publication (name) VALUES ('Belfast');
+INSERT INTO publication (name, email) VALUES ('North West / Donegal','design@localwomensnews.com');
+INSERT INTO publication (name, email) VALUES ('North Coast','designcol@localwomensnews.com');
+INSERT INTO publication (name, email) VALUES ('Mid Ulster','designmid@localwomensnews.com');
+INSERT INTO publication (name, email) VALUES ('Belfast','design@localwomenbelfast.com');
 
 -- Insert values into the role table
 INSERT INTO role (name) VALUES ('ADMIN');

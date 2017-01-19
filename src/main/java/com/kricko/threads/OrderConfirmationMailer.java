@@ -25,9 +25,8 @@ public class OrderConfirmationMailer implements Runnable
     @Override
     public void run ()
     {
-        Long orderId = orders.getId();
         try {
-            mailer.sendOrderConfirmation(orderId, email, type, orders); 
+            mailer.sendOrderConfirmation(email, type, orders); 
         } catch (Exception e) {
             LOGGER.error("Failed to send email", e);
         }
