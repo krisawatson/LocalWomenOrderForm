@@ -17,7 +17,7 @@ import com.kricko.domain.User;
 import com.kricko.repository.RoleRepository;
 import com.kricko.repository.UserRepository;
 
-@Service
+@Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     private UserRepository userRepository;
