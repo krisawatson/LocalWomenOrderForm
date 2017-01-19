@@ -1,3 +1,48 @@
-<h2>Order Confirmation</h2>
-<p>Order number: ${orderNumber}</p>    
-<p>${disclaimer}</p>
+<div>
+    <p>
+    <div>Business Name: ${businessname}</div>
+    <div>Contact Name: ${firstname} ${lastname}</div>
+    <div>Address: ${address1}, ${address2}, ${city}, ${county}, ${postcode}</div>
+    <div>Tel: ${tel}</div>
+    <div>Email: ${email}</div>
+    <div>Order Number: ${orderId}</div>
+    </p>
+    
+    <p>Hello ${firstname} ${lastname}</p>
+    
+    <p>
+        Thanks for your recent order with Local Women Magazine. Your order has now been sent 
+        to the design and editorial team who will be in contact for any information required 
+        to complete your deal.
+    </p>
+    
+    <p>
+        Please review the following details and contact us if you have any queries.
+    </p>
+    
+    #foreach( $order in $orders)
+    <p>
+        <div style="font-weight:bold;">${month} ${year}</div>
+        <table>
+        #foreach($advert in $order.adverts)
+            <tr>
+                <td>${advert.publication}</td>
+                <td>${advert.type}</td>
+                <td>${advert.size}</td>
+                <td>${advert.note}</td>
+            </tr>
+        #end
+        </table>
+    </p>
+    #end
+    
+    <p>
+        This is confirmation of you order and not an invoice, an invoice will follow will all cost and payment details.
+    </p>
+    <p>
+        We look forward to working with you.
+    </p>
+    <p>
+        Kind Regards
+    </p>
+</div>
