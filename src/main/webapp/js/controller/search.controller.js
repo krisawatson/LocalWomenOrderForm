@@ -109,10 +109,14 @@
         }
         
         var getNameById = function (arrayItems , id) {
+        	var name;
             var item = $filter('filter')(arrayItems, function (item) {
                 return item.id === id;
             });
-            return item[0].name;
+            if(item && item[0]) {
+            	name = item[0].name;
+            }
+            return name;
         };
         
         var getMonthByInt = function (month) {
