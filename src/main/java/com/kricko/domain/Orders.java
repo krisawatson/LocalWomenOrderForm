@@ -67,4 +67,15 @@ public class Orders {
     public void setOrderParts(List<OrderPart> orderParts) {
         this.orderParts = orderParts;
     }
+    
+    @Override
+    public String toString() {
+        String value = "Orders [id="+ getId() + ", businessId="+getBusinessId()
+                        +", userId="+getUserId()+ ",orderParts=[";
+        for(OrderPart orderPart : getOrderParts()) {
+            value += orderPart.toString();
+        }
+        value += "]]";
+        return value;
+    }
 }

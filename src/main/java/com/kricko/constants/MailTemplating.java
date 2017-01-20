@@ -4,7 +4,7 @@ public class MailTemplating
 {
 	// Email template folders
 	public static final String TMPL_FOLDER = "templates/email/";
-	public static final String TMPL_ORDER_FOLDER = TMPL_FOLDER + "/order/";
+	public static final String TMPL_ORDER_FOLDER = TMPL_FOLDER + "order/";
 	
 	// Email template files
 	public static final String TMPL_ORDER_CONFIRMATION = "confirmation.html";

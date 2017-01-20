@@ -68,4 +68,15 @@ public class OrderPart {
     public void setOrders(Orders orders) {
         this.orders = orders;
     }
+    
+    @Override
+    public String toString() {
+        String value = "OrderPart [id="+ getId() + ", month="+getMonth()
+                        +", year="+ getYear()+ ",orderPublications=[";
+        for(OrderPublication publication : getPublications()) {
+            value += publication.toString();
+        }
+        value += "]]";
+        return value;
+    }
 }

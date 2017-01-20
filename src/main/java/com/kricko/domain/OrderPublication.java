@@ -69,4 +69,11 @@ public class OrderPublication {
     public void setOrderPart(OrderPart orderPart) {
         this.orderPart = orderPart;
     }
+    
+    @Override
+    public String toString() {
+        return "OrderPublication [id="+ getId() + ", adSize=" + getAdSize()
+                +", adType=" + getAdType() + ", note=" + getNote() 
+                + ", publicationId=" + getPublicationId() +"]]";
+    }
 }

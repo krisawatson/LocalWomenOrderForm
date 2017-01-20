@@ -1,13 +1,7 @@
 package com.kricko.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -24,13 +18,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.kricko.constants.EmailType;
-import com.kricko.constants.MailTemplating;
 import com.kricko.constants.Roles;
 import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
 import com.kricko.domain.OrderPublication;
 import com.kricko.domain.Orders;
-import com.kricko.domain.Publication;
 import com.kricko.domain.User;
 import com.kricko.mail.SmtpMailer;
 import com.kricko.model.WebOrder;
@@ -46,7 +38,7 @@ import com.kricko.threads.OrderConfirmationMailer;
 public class OrderServiceImpl implements OrderService
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    
+
     @Autowired
     BusinessRepository businessRepo;
     @Autowired
@@ -63,7 +55,7 @@ public class OrderServiceImpl implements OrderService
     SmtpMailer mailer;
 
     Authentication auth;
-    
+
     @Value("${orders.email.account.orders}")
     private String ordersEmail;
     @Value("${orders.email.account.accounts}")
@@ -71,7 +63,7 @@ public class OrderServiceImpl implements OrderService
 
     @Override
     public Orders getOrder(Long id) {
-    	return orderRepo.findOne(id);
+        return orderRepo.findOne(id);
     }
 
     @Override
@@ -79,34 +71,36 @@ public class OrderServiceImpl implements OrderService
         LOGGER.debug("Submitting order");
 
         Business business = webOrder.getBusiness();
-        businessRepo.save(business);
-        
+        businessRepo.saveAndFlush(business);
+
         Orders orders = new Orders(business.getId(), user.getId());
-        orderRepo.save(orders);
-        
+        orderRepo.saveAndFlush(orders);
+
         List<OrderPart> orderParts = webOrder.getOrderParts();
-        
-        // For Java 1.7 and before
+
         for(OrderPart orderPart : orderParts) {
+            LOGGER.debug(String.format("Order Part is %s", orderPart.toString()));
             orderPart.setOrders (orders);
-            orderPartRepo.save(orderPart);
+            orderPartRepo.saveAndFlush(orderPart);
             List<OrderPublication> publications = orderPart.getPublications();
+            LOGGER.debug(String.format("Publications is not empty for %d %d it contains %d", 
+                    orderPart.getMonth(), orderPart.getYear(), orderPart.getPublications().size()));
             for(OrderPublication publication : publications) {
                 publication.setOrderPart(orderPart);
             }
             orderPublicationRepo.save(publications);
         }
-        
+        orders.setOrderParts(orderParts);
+
         Long orderId = orders.getId();
         String businessEmail = business.getEmail();
         List<OrderConfirmationMailer> mails  = new ArrayList<>(0);
-        mails.add(new OrderConfirmationMailer(mailer, orders, businessEmail, EmailType.BUSINESS));
-        mails.add(new OrderConfirmationMailer(mailer, orders, user.getEmail(), EmailType.USER));
-        mails.add(new OrderConfirmationMailer(mailer, orders, ordersEmail, EmailType.ORDERS));
-        mails.add(new OrderConfirmationMailer(mailer, orders, accountsEmail, EmailType.ACCOUNTS));
-        mails.add(new OrderConfirmationMailer(mailer, orders, null, EmailType.PUBLICATION));
+        LOGGER.debug("Order after getOrder is " + getOrder(orderId).toString());
+        mails.add(new OrderConfirmationMailer(mailer, business, orders, businessEmail, new String[]{ordersEmail, accountsEmail}, EmailType.BUSINESS));
+        mails.add(new OrderConfirmationMailer(mailer, business, orders, user.getEmail(), null, EmailType.USER));
+        mails.add(new OrderConfirmationMailer(mailer, business, orders, null, null, EmailType.PUBLICATION));
         sendMails(mails);
-    	return orderId;
+        return orderId;
     }
 
     @Override
@@ -119,14 +113,14 @@ public class OrderServiceImpl implements OrderService
             return orderRepo.findByUserId(user.getId());
         }
     }
-    
+
     @Override
     public void updateOrder(Orders webOrder, User user) {
         Orders orders = orderRepo.getOne(webOrder.getId());
-    	List<OrderPart> webOrderParts = webOrder.getOrderParts();
-    	updateOrderParts(webOrderParts, orders);
+        List<OrderPart> webOrderParts = webOrder.getOrderParts();
+        updateOrderParts(webOrderParts, orders);
     }
-    
+
     @Override
     public void removeOrderPart(Long orderId, Long orderPartId) {
         Orders order = orderRepo.findOne(orderId);
@@ -135,13 +129,13 @@ public class OrderServiceImpl implements OrderService
             orderPartRepo.delete(orderPartId);
         }
     }
-    
+
     private User getUser() {
         auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         return userRepo.findByUsername(username);
     }
-    
+
     private void updateOrderParts(List<OrderPart> webOrderParts, Orders orders) {
         for(OrderPart orderPart : webOrderParts) {
             orderPart.setOrders(orders);
@@ -157,14 +151,14 @@ public class OrderServiceImpl implements OrderService
             }
         }
     }
-    
+
     private void updateOrderPart(OrderPart dbOrderPart, OrderPart webOrderPart) {
         dbOrderPart.setMonth(webOrderPart.getMonth());
         dbOrderPart.setYear(webOrderPart.getYear());
         dbOrderPart.setPublications(webOrderPart.getPublications());
         saveOrderPart(dbOrderPart);
     }
-    
+
     private void updateOrderPublication(OrderPart orderPart) {
         List<OrderPublication> webOrderPublications = orderPart.getPublications();
         for(OrderPublication orderPub : webOrderPublications) {
@@ -185,49 +179,23 @@ public class OrderServiceImpl implements OrderService
             }
         }
     }
-    
+
     private void saveOrderPart(OrderPart orderPart) {
         orderPartRepo.save(orderPart);
     }
-    
+
     private void saveOrderPublication(OrderPublication orderPub) {
         orderPublicationRepo.save(orderPub);
     }
-    
+
     private void sendMails(List<OrderConfirmationMailer> mails) {
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
         ThreadPoolExecutor executorPool = new ThreadPoolExecutor(2, 4, 10, TimeUnit.SECONDS,new ArrayBlockingQueue<Runnable>(2), 
-                                                                 threadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
-        
+                threadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
+
         for(OrderConfirmationMailer mail : mails){
             executorPool.execute(mail);
         }
         executorPool.shutdown();
-    }
-    
-    private Map<Long, Set<OrderPublication>> getPublicationSet( List<OrderPart> orderParts) {
-        Map<Long, Set<OrderPublication>> publicationSet = new HashMap<>(0);
-        for(OrderPart orderPart: orderParts) {
-            for(OrderPublication orderPub : orderPart.getPublications()){
-                if(publicationSet.containsKey(orderPub.getPublicationId())) {
-                    Set<OrderPublication> ops = publicationSet.get(orderPub.getPublicationId());
-                    ops.add(orderPub);
-                } else {
-                    Set<OrderPublication> set = new HashSet<>();
-                    set.add(orderPub);
-                    publicationSet.put(orderPub.getPublicationId(), set);
-                }
-            }
-        }
-        return publicationSet;
-    }
-    
-    private void addPubSetToMails(List<OrderConfirmationMailer> mails, Map<Long, Set<OrderPublication>> pubSet) {
-        Iterator<Entry <Long, Set <OrderPublication>>> it = pubSet.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Long, Set<OrderPublication>> pair = it.next();
-            Publication pub = pubRepo.findOne(pair.getKey());
-            mails.add (new OrderConfirmationMailer(mailer, null, pub.getEmail(), EmailType.PUBLICATION));
-        }
     }
 }
