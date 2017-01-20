@@ -4,6 +4,7 @@
     angular.module('localWomenApp').controller('SearchController', [
         '$filter','$http','$location', '$q','$scope',
         'BusinessService','DetailsService','OrderService',
+        'SortingUtilsFactory',
         Search]);
     
     function Search($filter,
@@ -13,11 +14,13 @@
                     $scope,
                     BusinessService,
                     DetailsService,
-                    OrderService) {
+                    OrderService,
+                    SortingUtilsFactory) {
         var self = this;
         self.orders = [];
         self.editBusiness = editBusiness;
         self.editOrder = editOrder;
+        self.getMonthByInt = getMonthByInt;
         
         self.gridOptions = {
             appScopeProvider: self,
@@ -33,7 +36,8 @@
             rowHeight:44,
             columnDefs: [{ field: 'orderId', 
                            displayName: 'ID',
-                           width: 50
+                           width: 50,
+       					   sortingAlgorithm: SortingUtilsFactory.sortNumbers
                          },
                          { field: 'businessName', 
                            displayName: 'Business Name',
@@ -51,7 +55,8 @@
                            displayName: 'Size'
                          },
                          { field: 'month', 
-                           displayName: 'Month'
+                           displayName: 'Month',
+                           cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.appScope.getMonthByInt(grid.getCellValue(row, col))}}</div>'
                          },
                          { field: 'year', 
                            displayName: 'Year'
@@ -85,7 +90,7 @@
                     }
                     angular.forEach(order.orderParts, function(orderPart){
                         var part = angular.copy(orderItems);
-                        part.month = getMonthByInt(orderPart.month);
+                        part.month = orderPart.month;
                         part.year = orderPart.year;
                         angular.forEach(orderPart.publications, function(publication){
                             var pub = angular.copy(part);
@@ -108,6 +113,14 @@
         	$location.path('/order/' + orderId + '/edit');
         }
         
+        function getMonthByInt(month) {
+        	console.log(month);
+            var monthNames = ["January", "February", "March", "April", "May", "June",
+                  "July", "August", "September", "October", "November", "December"
+                ];
+            return monthNames[month-1];
+        }
+        
         var getNameById = function (arrayItems , id) {
         	var name;
             var item = $filter('filter')(arrayItems, function (item) {
@@ -117,13 +130,6 @@
             	name = item[0].name;
             }
             return name;
-        };
-        
-        var getMonthByInt = function (month) {
-            var monthNames = ["January", "February", "March", "April", "May", "June",
-                  "July", "August", "September", "October", "November", "December"
-                ];
-            return monthNames[month-1];
         };
     };
 })(window);
