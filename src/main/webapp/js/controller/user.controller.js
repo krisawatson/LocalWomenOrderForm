@@ -4,11 +4,10 @@
     angular.module('localWomenApp').controller('UserController', [
         '$filter',
         '$q',
-        '$scope', 
         'UserService',
         User]);
     
-    function User($filter, $q, $scope, UserService) {
+    function User($filter, $q, UserService) {
         var self = this;
         self.users = [];
         var newUser = {username:'',password:''};
