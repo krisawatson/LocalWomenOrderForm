@@ -82,11 +82,9 @@ div.buttons {
     border-radius: 2px;
 }
 
-button {
-    background: #EA4C89;
-}
-button.formButton {
+.formButton {
 	/* Normal State */
+	background: #EA4C89;
     padding: 4px 15px 7px 15px;
     width: auto;
     height: auto;

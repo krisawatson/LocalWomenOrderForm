@@ -62,9 +62,16 @@ public class UserServiceImpl implements UserService
     }
     
     @Override
-    public void updateUser(Long userId, User user) {
-        userRepo.updateUserInfoById(userId, user.getFirstname(), user.getLastname(), 
-                user.getEmail(), user.getRoleId(), user.getEnabled());
+    public ResponseEntity<Void> updateUser(Long userId, User user) {
+    	if(null != user.getPassword()){
+    		user.setPassword(passwordEncoder.encode(user.getPassword()));
+    		userRepo.updateUserById(userId, user.getFirstname(), user.getLastname(), 
+	                user.getEmail(), user.getRoleId(), user.getEnabled(), user.getPassword());
+    	} else {
+	        userRepo.updateUserInfoById(userId, user.getFirstname(), user.getLastname(), 
+	                user.getEmail(), user.getRoleId(), user.getEnabled());
+    	}
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
     @Override

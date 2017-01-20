@@ -13,6 +13,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public User findByUsername(String username);
     
     @Modifying(clearAutomatically = true)
+    @Query("UPDATE User u SET u.firstname = :firstname, u.lastname = :lastname, u.email = :email, u.roleId = :roleId, u.enabled = :enabled, u.password = :password WHERE u.id = :id")
+    void updateUserById(@Param("id") Long id, @Param("firstname") String firstname, @Param("lastname") String lastname, 
+                         @Param("email") String email, @Param("roleId") Long roleId, @Param("enabled") boolean enabled,
+                         @Param("password") String password);
+    
+    @Modifying(clearAutomatically = true)
     @Query("UPDATE User u SET u.firstname = :firstname, u.lastname = :lastname, u.email = :email, u.roleId = :roleId, u.enabled = :enabled WHERE u.id = :id")
     void updateUserInfoById(@Param("id") Long id, @Param("firstname") String firstname, @Param("lastname") String lastname, 
                          @Param("email") String email, @Param("roleId") Long roleId, @Param("enabled") boolean enabled);

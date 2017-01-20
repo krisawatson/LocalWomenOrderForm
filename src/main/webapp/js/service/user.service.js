@@ -56,7 +56,6 @@ angular
 	    
 	    function update(user) {
 	    	var deferred = $q.defer();
-	    	console.log(user);
 	    	$http.put('/user/' + user.id + '/update', user).then(function successCallback(response) {
 	    		deferred.resolve(response);
 	    	}, function(errResponse){

@@ -19,7 +19,7 @@ public interface UserService
     public ResponseEntity<Void> createUser(@RequestBody User user);
     
     @Transactional
-    public void updateUser(Long userId, User user);
+    public ResponseEntity<Void> updateUser(Long userId, User user);
     
     public User getUserByUsername(String username);
 }

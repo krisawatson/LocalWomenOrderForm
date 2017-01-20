@@ -15,8 +15,11 @@
         var createdUser = {};
         angular.copy(newUser, self.user);
         self.create = create;
-        self.enableUser = enableUser;
+        self.clearUser = clearUser;
         self.disableUser = disableUser;
+        self.editUser = editUser;
+        self.enableUser = enableUser;
+        self.updateUser = updateUser;
         
         function create(valid) {
             delete self.errorMsg;
@@ -55,32 +58,50 @@
         }
         
         function disableUser(user) {
+        	console.log(user);
         	user.enabled = false;
         	updateUser(user);
         }
         function updateUser(user) {
-        	delete self.updateErrorMsg;
+        	delete self.successMsg;
+        	delete self.errorMsg;
         	UserService.update(user).then(
         		function(response) {
-                    console.log("Successfully enabled user")
+                    self.successMsg = "Successfully updated user";
+                    clearUser();
+                    getUserList();
                 },
                 function(errResponse){
-                    self.user[user.id].updateErrorMsg = "Failed to update the user";
+                    self.errorMsg = "Failed to update the user";
                 }
             );
         }
+        function editUser(user) {
+        	self.user = angular.copy(user);
+        }
+        function clearUser() {
+        	delete self.user;
+        }
         
-        $q.all([UserService.list(),
+        $q.all([UserService.get(),
                 UserService.roles()])
             .then(function(data) {
-                console.log(data[0]);
-                self.users = data[0];
+            	getUserList();
+                self.currentUser = data[0];
                 self.roles = data[1];
-                angular.forEach(self.users, function(user){
-                    setRoleName(user);
-                });
             });
         
+        function getUserList() {
+            UserService.list().then(function(data){
+            	self.users = data;
+            	angular.forEach(self.users, function(user){
+                	delete user.password;
+                    setRoleName(user);
+                });
+            },function(error){
+            	console.log(error);
+            });
+        }
         function setRoleName(user) {
             var role = $filter('filter')(self.roles, function (role) {
                 if(role.id === user.roleId){
