@@ -17,10 +17,24 @@
                     OrderService,
                     SortingUtilsFactory) {
         var self = this;
-        self.orders = [];
+        self.orderList = [];
+        self.inProgressOrders = [];
+        self.finishedOrders = [];
+        self.orderFilters = [{
+        	'id': 1,
+        	'name': 'All'
+        },{
+        	'id': 2,
+        	'name': 'In Progress'
+        },{
+        	'id': 3,
+        	'name': 'Finished'
+        }];
+        self.filter = 1;
         self.editBusiness = editBusiness;
         self.editOrder = editOrder;
         self.getMonthByInt = getMonthByInt;
+        self.filterOrderList = filterOrderList;
         
         self.gridOptions = {
             appScopeProvider: self,
@@ -67,7 +81,7 @@
                            enableFiltering: false
                          }]
         };
-        
+
         $q.all([BusinessService.list(),
             DetailsService.publications(), 
             DetailsService.adtypes(), 
@@ -78,31 +92,7 @@
                 self.publications = data[1];
                 self.adverts = data[2];
                 self.advertSizes = data[3];
-                self.orders = data[4];
-                self.orderList = [];
-                
-                angular.forEach(self.orders, function(order){
-                    var orderItems = {
-                            orderId: order.id,
-                            businessId: order.businessId,
-                            businessName: getNameById(self.businesses, order.businessId),
-                            userId: order.userId
-                    }
-                    angular.forEach(order.orderParts, function(orderPart){
-                        var part = angular.copy(orderItems);
-                        part.month = orderPart.month;
-                        part.year = orderPart.year;
-                        angular.forEach(orderPart.publications, function(publication){
-                            var pub = angular.copy(part);
-                            pub.name = getNameById(self.publications, publication.publicationId);
-                            pub.adSize = getNameById(self.advertSizes, publication.adSize);
-                            pub.adType = getNameById(self.adverts, publication.adType);
-                            pub.note = publication.note;
-                            self.orderList.push(pub);
-                        });
-                    });
-                });
-                self.gridOptions.data = self.orderList;
+                fillOrderListDetails(data[4]);
             });
         
         function editBusiness(businessId) {
@@ -114,11 +104,53 @@
         }
         
         function getMonthByInt(month) {
-        	console.log(month);
             var monthNames = ["January", "February", "March", "April", "May", "June",
                   "July", "August", "September", "October", "November", "December"
                 ];
             return monthNames[month-1];
+        }
+        
+        function filterOrderList() {
+        	if(self.filter === 2) {
+        		self.gridOptions.data = angular.copy(self.inProgressOrders);
+        	} else if (self.filter === 3) {
+        		self.gridOptions.data = angular.copy(self.finishedOrders);
+        	} else {
+        		self.gridOptions.data = angular.copy(self.showOrders);
+        	}
+        }
+        
+        function fillOrderListDetails(orders) {
+        	angular.forEach(orders, function(order){
+                var orderItems = {
+                        orderId: order.id,
+                        businessId: order.businessId,
+                        businessName: getNameById(self.businesses, order.businessId),
+                        userId: order.userId
+                }
+                angular.forEach(order.orderParts, function(orderPart){
+                    var part = angular.copy(orderItems);
+                    part.month = orderPart.month;
+                    part.year = orderPart.year;
+                    var isActive = isActivePart(part.month, part.year);
+                    angular.forEach(orderPart.publications, function(publication){
+                        var pub = angular.copy(part);
+                        pub.name = getNameById(self.publications, publication.publicationId);
+                        pub.adSize = getNameById(self.advertSizes, publication.adSize);
+                        pub.adType = getNameById(self.adverts, publication.adType);
+                        pub.note = publication.note;
+                        self.orderList.push(pub);
+                        if(isActive) {
+                        	self.inProgressOrders.push(pub);
+                        } else {
+                        	self.finishedOrders.push(pub);
+                        }
+                    });
+                });
+            });
+        	
+        	self.showOrders = angular.copy(self.orderList);
+            self.gridOptions.data = self.showOrders;
         }
         
         var getNameById = function (arrayItems , id) {
@@ -130,6 +162,17 @@
             	name = item[0].name;
             }
             return name;
-        };
+        }
+        
+        var isActivePart = function(month, year) {
+        	var now = new Date();
+        	var currentMonth = now.getMonth() + 1;
+        	var currentYear = now.getFullYear();
+        	var isActive = false;
+        	if(year > currentYear || (month >= currentMonth && year == currentYear)) {
+        		isActive = true;
+        	}
+        	return isActive;
+        }
     };
 })(window);

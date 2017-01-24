@@ -9,6 +9,8 @@ angular
 			get: get,
 			create: create,
 	        list: list,
+			getInProgress: getInProgress,
+			getFinished: getFinished,
 	        update: update,
 	        remove: remove
 	    };
@@ -38,6 +40,26 @@ angular
 	    function list() {
 	    	var deferred = $q.defer();
 	    	$http.get('/order/list').then(function successCallback(response) {
+	    		deferred.resolve(response.data);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+	        return deferred.promise;
+	    }
+	    
+	    function getInProgress() {
+	    	var deferred = $q.defer();
+	    	$http.get('/order/inprogress').then(function successCallback(response) {
+	    		deferred.resolve(response.data);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+	        return deferred.promise;
+	    }
+	    
+	    function getFinished() {
+	    	var deferred = $q.defer();
+	    	$http.get('/order/finished').then(function successCallback(response) {
 	    		deferred.resolve(response.data);
 	    	}, function(errResponse){
                 deferred.reject(errResponse);

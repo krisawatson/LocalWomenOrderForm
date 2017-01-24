@@ -25,7 +25,6 @@ import com.kricko.model.email.TemplateOrderPart;
 import com.kricko.model.email.TemplateOrderPublication;
 import com.kricko.repository.AdvertSizeRepository;
 import com.kricko.repository.AdvertTypeRepository;
-import com.kricko.repository.BusinessRepository;
 import com.kricko.repository.PublicationRepository;
 
 @Service("mailTemplateService")
@@ -39,8 +38,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     private AdvertTypeRepository adTypeRepo;
     @Autowired
     private PublicationRepository pubRepo;
-    @Autowired
-    private BusinessRepository businessRepo;
 
     private final Logger LOGGER = LogManager.getLogger();
     private final String FOOTER_TEMPLATE = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_FOOTER;
