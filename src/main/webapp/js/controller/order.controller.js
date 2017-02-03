@@ -7,14 +7,17 @@
         'ngDialog',
         'DetailsService',
         'OrderService',
+        'NavFactory',
         Order]);
     
     function Order($http,
                 $scope,
                 ngDialog,
                 DetailsService,
-                OrderService) {
+                OrderService,
+                NavFactory) {
         var self = this;
+        NavFactory.setTab('order');
         var now = new Date();
         self.id = 1;
         self.currentMonth = now.getMonth() + 1;

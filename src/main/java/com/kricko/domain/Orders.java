@@ -1,5 +1,6 @@
 package com.kricko.domain;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class Orders {
     private Long id;
     private Long businessId;
     private Long userId;
+    private Date created;
+    private Date updated;
     private List<OrderPart> orderParts = new ArrayList<>(0);
 
     public Orders() {
@@ -58,7 +61,23 @@ public class Orders {
         this.userId = userId;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
+    public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
     @JsonManagedReference
     public List<OrderPart> getOrderParts() {
         return orderParts;

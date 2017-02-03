@@ -5,13 +5,15 @@
         '$filter',
         '$q',
         'UserService',
+        'NavFactory',
         User]);
     
-    function User($filter, $q, UserService) {
+    function User($filter, $q, UserService, NavFactory) {
         var self = this;
         self.users = [];
         var newUser = {username:'',password:''};
         var createdUser = {};
+        NavFactory.setTab('users');
         angular.copy(newUser, self.user);
         self.create = create;
         self.clearUser = clearUser;

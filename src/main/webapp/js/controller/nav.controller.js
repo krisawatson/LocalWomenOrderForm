@@ -2,12 +2,15 @@
     'use strict';
 
     angular.module('localWomenApp').controller('NavController', [
-    	'$http',
-    	'$scope',
+    	'NavFactory',
     	Nav]);
     
-    function Nav($http,
-	    		$scope) {
+    function Nav(NavFactory) {
     	var self = this;
+        self.isSet = isSet;
+        
+        function isSet(tabName){
+          return NavFactory.getTab() === tabName;
+        };
 	}
 })(window);

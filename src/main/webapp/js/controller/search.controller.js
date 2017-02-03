@@ -4,7 +4,7 @@
     angular.module('localWomenApp').controller('SearchController', [
         '$filter','$http','$location', '$q','$scope',
         'BusinessService','DetailsService','OrderService',
-        'SortingUtilsFactory',
+        'SortingUtilsFactory','uiGridConstants','NavFactory',
         Search]);
     
     function Search($filter,
@@ -15,8 +15,36 @@
                     BusinessService,
                     DetailsService,
                     OrderService,
-                    SortingUtilsFactory) {
+                    SortingUtilsFactory,
+                    uiGridConstants,
+                    NavFactory) {
         var self = this;
+        var months = [{value: 1,
+        			   label: 'January'
+        			  },{value: 2,
+        			   label: 'February'
+        			  },{value: 3,
+        			   label: 'March'
+        			  },{value: 4,
+        			   label: 'April'
+        			  },{value: 5,
+        			   label: 'May'
+        			  },{value: 6,
+        			   label: 'June'
+        			  },{value: 7,
+        			   label: 'July'
+        			  },{value: 8,
+        			   label: 'August'
+        			  },{value: 9,
+        			   label: 'September'
+        			  },{value: 10,
+        			   label: 'October'
+        			  },{value: 11,
+        			   label: 'November'
+        			  },{value: 12,
+        			   label: 'December'
+        			  }];
+        NavFactory.setTab('search');
         self.orderList = [];
         self.inProgressOrders = [];
         self.finishedOrders = [];
@@ -70,7 +98,11 @@
                          },
                          { field: 'month', 
                            displayName: 'Month',
-                           cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.appScope.getMonthByInt(grid.getCellValue(row, col))}}</div>'
+                           cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.appScope.getMonthByInt(grid.getCellValue(row, col))}}</div>',
+                           filter: {
+                        	   type: uiGridConstants.filter.SELECT,
+                        	   selectOptions: months
+                           }
                          },
                          { field: 'year', 
                            displayName: 'Year'
@@ -103,11 +135,8 @@
         	$location.path('/order/' + orderId + '/edit');
         }
         
-        function getMonthByInt(month) {
-            var monthNames = ["January", "February", "March", "April", "May", "June",
-                  "July", "August", "September", "October", "November", "December"
-                ];
-            return monthNames[month-1];
+        function getMonthByInt(monthValue) {
+            return getLabelByValue(months, monthValue);
         }
         
         function filterOrderList() {
@@ -162,6 +191,17 @@
             	name = item[0].name;
             }
             return name;
+        }
+        
+        var getLabelByValue = function (arrayItems , value) {
+        	var label;
+            var item = $filter('filter')(arrayItems, function (item) {
+                return item.value === value;
+            });
+            if(item && item[0]) {
+            	label = item[0].label;
+            }
+            return label;
         }
         
         var isActivePart = function(month, year) {

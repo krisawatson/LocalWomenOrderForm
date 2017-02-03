@@ -1,5 +1,6 @@
 package com.kricko.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -74,6 +75,7 @@ public class OrderServiceImpl implements OrderService
         businessRepo.saveAndFlush(business);
 
         Orders orders = new Orders(business.getId(), user.getId());
+        orders.setCreated(new Date(System.currentTimeMillis()));
         orderRepo.saveAndFlush(orders);
 
         List<OrderPart> orderParts = webOrder.getOrderParts();
@@ -117,17 +119,21 @@ public class OrderServiceImpl implements OrderService
     @Override
     public void updateOrder(Orders webOrder, User user) {
         Orders orders = orderRepo.getOne(webOrder.getId());
+        orders.setUpdated(new Date(System.currentTimeMillis()));
         List<OrderPart> webOrderParts = webOrder.getOrderParts();
         updateOrderParts(webOrderParts, orders);
+        orderRepo.saveAndFlush(orders);
     }
 
     @Override
     public void removeOrderPart(Long orderId, Long orderPartId) {
-        Orders order = orderRepo.findOne(orderId);
+        Orders orders = orderRepo.findOne(orderId);
+        orders.setUpdated(new Date(System.currentTimeMillis()));
         OrderPart orderPart = orderPartRepo.findOne(orderPartId);
-        if(order.getOrderParts().contains(orderPart)) {
+        if(orders.getOrderParts().contains(orderPart)) {
             orderPartRepo.delete(orderPartId);
         }
+        orderRepo.saveAndFlush(orders);
     }
 
     private User getUser() {
@@ -146,7 +152,7 @@ public class OrderServiceImpl implements OrderService
                 updateOrderPublication(dbOrderPart);
             } else {
                 LOGGER.debug ("Order part does not exists, creating new");
-                saveOrderPart(orderPart);
+                orderPartRepo.save(orderPart);
                 updateOrderPublication(orderPart);
             }
         }
@@ -156,7 +162,7 @@ public class OrderServiceImpl implements OrderService
         dbOrderPart.setMonth(webOrderPart.getMonth());
         dbOrderPart.setYear(webOrderPart.getYear());
         dbOrderPart.setPublications(webOrderPart.getPublications());
-        saveOrderPart(dbOrderPart);
+        orderPartRepo.save(dbOrderPart);
     }
 
     private void updateOrderPublication(OrderPart orderPart) {
@@ -171,21 +177,13 @@ public class OrderServiceImpl implements OrderService
                 dbOrderPub.setNote(orderPub.getNote());
                 dbOrderPub.setOrderPart(orderPart);
                 dbOrderPub.setPublicationId(orderPub.getPublicationId());
-                saveOrderPublication(dbOrderPub);
+                orderPublicationRepo.save(dbOrderPub);
             } else {
                 LOGGER.debug ("Order publication does not exists, cerating new");
                 orderPub.setOrderPart(orderPart);
-                saveOrderPublication(orderPub);
+                orderPublicationRepo.save(orderPub);
             }
         }
-    }
-
-    private void saveOrderPart(OrderPart orderPart) {
-        orderPartRepo.save(orderPart);
-    }
-
-    private void saveOrderPublication(OrderPublication orderPub) {
-        orderPublicationRepo.save(orderPub);
     }
 
     private void sendMails(List<OrderConfirmationMailer> mails) {

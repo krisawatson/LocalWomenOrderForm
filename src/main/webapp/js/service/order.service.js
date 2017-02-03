@@ -5,7 +5,7 @@ angular
 .service('OrderService', ['$http', '$q', 
     function($http, $q){
  
-	var services = {
+		var services = {
 			get: get,
 			create: create,
 	        list: list,
