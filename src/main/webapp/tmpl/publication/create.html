@@ -1,0 +1,25 @@
+<div data-ng-if="mainCtrl.role == 'ADMIN'" >
+    <div class="section-header">Create Publication</div>
+    <form name="createPublicationForm" class="createPublicationForm" data-ng-submit="pubCtrl.create(createPublicationForm.$valid)" novalidate>
+        <div class="success" data-ng-if="pubCtrl.successMsg">{{pubCtrl.createSuccessMsg}}</div>
+        <div class="error" data-ng-if="pubCtrl.errorMsg">{{pubCtrl.createErrorMsg}}</div>
+        <table>
+            <tr>
+                <td><label for="name">Name:</label></td>
+                <td><input type="text" class="large" data-ng-class="!pubCtrl.successMsg && createPublicationForm.$submitted && createPublicationForm.name.$invalid ? 'validation-error' : ''" name="name" data-ng-model="pubCtrl.publication.name" required/></td>
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" class="large" data-ng-class="!pubCtrl.successMsg && createPublicationForm.$submitted && createPublicationForm.email.$invalid ? 'validation-error' : ''" name="email" data-ng-model="pubCtrl.publication.email" required/></td>
+            </tr>
+        </table>
+        <div class="buttons" data-ng-if="!pubCtrl.publication.id">
+            <button class="formButton" type="submit">Create</button>
+        </div>
+        <div class="buttons" data-ng-if="pubCtrl.publication.id">
+            <input type="button" class="formButton" data-ng-click="pubCtrl.clearPublication()" value="Clear"/>
+            <input type="button" class="formButton" data-ng-click="pubCtrl.updatePublication(pubCtrl.publication)" value="Update"/>
+        </div>
+    </form>
+</div>
+<div data-ng-if="mainCtrl.role != 'ADMIN'" class="permission-denied">
+    <img src="img/denied.png" alt="PERMISSION DENIED"/>
+</div>
