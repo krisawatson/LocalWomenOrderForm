@@ -1,6 +1,6 @@
 form {
 	padding-left: 5%;
-    padding-right: 5%;
+	padding-right: 5%;
 }
 
 body {
@@ -19,7 +19,7 @@ div.content {
 }
 
 div.mainDetails, div.orderDetails {
-    padding: 10px 10px 20px 10px;
+	padding: 10px 10px 20px 10px;
 }
 
 div.publication {
@@ -33,9 +33,11 @@ div.publication label.header {
 .small {
 	width: 29%;
 }
+
 .medium {
 	width: 44%;
 }
+
 .large {
 	width: 90%;
 }
@@ -65,54 +67,65 @@ div.orderSuccess {
 }
 
 textarea {
-    resize: none;
-    width:80%;
-	box-sizing: border-box;         /* For IE and modern versions of Chrome */
-	-moz-box-sizing: border-box;    /* For Firefox                          */
-	-webkit-box-sizing: border-box; /* For Safari                           */
+	resize: none;
+	width: 80%;
+	box-sizing: border-box; /* For IE and modern versions of Chrome */
+	-moz-box-sizing: border-box; /* For Firefox                          */
+	-webkit-box-sizing: border-box;
+	/* For Safari                           */
 }
 
 div.buttons {
 	margin: 10px 10px;
 	text-align: right;
-    margin: 0 auto;
-    padding-top: 2px;
-    padding-left: 2px;
-    border: 10px solid #fff;
-    border-radius: 2px;
+	margin: 0 auto;
+	padding-top: 2px;
+	padding-left: 2px;
+	border: 10px solid #fff;
+	border-radius: 2px;
 }
 
 .formButton {
 	/* Normal State */
 	background: #EA4C89;
-    padding: 4px 15px 7px 15px;
-    width: auto;
-    height: auto;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    font-style: normal;
-    font-smoothing: antialiased;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
-    -ms-font-smoothing: antialiased;
-    text-decoration: none;
-    text-shadow: 0 -1px 1px rgba(0,0,0,0.50);
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -o-border-radius: 3px;
-    -ms-border-radius: 3px;
-    border: 1px solid rgba(0,0,0,0.50);
-    border-top: 1px solid rgba(0,0,0,0.001);
-    box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
-    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
-    -o-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
-    -ms-box-shadow: 0 0 10px rgba(0,0,0,0.35), 0px 1px 3px rgba(0,0,0,0.18), inset 0px -3px 0px rgba(0,0,0,0.35), inset 0px 14px 14px rgba(255,255,255,0.10);
-    cursor: pointer;
+	padding: 4px 15px 7px 15px;
+	width: auto;
+	height: auto;
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: normal;
+	font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	text-decoration: none;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.50);
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	-ms-border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.50);
+	border-top: 1px solid rgba(0, 0, 0, 0.001);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.35), 0px 1px 3px
+		rgba(0, 0, 0, 0.18), inset 0px -3px 0px rgba(0, 0, 0, 0.35), inset 0px
+		14px 14px rgba(255, 255, 255, 0.10);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.35), 0px 1px 3px
+		rgba(0, 0, 0, 0.18), inset 0px -3px 0px rgba(0, 0, 0, 0.35), inset 0px
+		14px 14px rgba(255, 255, 255, 0.10);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.35), 0px 1px 3px
+		rgba(0, 0, 0, 0.18), inset 0px -3px 0px rgba(0, 0, 0, 0.35), inset 0px
+		14px 14px rgba(255, 255, 255, 0.10);
+	-o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.35), 0px 1px 3px
+		rgba(0, 0, 0, 0.18), inset 0px -3px 0px rgba(0, 0, 0, 0.35), inset 0px
+		14px 14px rgba(255, 255, 255, 0.10);
+	-ms-box-shadow: 0 0 10px rgba(0, 0, 0, 0.35), 0px 1px 3px
+		rgba(0, 0, 0, 0.18), inset 0px -3px 0px rgba(0, 0, 0, 0.35), inset 0px
+		14px 14px rgba(255, 255, 255, 0.10);
+	cursor: pointer;
 }
 
 div.login-username, div.login-password {
@@ -121,11 +134,11 @@ div.login-username, div.login-password {
 
 div.login-username label, div.login-password label {
 	width: 70px;
-	display:inline-block;
+	display: inline-block;
 }
 
 .ui-grid-row {
-    height: auto !important;
+	height: auto !important;
 }
 
 .form-error {
@@ -135,8 +148,8 @@ div.login-username label, div.login-password label {
 
 input.validation-error, select.validation-error {
 	outline: none;
-    border-color: red;
-    box-shadow: 0 0 10px red;
+	border-color: red;
+	box-shadow: 0 0 10px red;
 }
 
 .appGrid {
@@ -150,14 +163,14 @@ input.validation-error, select.validation-error {
 
 div.permission-denied {
 	text-align: center;
-    margin: 30px;
+	margin: 30px;
 }
 
 .user-control {
 	padding-right: 20px;
 	font-size: 0.8em;
 	text-align: right;
-    color: darkblue;
+	color: darkblue;
 }
 
 .section-header {
@@ -165,4 +178,8 @@ div.permission-denied {
 	font-weight: bold;
 	background-color: #fb03c3;
 	padding: 10px 10px 10px 30px;
+}
+
+.icon-tooltip {
+	color: #fb03c3;
 }

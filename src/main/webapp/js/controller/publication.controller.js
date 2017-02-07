@@ -48,7 +48,8 @@
                              },
                              { field: 'id', 
 	                           displayName: 'Edit',
-	                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Publication" data-ng-click="grid.appScope.editPublication(row.entity.id)"></i></div>',
+                               width: 50,
+	                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Publication" data-ng-click="grid.appScope.editPublication(row.entity)"></i></div>',
 	                           enableFiltering: false
 	                         }]
             };

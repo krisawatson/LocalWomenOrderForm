@@ -1,10 +1,11 @@
 <div class="container">
     <div class="row cardContainer show-hide-animation">
-        <div class="col-sm-6 col-md-4 col-lg-3 cardListItem"
-             data-ng-repeat="user in userCtrl.users | orderBy:'lastname'">
-             <div class="error" ng-if="userCtrl.user[user.id].updateErrorMsg">{{userCtrl.updateErrorMsg}}</div>
+        <div class="col-sm-6 col-md-4 col-lg-3 cardListItem" data-ng-repeat="user in userCtrl.users | orderBy:'lastname'">
+            <div class="error" data-ng-if="userCtrl.user[user.id].updateErrorMsg">{{userCtrl.updateErrorMsg}}</div>
             <div class="card">
-                <button class="btn edit cardEdit" title="Edit User" data-ng-click="userCtrl.editUser(user)"><i class="fa fa-pencil"></i></button>
+                <button class="btn edit cardEdit" title="Edit User" data-ng-click="userCtrl.editUser(user)">
+                    <i class="fa fa-pencil"></i>
+                </button>
                 <div class="cardHeader">{{user.firstname + ' ' + user.lastname}} ({{user.roleName}})</div>
                 <div class="cardBody">
                     <div class="clearfix">
@@ -15,12 +16,14 @@
                             <div class="cardBodyContent">Username: {{user.username}}</div>
                             <div class="cardBodyContent">Email: {{user.email}}</div>
                             <div class="cardBodyContent" data-ng-if="user.enabled" class="acc-active">
-                                Enabled
-                                <i class="fa fa-times acc-inactive" title="Deactivate" data-ng-if="userCtrl.currentUser.username != user.username" data-ng-click="userCtrl.disableUser(user)"></i>
+                                Enabled <i class="fa fa-times acc-inactive" title="Deactivate"
+                                    data-ng-if="userCtrl.currentUser.username != user.username"
+                                    data-ng-click="userCtrl.disableUser(user)"></i>
                             </div>
                             <div class="cardBodyContent" data-ng-if="!user.enabled" class="acc-inactive">
-                                Disabled
-                                <i class="fa fa-check acc-active" title="Deactivate" data-ng-if="userCtrl.currentUser.username != user.username" data-ng-click="userCtrl.enableUser(user)"></i>
+                                Disabled <i class="fa fa-check acc-active" title="Deactivate"
+                                    data-ng-if="userCtrl.currentUser.username != user.username"
+                                    data-ng-click="userCtrl.enableUser(user)"></i>
                             </div>
                         </div>
                     </div>

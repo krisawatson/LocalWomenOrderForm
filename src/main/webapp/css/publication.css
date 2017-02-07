@@ -1,7 +1,15 @@
 .createPublicationForm {
-	padding-left: 200px;
+	padding-left: 30px;
 }
 
 button.edit {
 	padding-top: 5px;
+}
+
+.publication-large {
+	width: 200px;
+}
+
+.publication-label {
+	padding-left: 20px;
 }

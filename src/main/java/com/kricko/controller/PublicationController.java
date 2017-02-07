@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kricko.domain.Publication;
-import com.kricko.domain.User;
 import com.kricko.service.PublicationService;
 
 

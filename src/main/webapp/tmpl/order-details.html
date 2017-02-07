@@ -2,34 +2,37 @@
     <fieldset>
         <legend>Order Part</legend>
         <div>
-            <label>Month:</label>
-            <select ng-options="month.id as month.name for month in orderCtrl.months" ng-model="order.month">
-            </select>
-            <select ng-options="year for year in orderCtrl.years" ng-model="order.year">
+            <label>Month:</label> <select data-ng-options="month.id as month.name for month in orderCtrl.months"
+                data-ng-model="order.month">
+            </select> <select data-ng-options="year for year in orderCtrl.years" data-ng-model="order.year">
             </select>
         </div>
-        <div class="publication" ng-repeat="publication in orderCtrl.publications">
+        <div class="publication" data-ng-repeat="publication in orderCtrl.publications">
             <div>
-                <input type="checkbox" data-ng-value="true" data-ng-model="order.publications[publication.id].selected"/>
-		        <label class="header">{{publication.name}}:</label>
+                <input type="checkbox" data-ng-value="true" data-ng-model="order.publications[publication.id].selected" /> <label
+                    class="header">{{publication.name}}:</label>
             </div>
-            <div ng-if="order.publications[publication.id].selected == true">
-                <label class="adType">Advert Type:</label>
-                <select name="adtype-{{order.id}}-{{publication.id}}-select" ng-class="orderDetailsForm.$submitted && orderDetailsForm.adtype-{{order.id}}-{{publication.id}}-select.$invalid ? 'validation-error' : ''" ng-options="ad.id as ad.name for ad in orderCtrl.adverts" ng-model="order.publications[publication.id].adType" required></select>
-                <label>Advert Size:</label>
-                <select name="adsize-{{order.id}}-{{publication.id}}-select" ng-class="orderDetailsForm.$submitted && orderDetailsForm.adsize-{{order.id}}-{{publication.id}}-select.$invalid ? 'validation-error' : ''" ng-options="adSize.id as adSize.name for adSize in orderCtrl.advertSizes" ng-model="order.publications[publication.id].adSize" required>
+            <div data-ng-if="order.publications[publication.id].selected == true">
+                <label class="adType">Advert Type:</label> <select name="adtype-{{order.id}}-{{publication.id}}-select"
+                    data-ng-class="orderDetailsForm.$submitted && orderDetailsForm.adtype-{{order.id}}-{{publication.id}}-select.$invalid ? 'validation-error' : ''"
+                    data-ng-options="ad.id as ad.name for ad in orderCtrl.adverts"
+                    data-ng-model="order.publications[publication.id].adType" required></select> <label>Advert Size:</label> <select
+                    name="adsize-{{order.id}}-{{publication.id}}-select"
+                    data-ng-class="orderDetailsForm.$submitted && orderDetailsForm.adsize-{{order.id}}-{{publication.id}}-select.$invalid ? 'validation-error' : ''"
+                    data-ng-options="adSize.id as adSize.name for adSize in orderCtrl.advertSizes"
+                    data-ng-model="order.publications[publication.id].adSize" required>
                 </select>
             </div>
             <div>
                 <label>Notes:</label>
             </div>
             <div>
-                <textarea ng-model="order.publications[publication.id].note"></textarea>
+                <textarea data-ng-model="order.publications[publication.id].note"></textarea>
             </div>
         </div>
-        <div class="buttons" ng-if="order.id > 1">
-            <button class="formButton" type="button" ng-click="orderCtrl.removeOrder(order.id)">Remove</button>
+        <div class="buttons" data-ng-if="order.id > 1">
+            <button class="formButton" type="button" data-ng-click="orderCtrl.removeOrder(order.id)">Remove</button>
         </div>
     </fieldset>
 </div>
-<div class="form-error" ng-if="orderCtrl.errorMsg">{{orderCtrl.errorMsg}}</div>
+<div class="form-error" data-ng-if="orderCtrl.errorMsg">{{orderCtrl.errorMsg}}</div>

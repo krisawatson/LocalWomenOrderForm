@@ -1,44 +1,60 @@
-<form name="mainDetailsForm" ng-submit="orderCtrl.goToNextStep(mainDetailsForm.$valid)" novalidate>
-	<div>
-		<label>Business Name:</label>
-	</div>
-	<div>
-		<input type="text" class="businessNameInput large" ng-class="mainDetailsForm.$submitted && mainDetailsForm.businessName.$invalid ? 'validation-error' : ''" placeholder="Business Name" name="businessName" ng-model="orderCtrl.business.name" required/>
-	</div>
-	<div>
-		<label>Contact Name:</label>
-	</div>
-	<div>
-		<input type="text" class="medium" ng-class="mainDetailsForm.$submitted && mainDetailsForm.firstname.$invalid ? 'validation-error' : ''" placeholder="First" name="firstname" ng-model="orderCtrl.business.firstname" required/>
-		<input type="text" class="medium" ng-class="mainDetailsForm.$submitted && mainDetailsForm.lastname.$invalid ? 'validation-error' : ''" placeholder="Last" name="lastname" ng-model="orderCtrl.business.lastname" required/>
-	</div>
-	<div>
-		<label>Address:</label>
-	</div>
-	<div>
-		<input type="text" class="large" ng-class="mainDetailsForm.$submitted && mainDetailsForm.address1.$invalid ? 'validation-error' : ''" placeholder="Address Line 1" name="address1" ng-model="orderCtrl.business.address1" required/>
-	</div>
-	<div>
-		<input type="text" class="large" placeholder="Address Line 2" ng-model="orderCtrl.business.address2"/>
-	</div>
-	<div>
-		<input type="text" class="small" ng-class="mainDetailsForm.$submitted && mainDetailsForm.city.$invalid ? 'validation-error' : ''" placeholder="City" name="city" ng-model="orderCtrl.business.city" required/>
-		<input type="text" class="small" placeholder="County" name="county" ng-model="orderCtrl.business.county"/>
-		<input type="text" class="small" ng-class="mainDetailsForm.$submitted && mainDetailsForm.postcode.$invalid ? 'validation-error' : ''" placeholder="Postcode" name="postcode" ng-model="orderCtrl.business.postcode" required/>
-	</div>
-	<div>
-		<table class="large">
-			<tr>
-				<td><label>Email:</label></td>
-				<td><label>Phone:</label></td>
-			</tr>
-			<tr>
-				<td><input type="text" class="large" ng-class="mainDetailsForm.$submitted && mainDetailsForm.email.$invalid ? 'validation-error' : ''" placeholder="name@email.com" name="email" ng-model="orderCtrl.business.email" required/></td>
-				<td><input type="text" class="large" placeholder="02890 123456" name="tel" ng-model="orderCtrl.business.tel"/></td>
-			</tr>
-		</table>
-	</div>
-	<div class="buttons" ng-if="orderCtrl.steps.step <= orderCtrl.steps.maxSteps">
-        <button class="formButton" ng-if="orderCtrl.steps.step < orderCtrl.steps.maxSteps" type="submit">Next</button>
+<form name="mainDetailsForm" data-ng-submit="orderCtrl.goToNextStep(mainDetailsForm.$valid)" novalidate>
+    <div>
+        <label>Business Name:</label>
+    </div>
+    <div>
+        <input type="text" class="businessNameInput large"
+            data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.businessName.$invalid ? 'validation-error' : ''"
+            placeholder="Business Name" name="businessName" data-ng-model="orderCtrl.business.name" required />
+    </div>
+    <div>
+        <label>Contact Name:</label>
+    </div>
+    <div>
+        <input type="text" class="medium"
+            data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.firstname.$invalid ? 'validation-error' : ''"
+            placeholder="First" name="firstname" data-ng-model="orderCtrl.business.firstname" required /> <input type="text"
+            class="medium"
+            data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.lastname.$invalid ? 'validation-error' : ''"
+            placeholder="Last" name="lastname" data-ng-model="orderCtrl.business.lastname" required />
+    </div>
+    <div>
+        <label>Address:</label>
+    </div>
+    <div>
+        <input type="text" class="large"
+            data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.address1.$invalid ? 'validation-error' : ''"
+            placeholder="Address Line 1" name="address1" data-ng-model="orderCtrl.business.address1" required />
+    </div>
+    <div>
+        <input type="text" class="large" placeholder="Address Line 2" data-ng-model="orderCtrl.business.address2" />
+    </div>
+    <div>
+        <input type="text" class="small"
+            data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.city.$invalid ? 'validation-error' : ''"
+            placeholder="City" name="city" data-ng-model="orderCtrl.business.city" required /> <input type="text" class="small"
+            placeholder="County" name="county" data-ng-model="orderCtrl.business.county" /> <input type="text" class="small"
+            data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.postcode.$invalid ? 'validation-error' : ''"
+            placeholder="Postcode" name="postcode" data-ng-model="orderCtrl.business.postcode" required />
+    </div>
+    <div>
+        <table class="large">
+            <tr>
+                <td><label>Email:</label></td>
+                <td><label>Phone:</label></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="large"
+                    data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.email.$invalid ? 'validation-error' : ''"
+                    placeholder="name@email.com" name="email" data-ng-model="orderCtrl.business.email"
+                    data-ng-pattern="orderCtrl.emailFormat" required /></td>
+                <td><input type="number" class="large" placeholder="02890123456"
+                    data-ng-class="mainDetailsForm.$submitted && mainDetailsForm.business.tel.$invalid ? 'validation-error' : ''"
+                    name="tel" data-ng-model="orderCtrl.business.tel" /></td>
+            </tr>
+        </table>
+    </div>
+    <div class="buttons" data-ng-if="orderCtrl.steps.step <= orderCtrl.steps.maxSteps">
+        <button class="formButton" data-ng-if="orderCtrl.steps.step < orderCtrl.steps.maxSteps" type="submit">Next</button>
     </div>
 </form>

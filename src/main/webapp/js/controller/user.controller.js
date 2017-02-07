@@ -21,6 +21,8 @@
         self.editUser = editUser;
         self.enableUser = enableUser;
         self.updateUser = updateUser;
+        self.passwordTooltip = "Leave blank if you do not wish to change the password. " +
+        		"If you enter a value it will update the users password";
         
         function create(valid) {
             delete self.errorMsg;

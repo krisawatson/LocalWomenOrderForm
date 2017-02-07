@@ -1,24 +1,24 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
-  <head>
-    <title tiles:fragment="title">Local Women Order Form</title>
-    <link rel="stylesheet" type="text/css" href="css/app.css">
-  </head>
-  <body ng-controller="AuthController as ctrl">
+<head>
+<title tiles:fragment="title">Local Women Order Form</title>
+<link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+<body data-ng-controller="AuthController as ctrl">
     <div class="content" tiles:fragment="content">
-    	<h2>Login</h2>
-        <form ng-submit="submit" method="post">
-        	<div class="login-username">
-	            <label for="username">Username</label>
-	            <input type="text" id="username" name="username" ng-model="user.username"/>
+        <h2>Login</h2>
+        <form data-ng-submit="submit" method="post">
+            <div class="login-username">
+                <label for="username">Username</label> <input type="text" id="username" name="username"
+                    data-ng-model="user.username" />
             </div>
-            <div class="login-password"> 
-	            <label for="password">Password</label>
-	            <input type="password" id="password" name="password" ng-model="user.password"/>
+            <div class="login-password">
+                <label for="password">Password</label> <input type="password" id="password" name="password"
+                    data-ng-model="user.password" />
             </div>
             <div class="buttons">
                 <button class="formButton" type="submit" class="btn">Log in</button>
             </div>
         </form>
     </div>
-  </body>
+</body>
 </html>

@@ -33,7 +33,8 @@
                        {id:9, name:"September"},
                        {id:10, name:"October"},
                        {id:11, name:"November"},
-                       {id:12, name:"December"}]
+                       {id:12, name:"December"}];
+        self.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
         
         setStart();
         buildYears();
