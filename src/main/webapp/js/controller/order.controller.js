@@ -126,7 +126,9 @@
         
         function getResources() {
             DetailsService.publications().then(function(data){
-                self.publications = data;
+                self.publications = data.filter(function(publication) {
+                    return publication.enabled;
+                });
             });
             
             DetailsService.adtypes().then(function (data) {

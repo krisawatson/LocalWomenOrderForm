@@ -23,6 +23,8 @@
         self.clearPublication = clearPublication;
         self.editPublication = editPublication;
         self.updatePublication = updatePublication;
+        self.enablePublication = enablePublication;
+        self.disablePublication = disablePublication;
         
         self.gridOptions = {
                 appScopeProvider: self,
@@ -50,6 +52,12 @@
 	                           displayName: 'Edit',
                                width: 50,
 	                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Publication" data-ng-click="grid.appScope.editPublication(row.entity)"></i></div>',
+	                           enableFiltering: false
+	                         },
+                             { field: 'enabled', 
+	                           displayName: 'Active',
+                               width: 70,
+	                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-check acc-active" title="Deactivate" data-ng-if="row.entity.enabled" data-ng-click="grid.appScope.disablePublication(row.entity)"></i><i class="fa fa-times acc-inactive" title="Activate" data-ng-if="!row.entity.enabled" data-ng-click="grid.appScope.enablePublication(row.entity)"></i></div>',
 	                           enableFiltering: false
 	                         }]
             };
@@ -101,6 +109,14 @@
             },function(error){
             	console.log(error);
             });
+        }
+        function enablePublication(publication) {
+        	publication.enabled = true;
+        	updatePublication(publication);
+        }
+        function disablePublication(publication) {
+        	publication.enabled = false;
+        	updatePublication(publication);
         }
         
         getPublicationList();

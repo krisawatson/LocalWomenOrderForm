@@ -1,5 +1,6 @@
 package com.kricko.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ public class Publication {
     private Long id;
     private String name;
     private String email;
+    private boolean enabled;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +37,12 @@ public class Publication {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    @Column(columnDefinition="tinyint(1) default 1")
+    public boolean isEnabled() {
+        return enabled;
+    }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
