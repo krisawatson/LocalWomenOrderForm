@@ -26,4 +26,4 @@ INSERT INTO role (name) VALUES ('ADMIN');
 INSERT INTO role (name) VALUES ('USER');
 
 -- Create a first user
-INSERT INTO user (username, password, firstname, lastname, email, enabled, role_id) VALUES ('kris','$2a$10$RorPa6Wsf50Rk9CNSyeFpOGh/XH0iIBgCL01FkrQWyFCzYCCy58KO','Kris','Watson','treble00_01@hotmail.com',1,1);
+INSERT INTO user (username, password, firstname, lastname, email, enabled, role_id) VALUES ('admin','$2a$10$RorPa6Wsf50Rk9CNSyeFpOGh/XH0iIBgCL01FkrQWyFCzYCCy58KO','Admin','User','treble00_01@hotmail.com',1,1);
