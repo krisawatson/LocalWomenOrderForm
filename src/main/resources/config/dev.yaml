@@ -9,7 +9,7 @@ server:
 # Connection url for the database "localwomen"
 spring:
     datasource:
-        url: jdbc:mysql://localwomen.cmx1vpsrbwxr.us-west-2.rds.amazonaws.com:3306/localwomen?useSSL=false
+        url: jdbc:mysql://localwomendevdb.cmx1vpsrbwxr.us-west-2.rds.amazonaws.com:3306/localwomen?useSSL=false
         username: localwomen
         password: L0calW0men
         testWhileIdle: true
@@ -33,7 +33,7 @@ spring:
     mail:
         host: smtp.gmail.com
         username: treble2001@gmail.com
-        password: cfl...
+        password: cfl5747
         properties:
             mail:
                 debug: true
@@ -52,5 +52,5 @@ spring:
 orders:
     email:
         account:
-            orders: anelis1982@hotmail.com
-            accounts: aidannelis@gmail.com
+            orders: treble00_01@hotmail.com
+            accounts: krisawatson@yahoo.co.uk
