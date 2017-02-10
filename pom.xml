@@ -27,6 +27,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 
+			The following exclusion is used for deployment to external tomcat
+			If you want to run it from embedded tomcat comment out
+			 -->
 			<exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

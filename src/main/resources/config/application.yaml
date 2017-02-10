@@ -31,9 +31,9 @@ spring:
 # = Mailer
 # ===============================
     mail:
-        host: smtp.gmail.com
-        username: treble2001@gmail.com
-        password: cfl5747
+        host: smtp.mail.yahoo.com
+        username: krisawatson@yahoo.co.uk
+        password: "*K..."
         properties:
             mail:
                 debug: false

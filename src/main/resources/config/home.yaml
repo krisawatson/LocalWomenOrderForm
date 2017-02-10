@@ -33,7 +33,7 @@ spring:
     mail:
         host: smtp.gmail.com
         username: treble2001@gmail.com
-        password: cfl5747
+        password: cfl...
         properties:
             mail:
                 debug: true

@@ -72,7 +72,8 @@
             var processingDialog = ngDialog.open({
             	template: 'tmpl/order-processing-dialog.html',
             	controller: 'OrderController', 
-            	className: 'ngdialog-theme-default'
+            	className: 'ngdialog-theme-default',
+            	disableAnimation: true
             });
             
             self.orderError = null;
