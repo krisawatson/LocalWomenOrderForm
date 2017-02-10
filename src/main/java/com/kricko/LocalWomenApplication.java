@@ -2,6 +2,8 @@ package com.kricko;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 
@@ -10,8 +12,15 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource({ "classpath:config/application.yaml",
                   "classpath:config/dev.yaml",
                   "classpath:config/home.yaml"})
-public class LocalWomenApplication {
+public class LocalWomenApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(LocalWomenApplication.class, args);
     }
+    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(applicationClass);
+    }
+
+    private static Class<LocalWomenApplication> applicationClass = LocalWomenApplication.class;
 }
