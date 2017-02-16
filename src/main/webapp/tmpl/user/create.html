@@ -5,16 +5,16 @@
         <div class="error" data-ng-if="userCtrl.errorMsg">{{userCtrl.createErrorMsg}}</div>
         <table>
             <tr>
-                <td><label for="username">Username:</label></td>
+                <td><label for="create-username">Username:</label></td>
                 <td><input type="text" class="large"
                     data-ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.username.$invalid ? 'validation-error' : ''"
-                    name="username" data-ng-model="userCtrl.user.username" required /></td>
+                    name="create-username" data-ng-model="userCtrl.user.username" required /></td>
             </tr>
             <tr>
-                <td><label for="password">Password:</label></td>
+                <td><label for="create-password">Password:</label></td>
                 <td><input type="password" class="large"
                     data-ng-class="!userCtrl.successMsg && createUserForm.$submitted && createUserForm.password.$invalid ? 'validation-error' : ''"
-                    name="password" data-ng-model="userCtrl.user.password" data-ng-required="!userCtrl.user.id" /> 
+                    name="create-password" data-ng-model="userCtrl.user.password" data-ng-required="!userCtrl.user.id" /> 
                 </td>
                 <td data-ng-if="userCtrl.user.id"><i class="fa fa-question-circle icon-tooltip" aria-hidden="true" title="{{userCtrl.passwordTooltip}}" data-toggle="tooltip" data-placement="top" tooltip></i></td>
             </tr>
