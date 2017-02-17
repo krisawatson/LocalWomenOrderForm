@@ -99,6 +99,9 @@
             	self.users = data;
             	angular.forEach(self.users, function(user){
                 	delete user.password;
+                	if(!user.lastname) {
+                		user.lastname = '';
+                	}
                     setRoleName(user);
                 });
             },function(error){
