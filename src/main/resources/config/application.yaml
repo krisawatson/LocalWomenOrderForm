@@ -12,7 +12,7 @@ spring:
         url: jdbc:mysql://localwomen.cmx1vpsrbwxr.us-west-2.rds.amazonaws.com:3306/localwomen?useSSL=false
         username: localwomen
         password: L0calW0men
-        testWhileIdle: true
+        testWhileIdle: false
         validationQuery: SELECT 1
 
 # ===============================
@@ -31,20 +31,20 @@ spring:
 # = Mailer
 # ===============================
     mail:
-        host: smtp.mail.yahoo.com
-        username: krisawatson@yahoo.co.uk
-        password: "*K..."
+        host: smtp.localwomensnews.com
+        username: orders@localwomensnews.com
+        password: SX9a5g
         properties:
             mail:
-                debug: false
+                debug: true
                 smtp:
                     auth: true
                     ssl:
-                        enable: true
+                        enable: false
                     socketFactory:
-                        port: 465
+                        port: 25
                         class: javax.net.ssl.SSLSocketFactory
-                        fallback: false
+                        fallback: true
 
 # ===============================
 # = Email Accounts

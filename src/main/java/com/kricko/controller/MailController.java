@@ -32,7 +32,7 @@ public class MailController {
 
 	@RequestMapping(value = "/mail/test", method = RequestMethod.GET)
     public String testEmail() {
-		Orders orders = getSingleOrder(4L);
+		Orders orders = getSingleOrder(1L);
 		Business business = getBusiness(orders.getBusinessId());
 		String body = mailTemplateService.buildTemplate(EmailType.BUSINESS, business, orders);
 		try {

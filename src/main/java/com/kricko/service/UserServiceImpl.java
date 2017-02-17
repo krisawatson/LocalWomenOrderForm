@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService
     public ResponseEntity<Void> createUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try{
-            userRepo.save(user);
+            userRepo.saveAndFlush(user);
         } catch (DataIntegrityViolationException e) {
             if(e.contains(ConstraintViolationException.class)) {
                 LOGGER.warn("Constaint violated while trying to create an account, "
@@ -63,14 +63,17 @@ public class UserServiceImpl implements UserService
     
     @Override
     public ResponseEntity<Void> updateUser(Long userId, User user) {
+        User dbUser = userRepo.getOne(userId);
+        dbUser.setEmail(user.getEmail());
+        dbUser.setEnabled(user.getEnabled());
+        dbUser.setFirstname(user.getFirstname());
+        dbUser.setLastname(user.getLastname());
+        dbUser.setRoleId(user.getRoleId());
+        dbUser.setUsername(user.getUsername());
     	if(null != user.getPassword()){
-    		user.setPassword(passwordEncoder.encode(user.getPassword()));
-    		userRepo.updateUserById(userId, user.getFirstname(), user.getLastname(), 
-	                user.getEmail(), user.getRoleId(), user.getEnabled(), user.getPassword());
-    	} else {
-	        userRepo.updateUserInfoById(userId, user.getFirstname(), user.getLastname(), 
-	                user.getEmail(), user.getRoleId(), user.getEnabled());
+    		dbUser.setPassword(passwordEncoder.encode(user.getPassword()));
     	}
+    	userRepo.saveAndFlush(dbUser);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     

@@ -40,7 +40,12 @@ public class PublicationServiceImpl implements PublicationService
     
     @Override
     public ResponseEntity<Void> updatePublication(Long pubId, Publication publication) {
-    	pubRepo.updatePublicationInfoById(pubId, publication.getName(), publication.getEmail(), publication.isEnabled());
+        Publication dbPublication = pubRepo.findOne(pubId);
+        dbPublication.setEmail(publication.getEmail());
+        dbPublication.setEnabled(publication.isEnabled());
+        dbPublication.setName(publication.getName());
+        
+    	pubRepo.saveAndFlush(dbPublication);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
