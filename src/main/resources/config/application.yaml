@@ -12,7 +12,7 @@ spring:
         url: jdbc:mysql://localwomen.cmx1vpsrbwxr.us-west-2.rds.amazonaws.com:3306/localwomen?useSSL=false
         username: localwomen
         password: L0calW0men
-        testWhileIdle: false
+        testWhileIdle: true
         validationQuery: SELECT 1
 
 # ===============================
