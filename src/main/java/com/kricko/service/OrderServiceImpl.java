@@ -74,7 +74,9 @@ public class OrderServiceImpl implements OrderService
         Business business = webOrder.getBusiness();
         businessRepo.saveAndFlush(business);
 
-        Orders orders = new Orders(business.getId(), user.getId());
+        Orders orders = new Orders(business.getId(), user.getId(), 
+                    webOrder.getPriceExVat(), webOrder.getPriceIncVat(), 
+                    webOrder.getDeposit());
         orders.setCreated(new Date(System.currentTimeMillis()));
         orderRepo.saveAndFlush(orders);
 

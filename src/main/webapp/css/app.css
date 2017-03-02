@@ -30,6 +30,10 @@ div.publication label.header {
 	font-weight: bold;
 }
 
+.vsmall {
+	width: 12%;
+}
+
 .small {
 	width: 29%;
 }

@@ -19,9 +19,13 @@
         var self = this;
         NavFactory.setTab('order');
         var now = new Date();
+        var priceVatDiff = 1.2;
         self.id = 1;
         self.currentMonth = now.getMonth() + 1;
         self.currentYear = now.getFullYear();
+        self.priceIncVat=parseFloat(0.00);
+        self.priceExVat=parseFloat(0.00);
+        self.deposit=parseFloat(0.00);
         self.months = [{id:1, name:"January"},
                        {id:2, name:"February"},
                        {id:3, name:"March"},
@@ -46,6 +50,8 @@
         self.goToPreviousStep = goToPreviousStep;
         self.removeOrder = removeOrder;
         self.reset = setStart;
+        self.updatePriceIncVat = updatePriceIncVat;
+        self.updatePriceExVat = updatePriceExVat;
         
         function addMoreDetails() {
             // For new order set the month to the next one
@@ -80,7 +86,10 @@
             fixOrderDetails();
             var order = {
                 "business": self.business,
-                "orderParts": self.orderParts
+                "orderParts": self.orderParts,
+                "priceExVat": self.priceExVat,
+                "priceIncVat": self.priceIncVat,
+                "deposit": self.deposit
             }
             OrderService.create(order).then(function(orderNumber){
                 processingDialog.close();
@@ -171,6 +180,14 @@
                 });
             }
             return valid;
+        }
+        
+        function updatePriceExVat() {
+        	self.priceExVat = parseFloat(self.priceIncVat / priceVatDiff);
+        }
+        
+        function updatePriceIncVat() {
+        	self.priceIncVat = parseFloat(self.priceExVat * priceVatDiff);
         }
     }
 })(window);

@@ -5,7 +5,7 @@
         '$filter','$http','$location', '$q','$scope',
         'BusinessService','DetailsService','OrderService',
         'SortingUtilsFactory','uiGridConstants','NavFactory',
-        Search]);
+        'UserService',Search]);
     
     function Search($filter,
                     $http,
@@ -17,7 +17,8 @@
                     OrderService,
                     SortingUtilsFactory,
                     uiGridConstants,
-                    NavFactory) {
+                    NavFactory,
+                    UserService) {
         var self = this;
         var months = [{value: 1,
         			   label: 'January'
@@ -79,26 +80,32 @@
             rowHeight:44,
             columnDefs: [{ field: 'orderId', 
                            displayName: 'ID',
+                           headerTooltip:'Order ID',
                            width: 50,
        					   sortingAlgorithm: SortingUtilsFactory.sortNumbers
                          },
                          { field: 'businessName', 
                            displayName: 'Business Name',
+                           headerTooltip:'Business Name',
                            cellTemplate: '<div class="tbl-cell-business">{{row.entity.businessName}}<i class="fa fa-pencil right" title="Edit {{row.entity.businessName}}" data-ng-click="grid.appScope.editBusiness(row.entity.businessId)"></i></div>',
                            width: 150
                          },
                          { field: 'name', 
                            displayName: 'Publication',
+                           headerTooltip:'Publication',
                            width: 120
                          },
                          { field: 'adType', 
-                           displayName: 'Type'
+                           displayName: 'Type',
+                           headerTooltip:'Type'
                          },
                          { field: 'adSize', 
-                           displayName: 'Size'
+                           displayName: 'Size',
+                           headerTooltip:'Size'
                          },
                          { field: 'month', 
                            displayName: 'Month',
+                           headerTooltip:'Month',
                            cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.appScope.getMonthByInt(grid.getCellValue(row, col))}}</div>',
                            filter: {
                         	   type: uiGridConstants.filter.SELECT,
@@ -106,12 +113,27 @@
                            }
                          },
                          { field: 'year', 
-                           displayName: 'Year'
+                           displayName: 'Year',
+                           headerTooltip:'Year'
+                         },
+                         { field: 'priceExVat', 
+                           displayName: 'Price',
+                           headerTooltip:'Price Excluding / Including VAT',
+                           cellTemplate: '<div class="ui-grid-cell-contents">{{row.entity.priceExVat}}<br/>{{row.entity.priceIncVat}}</div>',
+                           enableFiltering: false,
+                           visible: false
+                         },
+                         { field: 'deposit', 
+                           displayName: 'Deposit',
+                           headerTooltip:'Deposit',
+                           enableFiltering: false,
+                           visible: false
                          },
                          { field: 'orderId', 
-                           displayName: 'Edit',
+                           displayName: '',
                            cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
-                           enableFiltering: false
+                           enableFiltering: false,
+                           width: 50
                          }]
         };
 
@@ -119,13 +141,18 @@
             DetailsService.publications(), 
             DetailsService.adtypes(), 
             DetailsService.adsizes(),
-            OrderService.list()])
+            OrderService.list(),
+            UserService.get()])
             .then(function(data) {
                 self.businesses = data[0];
                 self.publications = data[1];
                 self.adverts = data[2];
                 self.advertSizes = data[3];
                 fillOrderListDetails(data[4]);
+                if(data[5].authorities[0].authority === 'ADMIN') {
+                	self.gridOptions.columnDefs[7].visible = true;
+                    self.gridOptions.columnDefs[8].visible = true;
+                }
             });
         
         function editBusiness(businessId) {
@@ -156,7 +183,10 @@
                         orderId: order.id,
                         businessId: order.businessId,
                         businessName: getNameById(self.businesses, order.businessId),
-                        userId: order.userId
+                        userId: order.userId,
+                        priceExVat: order.priceExVat.toFixed(2),
+                        priceIncVat: order.priceIncVat.toFixed(2),
+                        deposit: order.deposit.toFixed(2)
                 }
                 angular.forEach(order.orderParts, function(orderPart){
                     var part = angular.copy(orderItems);
