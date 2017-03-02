@@ -20,6 +20,7 @@
         var pathParts = $location.path().split("/");
         var orderId = pathParts[2];
         var now = new Date();
+        var priceVatDiff = 1.2;
         self.months = [{id:1, name:"January"},
                         {id:2, name:"February"},
                         {id:3, name:"March"},
@@ -42,6 +43,8 @@
         self.addMoreDetails = addMoreDetails;
         self.update = update;
         self.removeOrder = removeOrder;
+        self.updatePriceIncVat = updatePriceIncVat;
+        self.updatePriceExVat = updatePriceExVat;
         
         function addMoreDetails() {
             // For new order set the month to the next one
@@ -180,6 +183,20 @@
               years.push(self.currentYear + i);
             }
             self.years = years;
+        }
+        
+        function updatePriceExVat() {
+        	var price = parseFloat((self.order.priceIncVat / priceVatDiff).toFixed(2));
+        	if(!isNaN(price)){
+        		self.order.priceExVat = price;
+        	}
+        }
+        
+        function updatePriceIncVat() {
+        	var price = parseFloat((self.order.priceExVat * priceVatDiff).toFixed(2));
+        	if(!isNaN(price)){
+        		self.order.priceIncVat = price;
+        	}
         }
         
         getOrderDetails();

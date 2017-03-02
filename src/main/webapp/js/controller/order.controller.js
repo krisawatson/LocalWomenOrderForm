@@ -122,6 +122,9 @@
                 "id":self.id,
                 "month": self.currentMonth + 1,
                 "year": self.currentYear,
+                "priceExVat": self.priceExVat,
+                "priceIncVat": self.priceIncVat,
+                "deposit": self.deposit,
                 "publications": []
             };
             self.business = {};
@@ -183,11 +186,17 @@
         }
         
         function updatePriceExVat() {
-        	self.priceExVat = parseFloat(self.priceIncVat / priceVatDiff);
+        	var price = parseFloat(self.priceIncVat / priceVatDiff);
+        	if(!isNaN(price)){
+        		self.priceExVat = price;
+        	}
         }
         
         function updatePriceIncVat() {
-        	self.priceIncVat = parseFloat(self.priceExVat * priceVatDiff);
+        	var price = parseFloat(self.priceExVat * priceVatDiff);
+        	if(!isNaN(price)){
+        		self.order.priceIncVat = price;
+        	}
         }
     }
 })(window);

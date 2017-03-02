@@ -122,6 +122,9 @@ public class OrderServiceImpl implements OrderService
     public void updateOrder(Orders webOrder, User user) {
         Orders orders = orderRepo.getOne(webOrder.getId());
         orders.setUpdated(new Date(System.currentTimeMillis()));
+        orders.setPriceExVat(webOrder.getPriceExVat());
+        orders.setPriceIncVat(webOrder.getPriceIncVat());
+        orders.setDeposit(webOrder.getDeposit());
         List<OrderPart> webOrderParts = webOrder.getOrderParts();
         updateOrderParts(webOrderParts, orders);
         orderRepo.saveAndFlush(orders);
