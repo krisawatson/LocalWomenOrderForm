@@ -31,20 +31,29 @@ spring:
 # = Mailer
 # ===============================
     mail:
-        host: smtp.localwomensnews.com
-        username: orders@localwomensnews.com
-        password: SX9a5g
+        #host: email-smtp.eu-west-1.amazonaws.com
+        host: email-smtp.us-west-2.amazonaws.com
+        port: 465
+        protocol: smtps
+        username: AKIAJ7SXLBST4573IKNQ
+        password: AgNmrDsz3PIYYQG84dYERWuN4MKhUroZhlfEIsB6OPAD
+        #username: orders@localwomensnews.com
+        #password: SX9a5g
         properties:
             mail:
                 debug: true
                 smtp:
                     auth: true
                     ssl:
-                        enable: false
+                        enable: true
                     socketFactory:
                         port: 25
                         class: javax.net.ssl.SSLSocketFactory
                         fallback: true
+                    transport:
+                        protocol: smtps
+                smtps:
+                    auth: true
 
 # ===============================
 # = Email Accounts

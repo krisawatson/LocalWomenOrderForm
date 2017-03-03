@@ -32,11 +32,14 @@ public class SmtpMailer
 
     private static final Logger LOGGER = LogManager.getLogger();
     
+    private static final String FROM_ADDRESS = "orders@localwomensnews.com";
+    
     private void send(String to, String[] cc, String subject, String body) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         message.setContent(body, "text/html");
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
+        helper.setFrom(FROM_ADDRESS);
         helper.setTo(to);
         if(null != cc){
             helper.setCc(cc);

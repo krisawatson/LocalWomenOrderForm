@@ -91,6 +91,7 @@
                 "priceIncVat": self.priceIncVat,
                 "deposit": self.deposit
             }
+            console.log(order);
             OrderService.create(order).then(function(orderNumber){
                 processingDialog.close();
                 self.orderNumber = orderNumber;
@@ -166,8 +167,10 @@
                 delete order.id;
                 var publications = []
                 angular.forEach(order.publications, function(publication, index){
-                    publication.publicationId = index;
-                    publications.push(publication);
+                	if(publication && publication.selected) {
+	                    publication.publicationId = index;
+	                    publications.push(publication);
+                	}
                 });
                 order.publications = publications;
             });
