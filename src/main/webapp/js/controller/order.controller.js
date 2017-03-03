@@ -186,16 +186,16 @@
         }
         
         function updatePriceExVat() {
-        	var price = parseFloat(self.priceIncVat / priceVatDiff);
+        	var price = parseFloat((self.priceIncVat / priceVatDiff).toFixed(2));
         	if(!isNaN(price)){
         		self.priceExVat = price;
         	}
         }
         
         function updatePriceIncVat() {
-        	var price = parseFloat(self.priceExVat * priceVatDiff);
+        	var price = parseFloat((self.priceExVat * priceVatDiff).toFixed(2));
         	if(!isNaN(price)){
-        		self.order.priceIncVat = price;
+        		self.priceIncVat = price;
         	}
         }
     }

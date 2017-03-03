@@ -2,9 +2,9 @@
     <div data-ng-if="orderCtrl.steps.step == 1" class="mainDetails" main-details></div>
     <form name="orderDetailsForm" data-ng-submit="orderCtrl.submitOrder(orderDetailsForm.$valid)" novalidate>
     	<div data-ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep">
-            <label>Price (Ex. VAT):</label><input type="number" step="0.01" min="0.00" class="vsmall" data-ng-model="orderCtrl.priceExVat" data-ng-change="orderCtrl.updatePriceIncVat()"/>
-            <label>Price (Inc. VAT):</label><input type="number" step="0.01" min="0.00" class="vsmall" data-ng-model="orderCtrl.priceIncVat" data-ng-change="orderCtrl.updatePriceExVat()"/>
-            <label>Deposit:</label><input type="number" step="0.01" min="0.00" class="vsmall" data-ng-model="orderCtrl.deposit"/>
+            <label>Price (Ex. VAT):</label><input type="text" class="vsmall" data-ng-model="orderCtrl.priceExVat" data-ng-change="orderCtrl.updatePriceIncVat()"/>
+            <label>Price (Inc. VAT):</label><input type="text" class="vsmall" data-ng-model="orderCtrl.priceIncVat" data-ng-change="orderCtrl.updatePriceExVat()"/>
+            <label>Deposit:</label><input type="text" class="vsmall" data-ng-model="orderCtrl.deposit"/>
     	</div>
         <div data-ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep" class="orders"
             data-ng-repeat="order in orderCtrl.orderParts track by order.id">

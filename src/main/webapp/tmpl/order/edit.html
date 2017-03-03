@@ -2,9 +2,9 @@
     <div class="success" data-ng-if="editOrderCtrl.successMsg">{{editOrderCtrl.successMsg}}</div>
     <div class="error" data-ng-if="editOrderCtrl.errorMsg">{{editOrderCtrl.errorMsg}}</div>
     <div data-ng-if="mainCtrl.role === 'ADMIN'">
-        <label>Price (Ex. VAT):</label><input type="number" step="0.01" min="0.00" class="vsmall" data-ng-model="editOrderCtrl.order.priceExVat" data-ng-change="editOrderCtrl.updatePriceIncVat()"/>
-        <label>Price (Inc. VAT):</label><input type="number" step="0.01" min="0.00" class="vsmall" data-ng-model="editOrderCtrl.order.priceIncVat" data-ng-change="editOrderCtrl.updatePriceExVat()"/>
-        <label>Deposit:</label><input type="number" step="0.01" min="0.00" class="vsmall" data-ng-model="editOrderCtrl.order.deposit"/>
+        <label>Price (Ex. VAT):</label><input type="text" class="vsmall" data-ng-model="editOrderCtrl.order.priceExVat" data-ng-change="editOrderCtrl.updatePriceIncVat()"/>
+        <label>Price (Inc. VAT):</label><input type="text" class="vsmall" data-ng-model="editOrderCtrl.order.priceIncVat" data-ng-change="editOrderCtrl.updatePriceExVat()"/>
+        <label>Deposit:</label><input type="text" class="vsmall" data-ng-model="editOrderCtrl.order.deposit"/>
     </div>
     <div class="orders" data-ng-repeat="orderPart in editOrderCtrl.orderParts">
         <div>
