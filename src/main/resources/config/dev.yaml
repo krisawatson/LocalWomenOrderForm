@@ -9,9 +9,9 @@ server:
 # Connection url for the database "localwomen"
 spring:
     datasource:
-        url: jdbc:mysql://localwomendevdb.cmx1vpsrbwxr.us-west-2.rds.amazonaws.com:3306/localwomen?useSSL=false
-        username: localwomen
-        password: L0calW0men
+        url: jdbc:mysql://cp1.astrahosting.com:3306/legendme_localwomen_dev?useSSL=false
+        username: legendme_lwuser
+        password: L0c@lw0m3n
         testWhileIdle: true
         validationQuery: SELECT 1
 
@@ -32,28 +32,30 @@ spring:
 # ===============================
     mail:
         #host: email-smtp.eu-west-1.amazonaws.com
-        host: email-smtp.us-west-2.amazonaws.com
-        port: 465
-        protocol: smtps
-        username: AKIAJ7SXLBST4573IKNQ
-        password: AgNmrDsz3PIYYQG84dYERWuN4MKhUroZhlfEIsB6OPAD
-        #username: orders@localwomensnews.com
-        #password: SX9a5g
+        #host: email-smtp.us-west-2.amazonaws.com
+        host: smtp.localwomensnews.com
+        #port: 465
+        #protocol: smtps
+        #username: AKIAJ7SXLBST4573IKNQ
+        #password: AgNmrDsz3PIYYQG84dYERWuN4MKhUroZhlfEIsB6OPAD
+        username: orders@localwomensnews.com
+        password: SX9a5g
         properties:
             mail:
                 debug: true
                 smtp:
                     auth: true
                     ssl:
-                        enable: true
+                        #enable: true
+                        enable: false
                     socketFactory:
                         port: 25
                         class: javax.net.ssl.SSLSocketFactory
                         fallback: true
-                    transport:
-                        protocol: smtps
-                smtps:
-                    auth: true
+                    #transport:
+                        #protocol: smtps
+                #smtps:
+                    #auth: true
 
 # ===============================
 # = Email Accounts

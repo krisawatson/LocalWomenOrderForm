@@ -1,4 +1,4 @@
-USE localwomen;
+USE legendme_localwomen;
 
 -- Insert values into the advert_type table
 INSERT INTO advert_type (name) VALUES ('Advert');
