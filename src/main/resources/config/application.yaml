@@ -9,7 +9,7 @@ server:
 # Connection url for the database "localwomen"
 spring:
     datasource:
-        url: jdbc:mysql://cp1.astrahosting.com:3306/legendme_localwomen?useSSL=false
+        url: jdbc:mysql://localhost:3306/legendme_localwomen?useSSL=false
         username: legendme_lwuser
         password: L0c@lw0m3n
         testWhileIdle: true
