@@ -62,6 +62,7 @@
         self.filter = 1;
         self.editBusiness = editBusiness;
         self.editOrder = editOrder;
+        self.canEdit = canEdit;
         self.getMonthByInt = getMonthByInt;
         self.filterOrderList = filterOrderList;
         self.filterTooltip = "You can filter the list of orders by it's current status";
