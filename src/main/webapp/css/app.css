@@ -187,3 +187,7 @@ div.permission-denied {
 .icon-tooltip {
 	color: #fb03c3;
 }
+
+.order-pricing {
+	padding: 10px;
+}

@@ -31,13 +31,7 @@ spring:
 # = Mailer
 # ===============================
     mail:
-        #host: email-smtp.eu-west-1.amazonaws.com
-        #host: email-smtp.us-west-2.amazonaws.com
         host: smtp.localwomensnews.com
-        #port: 465
-        #protocol: smtps
-        #username: AKIAJ7SXLBST4573IKNQ
-        #password: AgNmrDsz3PIYYQG84dYERWuN4MKhUroZhlfEIsB6OPAD
         username: orders@localwomensnews.com
         password: SX9a5g
         properties:
@@ -46,16 +40,11 @@ spring:
                 smtp:
                     auth: true
                     ssl:
-                        #enable: true
                         enable: false
                     socketFactory:
                         port: 25
                         class: javax.net.ssl.SSLSocketFactory
                         fallback: true
-                    #transport:
-                        #protocol: smtps
-                #smtps:
-                    #auth: true
 
 # ===============================
 # = Email Accounts

@@ -87,7 +87,7 @@
                          { field: 'businessName', 
                            displayName: 'Business Name',
                            headerTooltip:'Business Name',
-                           cellTemplate: '<div class="tbl-cell-business">{{row.entity.businessName}}<i class="fa fa-pencil right" title="Edit {{row.entity.businessName}}" data-ng-click="grid.appScope.editBusiness(row.entity.businessId)"></i></div>',
+                           cellTemplate: '<div class="tbl-cell-business">{{row.entity.businessName}}<i class="fa fa-pencil right" title="Edit {{row.entity.businessName}}" data-ng-if="grid.appScope.canEdit(row.entity.userId)" data-ng-click="grid.appScope.editBusiness(row.entity.businessId)"></i></div>',
                            width: 150
                          },
                          { field: 'name', 
@@ -129,9 +129,9 @@
                            enableFiltering: false,
                            visible: false
                          },
-                         { field: 'orderId', 
+                         { field: 'userId', 
                            displayName: '',
-                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
+                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-if="grid.appScope.canEdit(row.entity.userId)" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
                            enableFiltering: false,
                            width: 50
                          }]
@@ -142,14 +142,17 @@
             DetailsService.adtypes(), 
             DetailsService.adsizes(),
             OrderService.list(),
-            UserService.get()])
+            UserService.get(),
+            UserService.getId()])
             .then(function(data) {
                 self.businesses = data[0];
                 self.publications = data[1];
                 self.adverts = data[2];
                 self.advertSizes = data[3];
                 fillOrderListDetails(data[4]);
-                if(data[5].authorities[0].authority === 'ADMIN') {
+                self.user = data[5];
+                self.user.id = data[6];
+                if(self.user.authorities[0].authority === 'ADMIN') {
                 	self.gridOptions.columnDefs[7].visible = true;
                     self.gridOptions.columnDefs[8].visible = true;
                 }
@@ -167,6 +170,12 @@
             return getLabelByValue(months, monthValue);
         }
         
+        function canEdit(userId) {
+        	if(self.user.authorities[0].authority === 'ADMIN' || self.user.id === userId) {
+        		return true;
+        	}
+        	return false;
+        }
         function filterOrderList() {
         	if(self.filter === 2) {
         		self.gridOptions.data = angular.copy(self.inProgressOrders);

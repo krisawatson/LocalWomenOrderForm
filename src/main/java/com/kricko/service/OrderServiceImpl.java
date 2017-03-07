@@ -109,6 +109,10 @@ public class OrderServiceImpl implements OrderService
 
     @Override
     public List<Orders> getOrders() {
+    	return orderRepo.findAll();
+    }
+    
+    public List<Orders> getOrdersRestrictUser() {
         User user = getUser();
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority(Roles.ADMIN.toString()));
         if(isAdmin){
@@ -120,6 +124,7 @@ public class OrderServiceImpl implements OrderService
 
     @Override
     public void updateOrder(Orders webOrder, User user) {
+    	LOGGER.info(String.format("Updating order %s", webOrder.toString()));
         Orders orders = orderRepo.getOne(webOrder.getId());
         orders.setUpdated(new Date(System.currentTimeMillis()));
         orders.setPriceExVat(webOrder.getPriceExVat());
@@ -148,26 +153,28 @@ public class OrderServiceImpl implements OrderService
     }
 
     private void updateOrderParts(List<OrderPart> webOrderParts, Orders orders) {
-        for(OrderPart orderPart : webOrderParts) {
-            orderPart.setOrders(orders);
+    	for(OrderPart orderPart : webOrderParts) {
+    		LOGGER.info("Updating order part", orderPart);
             if(null != orderPart.getId () && orderPartRepo.exists(orderPart.getId())) {
                 LOGGER.debug ("Order part exists, updating with new values");
                 OrderPart dbOrderPart = orderPartRepo.getOne(orderPart.getId());
                 updateOrderPart(dbOrderPart, orderPart);
-                updateOrderPublication(dbOrderPart);
-            } else {
-                LOGGER.debug ("Order part does not exists, creating new");
-                orderPartRepo.save(orderPart);
                 updateOrderPublication(orderPart);
+                orderPartRepo.saveAndFlush(dbOrderPart);
+            } else {
+            	orderPart.setOrders(orders);
+                LOGGER.debug ("Order part does not exists, creating new");
+                updateOrderPublication(orderPart);
+                orderPartRepo.saveAndFlush(orderPart);
             }
         }
     }
 
     private void updateOrderPart(OrderPart dbOrderPart, OrderPart webOrderPart) {
+    	LOGGER.info(String.format("Updating order part details from %s to %s", dbOrderPart.toString(), webOrderPart.toString()));
         dbOrderPart.setMonth(webOrderPart.getMonth());
         dbOrderPart.setYear(webOrderPart.getYear());
         dbOrderPart.setPublications(webOrderPart.getPublications());
-        orderPartRepo.save(dbOrderPart);
     }
 
     private void updateOrderPublication(OrderPart orderPart) {
@@ -176,11 +183,10 @@ public class OrderServiceImpl implements OrderService
             if(null != orderPub.getId() && orderPublicationRepo.exists(orderPub.getId())) {
                 LOGGER.debug ("Order publication exists, updating with new values");
                 OrderPublication dbOrderPub = orderPublicationRepo.findOne(orderPub.getId());
-                dbOrderPub.setOrderPart(orderPart);
+                LOGGER.info(String.format("Updating order publication details from %s to %s", dbOrderPub.toString(), orderPub.toString()));
                 dbOrderPub.setAdSize(orderPub.getAdSize());
                 dbOrderPub.setAdType(orderPub.getAdType());
                 dbOrderPub.setNote(orderPub.getNote());
-                dbOrderPub.setOrderPart(orderPart);
                 dbOrderPub.setPublicationId(orderPub.getPublicationId());
                 orderPublicationRepo.save(dbOrderPub);
             } else {
