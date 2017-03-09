@@ -18,12 +18,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.kricko.constants.AdvertTypeEnum;
 import com.kricko.constants.EmailType;
 import com.kricko.constants.Roles;
 import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
 import com.kricko.domain.OrderPublication;
 import com.kricko.domain.Orders;
+import com.kricko.domain.Publication;
 import com.kricko.domain.User;
 import com.kricko.mail.SmtpMailer;
 import com.kricko.model.WebOrder;
@@ -71,6 +73,7 @@ public class OrderServiceImpl implements OrderService
     public Long createOrder(WebOrder webOrder, User user) {
         LOGGER.debug("Submitting order");
 
+        boolean hasPhotoshoot = false;
         Business business = webOrder.getBusiness();
         businessRepo.saveAndFlush(business);
 
@@ -81,7 +84,6 @@ public class OrderServiceImpl implements OrderService
         orderRepo.saveAndFlush(orders);
 
         List<OrderPart> orderParts = webOrder.getOrderParts();
-
         for(OrderPart orderPart : orderParts) {
             LOGGER.debug(String.format("Order Part is %s", orderPart.toString()));
             orderPart.setOrders (orders);
@@ -91,6 +93,8 @@ public class OrderServiceImpl implements OrderService
                     orderPart.getMonth(), orderPart.getYear(), orderPart.getPublications().size()));
             for(OrderPublication publication : publications) {
                 publication.setOrderPart(orderPart);
+                hasPhotoshoot = (publication.getAdType().longValue() == AdvertTypeEnum.PHOTOSHOOT.getValue()) 
+                            ? true : hasPhotoshoot;
             }
             orderPublicationRepo.save(publications);
         }
@@ -103,6 +107,9 @@ public class OrderServiceImpl implements OrderService
         mails.add(new OrderConfirmationMailer(mailer, business, orders, businessEmail, new String[]{ordersEmail, accountsEmail}, EmailType.BUSINESS));
         mails.add(new OrderConfirmationMailer(mailer, business, orders, user.getEmail(), null, EmailType.USER));
         mails.add(new OrderConfirmationMailer(mailer, business, orders, null, null, EmailType.PUBLICATION));
+        if(hasPhotoshoot) {
+            mails.add(new OrderConfirmationMailer(mailer, business, orders, null, null, EmailType.PHOTOSHOOT));
+        }
         sendMails(mails);
         return orderId;
     }

@@ -10,10 +10,17 @@
                 <td><input type="text" class="publication-large"
                     data-ng-class="!pubCtrl.successMsg && createPublicationForm.$submitted && createPublicationForm.name.$invalid ? 'validation-error' : ''"
                     name="name" data-ng-model="pubCtrl.publication.name" required /></td>
+            </tr>
+            <tr>
                 <td><label for="email" class="publication-label">Email:</label></td>
                 <td><input type="email" class="publication-large"
                     data-ng-class="!pubCtrl.successMsg && createPublicationForm.$submitted && createPublicationForm.email.$invalid ? 'validation-error' : ''"
                     name="email" data-ng-model="pubCtrl.publication.email" required /></td>
+            </tr>
+            <tr>
+                <td><label for="photoshootEmail" class="publication-label">Photoshoot Email:</label></td>
+                <td><input type="email" class="publication-large"
+                    name="photoshootEmail" data-ng-model="pubCtrl.publication.photoshootEmail" /></td>
             </tr>
         </table>
         <div class="buttons" data-ng-if="!pubCtrl.publication.id">

@@ -53,14 +53,15 @@ public class SmtpMailer
     public void sendOrderConfirmation(String to, String[] cc, EmailType type, Business business, Orders orders) throws MessagingException {
         LOGGER.debug(orders.toString());
         String subject = "Local Women Order Confirmation";
-        if(EmailType.PUBLICATION == type) {
+        if(EmailType.PUBLICATION == type || EmailType.PHOTOSHOOT == type) {
             LOGGER.info("Sending order confirmation for the publications");
             List<Publication> publications = pubRepo.findAll();
             for(Publication pub : publications) {
                 String body = mailTemplateService.buildTemplate(type, business, orders, pub.getId());
                 if(null != body) {
-                    LOGGER.info(String.format ("Sending order confirmation for %s publication", pub.getName ()));
-                    send(pub.getEmail(), null, subject, body);
+                    LOGGER.info(String.format ("Sending order confirmation for %s %", pub.getName(), type.getValue()));
+                    String email = EmailType.PUBLICATION == type ? pub.getEmail() : pub.getPhotoshootEmail();
+                    send(email, null, subject, body);
                 }
             }
         } else {

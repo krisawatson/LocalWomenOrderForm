@@ -117,6 +117,12 @@
                            displayName: 'Year',
                            headerTooltip:'Year'
                          },
+                         { field: 'userId', 
+                           displayName: 'User ID',
+                           headerTooltip:'User ID',
+                           width: 50,
+                           sortingAlgorithm: SortingUtilsFactory.sortNumbers
+                         },
                          { field: 'priceExVat', 
                            displayName: 'Price',
                            headerTooltip:'Price Excluding / Including VAT',
@@ -154,8 +160,8 @@
                 self.user = data[5];
                 self.user.id = data[6];
                 if(self.user.authorities[0].authority === 'ADMIN') {
-                	self.gridOptions.columnDefs[7].visible = true;
-                    self.gridOptions.columnDefs[8].visible = true;
+                	self.gridOptions.columnDefs[8].visible = true;
+                    self.gridOptions.columnDefs[9].visible = true;
                 }
             });
         

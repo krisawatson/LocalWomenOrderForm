@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kricko</groupId>
     <artifactId>LocalWomen</artifactId>
-    <version>1.1.6</version>
+    <version>1.2.0</version>
     <name>LocalWomen Webapp</name>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -161,7 +161,7 @@
                             <Class-Path>.</Class-Path>
                         </manifestEntries>
                     </archive>
-                    <finalName>LocalWomen-${project.version}</finalName>
+                    <finalName>LocalWomen</finalName>
                 </configuration>
             </plugin>
             <plugin>
