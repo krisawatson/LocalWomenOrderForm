@@ -13,6 +13,7 @@
                             <a href="#/useredit/{{user.id}}" class="white"><img data-ng-src="img/person.png" class="cardImage" /></a>
                         </div>
                         <div class="pull-left cardBodyRight">
+                            <div class="cardBodyContent">ID: {{user.id}}</div>
                             <div class="cardBodyContent">Username: {{user.username}}</div>
                             <div class="cardBodyContent">Email: {{user.email}}</div>
                             <div class="cardBodyContent" data-ng-if="user.enabled" class="acc-active">
