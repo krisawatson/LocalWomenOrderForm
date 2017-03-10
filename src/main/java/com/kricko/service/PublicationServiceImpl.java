@@ -44,6 +44,7 @@ public class PublicationServiceImpl implements PublicationService
         dbPublication.setEmail(publication.getEmail());
         dbPublication.setEnabled(publication.isEnabled());
         dbPublication.setName(publication.getName());
+        dbPublication.setPhotoshootEmail(publication.getPhotoshootEmail());
         
     	pubRepo.saveAndFlush(dbPublication);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

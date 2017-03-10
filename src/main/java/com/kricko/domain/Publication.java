@@ -14,6 +14,7 @@ public class Publication {
     private Long id;
     private String name;
     private String email;
+    private String photoshootEmail;
     private boolean enabled;
 
     @Id
@@ -37,6 +38,13 @@ public class Publication {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getPhotoshootEmail() {
+        return photoshootEmail;
+    }
+    public void setPhotoshootEmail(String photoshootEmail) {
+        this.photoshootEmail = photoshootEmail;
     }
     @Column(columnDefinition="tinyint(1) default 1")
     public boolean isEnabled() {

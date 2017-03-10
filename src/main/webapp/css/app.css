@@ -4,7 +4,7 @@ form {
 }
 
 body {
-	background: pink;
+	background: #cccccc;
 }
 
 h2 {
@@ -13,7 +13,7 @@ h2 {
 
 div.content {
 	background: white;
-	width: 700px;
+	width: 850px;
 	border: 2px solid;
 	margin: 0 auto;
 }

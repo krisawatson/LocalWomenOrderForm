@@ -5,7 +5,8 @@ public enum EmailType {
 	BUSINESS("business"),
 	ORDERS("orders"),
 	PUBLICATION("publication"),
-	USER("user");
+	USER("user"),
+	PHOTOSHOOT("photoshoot");
 	
 	private final String value;
 	

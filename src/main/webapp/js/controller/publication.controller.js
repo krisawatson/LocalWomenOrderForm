@@ -48,6 +48,9 @@
                              { field: 'email', 
                                displayName: 'Email Address'
                              },
+                             { field: 'photoshootEmail', 
+                               displayName: 'Photoshoot Email'
+                             },
                              { field: 'id', 
 	                           displayName: 'Edit',
                                width: 50,
