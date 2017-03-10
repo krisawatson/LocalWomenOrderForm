@@ -120,6 +120,8 @@
         }
         
         function setStart() {
+        	delete self.customerSignature;
+        	delete self.userSignature;
             var order = {
                 "id":self.id,
                 "month": self.currentMonth + 1,

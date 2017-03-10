@@ -41,6 +41,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     private final Logger LOGGER = LogManager.getLogger();
     private final String FOOTER_TEMPLATE = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_FOOTER;
+    private final String SIGNATURE_TEMPLATE = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_SIGNATURE;
     private final String TERMS_AND_CONDITIONS_TEMPLATE = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_TERMS_AND_CONDITIONS;
 
     private Long pubId;
@@ -58,6 +59,8 @@ public class MailTemplateServiceImpl implements MailTemplateService {
         model.put("orderNumber", orders.getId());
         LOGGER.info("Business ID is " + business.getId());
         model.put("business", business);
+        model.put("customerSignature", orders.getCustomerSignature());
+        model.put("userSignature", orders.getUserSignature());
         TemplateOrder order = buildEmailOrder(type, orders);
         if(null == order) {
             return null;
@@ -76,6 +79,8 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     private void appendCommonContent(StringBuilder body, Map<String, Object> model) {
         body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, 
                                                                 FOOTER_TEMPLATE, StandardCharsets.UTF_8.toString(), model));
+        body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, 
+                                                                SIGNATURE_TEMPLATE, StandardCharsets.UTF_8.toString(), model));
         body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, 
                                                                 TERMS_AND_CONDITIONS_TEMPLATE, StandardCharsets.UTF_8.toString(), model));
     }
