@@ -12,6 +12,8 @@ public class WebOrder {
 	private Double priceExVat;
 	private Double priceIncVat;
 	private Double deposit;
+	private String customerSignature;
+	private String userSignature;
 	
 	public Business getBusiness() {
 		return business;
@@ -51,5 +53,21 @@ public class WebOrder {
 
     public void setDeposit(Double deposit) {
         this.deposit = deposit;
+    }
+
+    public String getCustomerSignature() {
+        return customerSignature;
+    }
+
+    public void setCustomerSignature(String customerSignature) {
+        this.customerSignature = customerSignature;
+    }
+
+    public String getUserSignature() {
+        return userSignature;
+    }
+
+    public void setUserSignature(String userSignature) {
+        this.userSignature = userSignature;
     }
 }

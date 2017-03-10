@@ -89,9 +89,10 @@
                 "orderParts": self.orderParts,
                 "priceExVat": self.priceExVat,
                 "priceIncVat": self.priceIncVat,
-                "deposit": self.deposit
+                "deposit": self.deposit,
+                "customerSignature": self.customerSignature,
+                "userSignature": self.userSignature
             }
-            console.log(order);
             OrderService.create(order).then(function(orderNumber){
                 processingDialog.close();
                 self.orderNumber = orderNumber;

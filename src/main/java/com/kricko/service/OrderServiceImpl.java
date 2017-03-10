@@ -25,7 +25,6 @@ import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
 import com.kricko.domain.OrderPublication;
 import com.kricko.domain.Orders;
-import com.kricko.domain.Publication;
 import com.kricko.domain.User;
 import com.kricko.mail.SmtpMailer;
 import com.kricko.model.WebOrder;
@@ -79,7 +78,8 @@ public class OrderServiceImpl implements OrderService
 
         Orders orders = new Orders(business.getId(), user.getId(), 
                     webOrder.getPriceExVat(), webOrder.getPriceIncVat(), 
-                    webOrder.getDeposit());
+                    webOrder.getDeposit(), webOrder.getCustomerSignature(),
+                    webOrder.getUserSignature());
         orders.setCreated(new Date(System.currentTimeMillis()));
         orderRepo.saveAndFlush(orders);
 

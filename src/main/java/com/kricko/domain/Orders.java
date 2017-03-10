@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,8 @@ public class Orders {
     private double priceIncVat;
     private double priceExVat;
     private double deposit;
+    private String customerSignature;
+    private String userSignature;
     private Date created;
     private Date updated;
     private List<OrderPart> orderParts = new ArrayList<>(0);
@@ -33,12 +36,15 @@ public class Orders {
     	
     }
     
-    public Orders(Long businessId, Long userId, double priceExVat, double priceIncVat, double deposit){
+    public Orders(Long businessId, Long userId, double priceExVat, double priceIncVat, 
+                double deposit, String customerSignature, String userSignature){
         this.businessId = businessId;
         this.userId = userId;
         this.priceExVat = priceExVat;
         this.priceIncVat = priceIncVat;
         this.deposit = deposit;
+        this.customerSignature = customerSignature;
+        this.userSignature = userSignature;
     }
 
     @Id
@@ -93,6 +99,24 @@ public class Orders {
 
     public void setDeposit(double deposit) {
         this.deposit = deposit;
+    }
+
+    @Lob
+    public String getCustomerSignature() {
+        return customerSignature;
+    }
+
+    public void setCustomerSignature(String customerSignature) {
+        this.customerSignature = customerSignature;
+    }
+
+    @Lob
+    public String getUserSignature() {
+        return userSignature;
+    }
+
+    public void setUserSignature(String userSignature) {
+        this.userSignature = userSignature;
     }
 
     public Date getCreated() {
