@@ -3,7 +3,9 @@
 }
 
 .cardListItem {
-	height: 140px;
+	height: 160px;
+	word-wrap: break-word;
+	width: 360px;
 }
 
 .card {
@@ -49,7 +51,7 @@
 }
 
 .cardBodyContent {
-	width: 190px;
+	width: 250px;
 }
 
 .cardImage {
