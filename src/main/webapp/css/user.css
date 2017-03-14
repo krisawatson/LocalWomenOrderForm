@@ -3,7 +3,6 @@
 }
 
 .cardListItem {
-	height: 160px;
 	word-wrap: break-word;
 	width: 360px;
 }
@@ -33,21 +32,19 @@
 	float: right;
 }
 
-.cardContainer {
-	width: 85%;
-}
-
 .cardBody {
 	padding-left: 5px;
 }
 
 .cardBodyLeft {
 	margin-top: -5px;
+	width:15%;
 }
 
 .cardBodyRight {
 	margin-left: 20px;
 	margin-top: 2px;
+
 }
 
 .cardBodyContent {
@@ -79,6 +76,7 @@ button.edit {
 	.col-sm-6 {
 		float: left;
 		width: 50%;
+		margin-bottom: 20px;
 	}
 }
 
@@ -115,7 +113,6 @@ button.edit {
 .container {
 	padding-right: 15px;
 	padding-left: 15px;
-	margin-right: auto;
 	margin-left: auto;
 }
 
