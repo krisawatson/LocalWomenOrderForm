@@ -1,0 +1,14 @@
+.signature {
+	width: 100%;
+	height: 100%;
+	max-width:340px; 
+	max-height:100px;
+}
+
+.signatureCustomer {
+	float: left;
+}
+
+.signatureUser {
+	float: right;
+}

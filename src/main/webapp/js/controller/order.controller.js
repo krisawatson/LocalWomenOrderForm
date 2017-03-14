@@ -89,9 +89,10 @@
                 "orderParts": self.orderParts,
                 "priceExVat": self.priceExVat,
                 "priceIncVat": self.priceIncVat,
-                "deposit": self.deposit
+                "deposit": self.deposit,
+                "customerSignature": self.customerSignature,
+                "userSignature": self.userSignature
             }
-            console.log(order);
             OrderService.create(order).then(function(orderNumber){
                 processingDialog.close();
                 self.orderNumber = orderNumber;
@@ -119,6 +120,8 @@
         }
         
         function setStart() {
+        	delete self.customerSignature;
+        	delete self.userSignature;
             var order = {
                 "id":self.id,
                 "month": self.currentMonth + 1,
