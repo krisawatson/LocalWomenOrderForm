@@ -106,14 +106,13 @@ button.edit {
 
 @media ( min-width : 768px) {
 	.container {
-		width: 750px;
+		width: 800px;
 	}
 }
 
 .container {
 	padding-right: 15px;
 	padding-left: 15px;
-	margin-left: auto;
 }
 
 .container .row {
