@@ -111,11 +111,13 @@
                            filter: {
                         	   type: uiGridConstants.filter.SELECT,
                         	   selectOptions: months
-                           }
+                           },
+                           sort: {direction: 'asc', priority: 0}
                          },
                          { field: 'year', 
                            displayName: 'Year',
-                           headerTooltip:'Year'
+                           headerTooltip:'Year',
+                           sort: {direction: 'asc', priority: 1}
                          },
                          { field: 'userId', 
                            displayName: 'User ID',
