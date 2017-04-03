@@ -7,5 +7,5 @@ import com.kricko.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    public User findByUsername(String username);
+    User findByUsername(String username);
 }

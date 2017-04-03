@@ -11,10 +11,10 @@ import com.kricko.domain.Publication;
 public interface PublicationService
 {
 
-    public List<Publication> getPublications();
+    List<Publication> getPublications();
     
-    public ResponseEntity<Void> createPublication(@RequestBody Publication publication);
+    ResponseEntity<Void> createPublication(@RequestBody Publication publication);
     
     @Transactional
-    public ResponseEntity<Void> updatePublication(Long pubId, Publication publication);
+    void updatePublication(Long pubId, Publication publication);
 }

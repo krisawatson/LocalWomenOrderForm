@@ -23,17 +23,22 @@ import com.kricko.service.MailTemplateService;
 @Component
 public class SmtpMailer
 {
-    @Autowired
-    private JavaMailSender javaMailSender;
-    @Autowired
-    private MailTemplateService mailTemplateService;
-    @Autowired
-    private PublicationRepository pubRepo;
+    private final JavaMailSender javaMailSender;
+    private final MailTemplateService mailTemplateService;
+    private final PublicationRepository pubRepo;
 
     private static final Logger LOGGER = LogManager.getLogger();
     
     private static final String FROM_ADDRESS = "orders@localwomensnews.com";
-    
+
+    @Autowired
+    public SmtpMailer(JavaMailSender javaMailSender, MailTemplateService mailTemplateService,
+                      PublicationRepository pubRepo) {
+        this.javaMailSender = javaMailSender;
+        this.mailTemplateService = mailTemplateService;
+        this.pubRepo = pubRepo;
+    }
+
     private void send(String to, String[] cc, String subject, String body) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         message.setContent(body, "text/html");
@@ -59,7 +64,7 @@ public class SmtpMailer
             for(Publication pub : publications) {
                 String body = mailTemplateService.buildTemplate(type, business, orders, pub.getId());
                 if(null != body) {
-                    LOGGER.info(String.format ("Sending order confirmation for %s %", pub.getName(), type.getValue()));
+                    LOGGER.info(String.format ("Sending order confirmation for %s %s", pub.getName(), type.getValue()));
                     String email = EmailType.PUBLICATION == type ? pub.getEmail() : pub.getPhotoshootEmail();
                     send(email, null, subject, body);
                 }

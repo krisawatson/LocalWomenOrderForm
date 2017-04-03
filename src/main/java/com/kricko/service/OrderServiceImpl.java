@@ -14,13 +14,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.kricko.constants.AdvertTypeEnum;
 import com.kricko.constants.EmailType;
-import com.kricko.constants.Roles;
 import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
 import com.kricko.domain.OrderPublication;
@@ -32,7 +30,6 @@ import com.kricko.repository.BusinessRepository;
 import com.kricko.repository.OrderPartRepository;
 import com.kricko.repository.OrderPublicationRepository;
 import com.kricko.repository.OrderRepository;
-import com.kricko.repository.PublicationRepository;
 import com.kricko.repository.UserRepository;
 import com.kricko.threads.OrderConfirmationMailer;
 
@@ -41,27 +38,35 @@ public class OrderServiceImpl implements OrderService
 {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    @Autowired
+    private final
     BusinessRepository businessRepo;
-    @Autowired
+    private final
     OrderRepository orderRepo;
-    @Autowired
+    private final
     OrderPartRepository orderPartRepo;
-    @Autowired
+    private final
     OrderPublicationRepository orderPublicationRepo;
-    @Autowired
-    PublicationRepository pubRepo;
-    @Autowired
+    private final
     UserRepository userRepo;
-    @Autowired
+    private final
     SmtpMailer mailer;
-
-    Authentication auth;
 
     @Value("${orders.email.account.orders}")
     private String ordersEmail;
     @Value("${orders.email.account.accounts}")
     private String accountsEmail;
+
+    @Autowired
+    public OrderServiceImpl(BusinessRepository businessRepo, OrderRepository orderRepo,
+                            OrderPartRepository orderPartRepo, OrderPublicationRepository orderPublicationRepo,
+                            UserRepository userRepo, SmtpMailer mailer) {
+        this.businessRepo = businessRepo;
+        this.orderRepo = orderRepo;
+        this.orderPartRepo = orderPartRepo;
+        this.orderPublicationRepo = orderPublicationRepo;
+        this.userRepo = userRepo;
+        this.mailer = mailer;
+    }
 
     @Override
     public Orders getOrder(Long id) {
@@ -93,8 +98,7 @@ public class OrderServiceImpl implements OrderService
                     orderPart.getMonth(), orderPart.getYear(), orderPart.getPublications().size()));
             for(OrderPublication publication : publications) {
                 publication.setOrderPart(orderPart);
-                hasPhotoshoot = (publication.getAdType().longValue() == AdvertTypeEnum.PHOTOSHOOT.getValue()) 
-                            ? true : hasPhotoshoot;
+                hasPhotoshoot = (publication.getAdType() == AdvertTypeEnum.PHOTOSHOOT.getValue()) || hasPhotoshoot;
             }
             orderPublicationRepo.save(publications);
         }
@@ -117,16 +121,6 @@ public class OrderServiceImpl implements OrderService
     @Override
     public List<Orders> getOrders() {
     	return orderRepo.findAll();
-    }
-    
-    public List<Orders> getOrdersRestrictUser() {
-        User user = getUser();
-        boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority(Roles.ADMIN.toString()));
-        if(isAdmin){
-            return orderRepo.findAll();
-        } else {
-            return orderRepo.findByUserId(user.getId());
-        }
     }
 
     @Override
@@ -154,7 +148,7 @@ public class OrderServiceImpl implements OrderService
     }
 
     private User getUser() {
-        auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         return userRepo.findByUsername(username);
     }
@@ -206,7 +200,7 @@ public class OrderServiceImpl implements OrderService
 
     private void sendMails(List<OrderConfirmationMailer> mails) {
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
-        ThreadPoolExecutor executorPool = new ThreadPoolExecutor(2, 4, 10, TimeUnit.SECONDS,new ArrayBlockingQueue<Runnable>(2), 
+        ThreadPoolExecutor executorPool = new ThreadPoolExecutor(2, 4, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<>(2),
                 threadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
 
         for(OrderConfirmationMailer mail : mails){

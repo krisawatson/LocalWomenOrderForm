@@ -21,18 +21,30 @@ import com.kricko.service.OrderService;
 public class MailController {
 	private static final Logger LOGGER = LogManager.getLogger();
 	
-	@Autowired
+	private final
 	SmtpMailer mailer;
-	@Autowired
+
+	private final
 	OrderService orderService;
-    @Autowired
-    BusinessService businessService;
-	@Autowired
+
+	private final
+	BusinessService businessService;
+
+	private final
 	MailTemplateService mailTemplateService;
+
+	@Autowired
+	public MailController(SmtpMailer mailer, OrderService orderService,
+						  BusinessService businessService, MailTemplateService mailTemplateService) {
+		this.mailer = mailer;
+		this.orderService = orderService;
+		this.businessService = businessService;
+		this.mailTemplateService = mailTemplateService;
+	}
 
 	@RequestMapping(value = "/mail/test", method = RequestMethod.GET)
     public String testEmail() {
-		Orders orders = getSingleOrder(1L);
+		Orders orders = orderService.getOrder(1L);
 		Business business = getBusiness(orders.getBusinessId());
 		String body = mailTemplateService.buildTemplate(EmailType.BUSINESS, business, orders);
 		try {
@@ -42,10 +54,6 @@ public class MailController {
 		}
 		return body;
     }
-	
-	private Orders getSingleOrder(Long id) {
-		return orderService.getOrder(id);
-	}
 	
 	private Business getBusiness(Long id) {
         return businessService.getBusiness(id);

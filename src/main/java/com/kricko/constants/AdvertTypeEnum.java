@@ -7,9 +7,9 @@ public enum AdvertTypeEnum {
     PHOTOSHOOT(4L),
     FRONTCOVER(5L);
     
-    private long value;
+    private final long value;
     
-    private AdvertTypeEnum(long value){
+    AdvertTypeEnum(long value){
         this.value = value;
     }
     

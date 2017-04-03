@@ -13,9 +13,14 @@ import com.kricko.repository.UserRepository;
 @RestController
 public class AuthController {
 
+	private final
+	UserRepository userRepo;
+
 	@Autowired
-    UserRepository userRepo;
-	
+	public AuthController(UserRepository userRepo) {
+		this.userRepo = userRepo;
+	}
+
 	@RequestMapping(value = "/auth", method = RequestMethod.GET)
     public User getAuthUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

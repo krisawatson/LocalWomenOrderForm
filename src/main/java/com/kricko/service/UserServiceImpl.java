@@ -23,14 +23,21 @@ public class UserServiceImpl implements UserService
 {
     private static final Logger LOGGER = LogManager.getLogger();
     
-    @Autowired
+    private final
     PasswordEncoder passwordEncoder;
     
-    @Autowired
+    private final
     UserRepository userRepo;
     
-    @Autowired
+    private final
     RoleRepository roleRepo;
+
+    @Autowired
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepo, RoleRepository roleRepo) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
+    }
 
     @Override
     public List<User> getUsers() {
@@ -62,7 +69,7 @@ public class UserServiceImpl implements UserService
     }
     
     @Override
-    public ResponseEntity<Void> updateUser(Long userId, User user) {
+    public void updateUser(Long userId, User user) {
         User dbUser = userRepo.getOne(userId);
         dbUser.setEmail(user.getEmail());
         dbUser.setEnabled(user.getEnabled());
@@ -74,7 +81,7 @@ public class UserServiceImpl implements UserService
     		dbUser.setPassword(passwordEncoder.encode(user.getPassword()));
     	}
     	userRepo.saveAndFlush(dbUser);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
     @Override

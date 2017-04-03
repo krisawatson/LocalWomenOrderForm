@@ -11,14 +11,14 @@ import com.kricko.model.WebOrder;
 public interface OrderService
 {
 
-	public Orders getOrder(Long id);
+	Orders getOrder(Long id);
 
-    public Long createOrder(WebOrder webOrder, User user);
+    Long createOrder(WebOrder webOrder, User user);
 
-    public List<Orders> getOrders();
+    List<Orders> getOrders();
     
     @Transactional
-    public void updateOrder(Orders webOrder, User user);
+    void updateOrder(Orders webOrder, User user);
     
-    public void removeOrderPart(Long orderId, Long orderPartId);
+    void removeOrderPart(Long orderId, Long orderPartId);
 }

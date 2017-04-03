@@ -71,12 +71,12 @@ public class OrderPart {
     
     @Override
     public String toString() {
-        String value = "OrderPart [id="+ getId() + ", month="+getMonth()
-                        +", year="+ getYear()+ ",orderPublications=[";
+        StringBuilder value = new StringBuilder("OrderPart [id=" + getId() + ", month=" + getMonth()
+                + ", year=" + getYear() + ",orderPublications=[");
         for(OrderPublication publication : getPublications()) {
-            value += publication.toString();
+            value.append(publication.toString());
         }
-        value += "]]";
-        return value;
+        value.append("]]");
+        return value.toString();
     }
 }

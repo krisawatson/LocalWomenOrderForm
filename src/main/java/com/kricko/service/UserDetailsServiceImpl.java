@@ -19,11 +19,15 @@ import com.kricko.repository.UserRepository;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService{
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     
+    private final RoleRepository roleRepository;
+
     @Autowired
-    private RoleRepository roleRepository;
+    public UserDetailsServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)

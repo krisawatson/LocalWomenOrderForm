@@ -24,13 +24,17 @@ import com.kricko.service.UserService;
 @RequestMapping("order")
 public class OrderController {
 
-    @Autowired
+    private final
     OrderService orderService;
-    @Autowired
+    private final
     UserService userService;
-    
-    Authentication auth;
-    
+
+    @Autowired
+    public OrderController(OrderService orderService, UserService userService) {
+        this.orderService = orderService;
+        this.userService = userService;
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Orders getOrder(@PathVariable(value="id") Long id) {
     	return orderService.getOrder(id);
@@ -58,7 +62,7 @@ public class OrderController {
     }
     
     private User getUser() {
-        auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         return userService.getUserByUsername(username);
     }

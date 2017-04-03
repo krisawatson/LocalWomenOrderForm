@@ -17,10 +17,15 @@ import com.kricko.service.BusinessService;
 @RequestMapping("business")
 public class BusinessController {
 
-    @Autowired
+    private final
     BusinessService businessService;
-    
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+
+    @Autowired
+    public BusinessController(BusinessService businessService) {
+        this.businessService = businessService;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Business getBusiness( @PathVariable(value="id") Long id) {
         return businessService.getBusiness (id);
     }

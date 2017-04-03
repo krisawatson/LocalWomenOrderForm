@@ -19,9 +19,14 @@ import com.kricko.service.PublicationService;
 @RequestMapping(value = "/publication")
 public class PublicationController {
 
-	@Autowired
+	private final
 	PublicationService publicationService;
-	
+
+	@Autowired
+	public PublicationController(PublicationService publicationService) {
+		this.publicationService = publicationService;
+	}
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Publication> getPublications() {
 		return publicationService.getPublications();

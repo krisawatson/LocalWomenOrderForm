@@ -18,9 +18,14 @@ public class PublicationServiceImpl implements PublicationService
 {
     private static final Logger LOGGER = LogManager.getLogger();
     
-    @Autowired
+    private final
     PublicationRepository pubRepo;
-    
+
+    @Autowired
+    public PublicationServiceImpl(PublicationRepository pubRepo) {
+        this.pubRepo = pubRepo;
+    }
+
     @Override
     public List<Publication> getPublications() {
         return pubRepo.findAll();
@@ -39,7 +44,7 @@ public class PublicationServiceImpl implements PublicationService
     }
     
     @Override
-    public ResponseEntity<Void> updatePublication(Long pubId, Publication publication) {
+    public void updatePublication(Long pubId, Publication publication) {
         Publication dbPublication = pubRepo.findOne(pubId);
         dbPublication.setEmail(publication.getEmail());
         dbPublication.setEnabled(publication.isEnabled());
@@ -47,6 +52,6 @@ public class PublicationServiceImpl implements PublicationService
         dbPublication.setPhotoshootEmail(publication.getPhotoshootEmail());
         
     	pubRepo.saveAndFlush(dbPublication);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

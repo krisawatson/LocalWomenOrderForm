@@ -2,10 +2,7 @@ package com.kricko.service;
 
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,21 +27,23 @@ import com.kricko.repository.PublicationRepository;
 @Service("mailTemplateService")
 public class MailTemplateServiceImpl implements MailTemplateService {
 
-    @Autowired
-    private VelocityEngine velocityEngine;
-    @Autowired
-    private AdvertSizeRepository adSizeRepo;
-    @Autowired
-    private AdvertTypeRepository adTypeRepo;
-    @Autowired
-    private PublicationRepository pubRepo;
+    private final VelocityEngine velocityEngine;
+    private final AdvertSizeRepository adSizeRepo;
+    private final AdvertTypeRepository adTypeRepo;
+    private final PublicationRepository pubRepo;
 
     private final Logger LOGGER = LogManager.getLogger();
-    private final String FOOTER_TEMPLATE = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_FOOTER;
-    private final String SIGNATURE_TEMPLATE = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_SIGNATURE;
-    private final String TERMS_AND_CONDITIONS_TEMPLATE = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_TERMS_AND_CONDITIONS;
 
     private Long pubId;
+
+    @Autowired
+    public MailTemplateServiceImpl(VelocityEngine velocityEngine, AdvertSizeRepository adSizeRepo,
+                                   AdvertTypeRepository adTypeRepo, PublicationRepository pubRepo) {
+        this.velocityEngine = velocityEngine;
+        this.adSizeRepo = adSizeRepo;
+        this.adTypeRepo = adTypeRepo;
+        this.pubRepo = pubRepo;
+    }
 
     @Override
     public String buildTemplate(EmailType type, Business business, Orders orders) {
@@ -77,12 +76,15 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     }
 
     private void appendCommonContent(StringBuilder body, Map<String, Object> model) {
-        body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, 
-                                                                FOOTER_TEMPLATE, StandardCharsets.UTF_8.toString(), model));
-        body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, 
-                                                                SIGNATURE_TEMPLATE, StandardCharsets.UTF_8.toString(), model));
-        body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, 
-                                                                TERMS_AND_CONDITIONS_TEMPLATE, StandardCharsets.UTF_8.toString(), model));
+        String footerTemplate = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_FOOTER;
+        body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                footerTemplate, StandardCharsets.UTF_8.toString(), model));
+        String signatureTemplate = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_SIGNATURE;
+        body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                signatureTemplate, StandardCharsets.UTF_8.toString(), model));
+        String termsAndConditionsTemplate = MailTemplating.TMPL_FOLDER + MailTemplating.TMPL_TERMS_AND_CONDITIONS;
+        body.append(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                termsAndConditionsTemplate, StandardCharsets.UTF_8.toString(), model));
     }
 
     private TemplateOrder buildEmailOrder(EmailType type, Orders orders) {
@@ -122,7 +124,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
         LOGGER.debug("Publications size is " + orderPublications.size());
         List<TemplateOrderPublication> tmplOrderPubs = new ArrayList<>(0);
         for(OrderPublication orderPub : orderPublications) {
-            if(null == pubId || pubId == orderPub.getPublicationId()) {
+            if(null == pubId || Objects.equals(pubId, orderPub.getPublicationId())) {
                 TemplateOrderPublication tmplOrderPub = new TemplateOrderPublication();
                 tmplOrderPub.setAdSize(adSizeRepo.findOne(orderPub.getAdSize()).getName());
                 tmplOrderPub.setAdType(adTypeRepo.findOne(orderPub.getAdType()).getName());

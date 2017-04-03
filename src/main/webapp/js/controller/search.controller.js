@@ -180,10 +180,8 @@
         }
         
         function canEdit(userId) {
-        	if(self.user.authorities[0].authority === 'ADMIN' || self.user.id === userId) {
-        		return true;
-        	}
-        	return false;
+        	return self.user.authorities[0].authority === 'ADMIN' || self.user.id === userId;
+
         }
         function filterOrderList() {
         	if(self.filter === 2) {

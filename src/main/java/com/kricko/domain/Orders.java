@@ -66,7 +66,7 @@ public class Orders {
     }
     
     @NotNull
-    public Long getUserId() {
+    private Long getUserId() {
         return userId;
     }
 
@@ -147,12 +147,12 @@ public class Orders {
     
     @Override
     public String toString() {
-        String value = "Orders [id="+ getId() + ", businessId="+getBusinessId()
-                        +", userId="+getUserId()+ ",orderParts=[";
+        StringBuilder value = new StringBuilder("Orders [id=" + getId() + ", businessId=" + getBusinessId()
+                + ", userId=" + getUserId() + ",orderParts=[");
         for(OrderPart orderPart : getOrderParts()) {
-            value += orderPart.toString();
+            value.append(orderPart.toString());
         }
-        value += "]]";
-        return value;
+        value.append("]]");
+        return value.toString();
     }
 }

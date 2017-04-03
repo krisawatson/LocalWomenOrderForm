@@ -20,10 +20,15 @@ import com.kricko.service.UserService;
 @RequestMapping(value = "/user")
 public class UserController {
 
-	@Autowired
-	UserService userService;
-	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	private final
+    UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<User> getUsers() {
 		return userService.getUsers();
     }

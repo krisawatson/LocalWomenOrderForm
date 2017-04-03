@@ -383,11 +383,9 @@
                     applyAriaAttributes: function ($dialog, options) {
                         if (options.ariaAuto) {
                             if (!options.ariaRole) {
-                                var detectedRole = (privateMethods.getFocusableElements($dialog).length > 0) ?
+                                options.ariaRole = (privateMethods.getFocusableElements($dialog).length > 0) ?
                                     'dialog' :
                                     'alertdialog';
-
-                                options.ariaRole = detectedRole;
                             }
 
                             if (!options.ariaLabelledBySelector) {
@@ -533,7 +531,7 @@
 
                             if (options.data && angular.isString(options.data)) {
                                 var firstLetter = options.data.replace(/^\s*/, '')[0];
-                                scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : new String(options.data);
+                                scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : String(options.data);
                                 scope.ngDialogData.ngDialogId = dialogID;
                             } else if (options.data && angular.isObject(options.data)) {
                                 scope.ngDialogData = options.data;
@@ -754,41 +752,6 @@
                      *
                      * @return {Object} dialog
                      */
-                    openConfirm: function (opts) {
-                        var defer = $q.defer();
-                        var options = angular.copy(defaults);
-
-                        opts = opts || {};
-
-                        // Merge opts.data with predefined via setDefaults
-                        if (typeof options.data !== 'undefined') {
-                            if (typeof opts.data === 'undefined') {
-                                opts.data = {};
-                            }
-                            opts.data = angular.merge(angular.copy(options.data), opts.data);
-                        }
-
-                        angular.extend(options, opts);
-
-                        options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
-                        options.scope.confirm = function (value) {
-                            defer.resolve(value);
-                            var $dialog = $el(document.getElementById(openResult.id));
-                            privateMethods.performCloseDialog($dialog, value);
-                        };
-
-                        var openResult = publicMethods.open(options);
-                        if (openResult) {
-                            openResult.closePromise.then(function (data) {
-                                if (data) {
-                                    return defer.reject(data.value);
-                                }
-                                return defer.reject();
-                            });
-                            return defer.promise;
-                        }
-                    },
-
                     isOpen: function(id) {
                         var $dialog = $el(document.getElementById(id));
                         return $dialog.length > 0;
@@ -826,10 +789,6 @@
                             var dialog = $all[i];
                             privateMethods.closeDialog($el(dialog), value);
                         }
-                    },
-
-                    getOpenDialogs: function() {
-                        return openIdStack;
                     },
 
                     getDefaults: function () {

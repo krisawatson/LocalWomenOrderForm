@@ -12,14 +12,14 @@ import com.kricko.domain.User;
 public interface UserService
 {
 
-    public List<User> getUsers();
+    List<User> getUsers();
     
-    public List<Role> getRoles();
+    List<Role> getRoles();
     
-    public ResponseEntity<Void> createUser(@RequestBody User user);
+    ResponseEntity<Void> createUser(@RequestBody User user);
     
     @Transactional
-    public ResponseEntity<Void> updateUser(Long userId, User user);
+    void updateUser(Long userId, User user);
     
-    public User getUserByUsername(String username);
+    User getUserByUsername(String username);
 }

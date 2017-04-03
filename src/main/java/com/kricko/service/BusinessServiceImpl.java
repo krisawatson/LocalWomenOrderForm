@@ -18,8 +18,12 @@ public class BusinessServiceImpl implements BusinessService
 {
     private static final Logger LOGGER = LogManager.getLogger();
     
+    private final BusinessRepository businessRepo;
+
     @Autowired
-    public BusinessRepository businessRepo;
+    public BusinessServiceImpl(BusinessRepository businessRepo) {
+        this.businessRepo = businessRepo;
+    }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

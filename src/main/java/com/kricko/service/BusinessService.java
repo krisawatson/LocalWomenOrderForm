@@ -9,10 +9,10 @@ import com.kricko.domain.Business;
 public interface BusinessService
 {
 
-    public List<Business> getBusinesses();
+    List<Business> getBusinesses();
     
-    public Business getBusiness(Long id);
+    Business getBusiness(Long id);
     
     @Transactional
-    public void updateBusiness(Long id, Business business);
+    void updateBusiness(Long id, Business business);
 }

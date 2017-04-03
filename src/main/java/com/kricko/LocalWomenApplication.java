@@ -23,7 +23,7 @@ public class LocalWomenApplication extends SpringBootServletInitializer implemen
         return application.sources(applicationClass);
     }
 
-    private static Class<LocalWomenApplication> applicationClass = LocalWomenApplication.class;
+    private static final Class<LocalWomenApplication> applicationClass = LocalWomenApplication.class;
 
     @Override
     public void afterPropertiesSet() throws Exception {

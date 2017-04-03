@@ -12,12 +12,12 @@ public class OrderConfirmationMailer implements Runnable
 {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private Business business;
-    private Orders orders;
-    private String email;
-    private String[] cc;
-    private EmailType type;
-    private SmtpMailer mailer;
+    private final Business business;
+    private final Orders orders;
+    private final String email;
+    private final String[] cc;
+    private final EmailType type;
+    private final SmtpMailer mailer;
 
     public OrderConfirmationMailer(SmtpMailer mailer, Business business, Orders orders, String email, String[] cc, EmailType type) {
         this.mailer = mailer;
