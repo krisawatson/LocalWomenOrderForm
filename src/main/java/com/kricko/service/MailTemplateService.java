@@ -6,7 +6,7 @@ import com.kricko.domain.Orders;
 
 public interface MailTemplateService {
 
-	String buildTemplate(EmailType type, Business business, Orders orderId);
-	
-	String buildTemplate(EmailType type, Business business, Orders orderId, Long pubId);
+    String buildTemplate(EmailType type, Business business, Orders orderId);
+
+    String buildTemplate(EmailType type, Business business, Orders orderId, Long pubId);
 }

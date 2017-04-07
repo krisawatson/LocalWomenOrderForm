@@ -10,20 +10,20 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @ImportResource("classpath:applicationContext.xml")
-@PropertySource({ "classpath:config/application.yaml",
-                  "classpath:config/dev.yaml",
-                  "classpath:config/home.yaml"})
+@PropertySource({"classpath:config/application.yaml",
+        "classpath:config/dev.yaml",
+        "classpath:config/home.yaml"})
 public class LocalWomenApplication extends SpringBootServletInitializer implements InitializingBean {
+    private static final Class<LocalWomenApplication> applicationClass = LocalWomenApplication.class;
+
     public static void main(String[] args) throws Exception {
         SpringApplication.run(LocalWomenApplication.class, args);
     }
-    
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(applicationClass);
     }
-
-    private static final Class<LocalWomenApplication> applicationClass = LocalWomenApplication.class;
 
     @Override
     public void afterPropertiesSet() throws Exception {

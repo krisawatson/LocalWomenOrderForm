@@ -142,7 +142,6 @@ function SignatureDirective($interval, $timeout, $window) {
             	 }
              }
 	};
-};
-
+}
 //Backward compatibility
 angular.module('ngSignaturePad', ['signature']);

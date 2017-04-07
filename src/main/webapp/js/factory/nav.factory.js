@@ -19,5 +19,5 @@
 			getTab: getTab,
 			setTab: setTab
 		}
-	};
+    }
 })(window);

@@ -1,16 +1,9 @@
 package com.kricko.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "order_publication")
@@ -28,33 +21,42 @@ public class OrderPublication {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     @NotNull
     public Long getAdType() {
         return adType;
     }
+
     public void setAdType(Long adType) {
         this.adType = adType;
     }
+
     @NotNull
     public Long getAdSize() {
         return adSize;
     }
+
     public void setAdSize(Long adSize) {
         this.adSize = adSize;
     }
+
     @NotNull
     public Long getPublicationId() {
         return publicationId;
     }
+
     public void setPublicationId(Long publicationId) {
         this.publicationId = publicationId;
     }
+
     public String getNote() {
         return note;
     }
+
     public void setNote(String note) {
         this.note = note;
     }
@@ -69,11 +71,11 @@ public class OrderPublication {
     public void setOrderPart(OrderPart orderPart) {
         this.orderPart = orderPart;
     }
-    
+
     @Override
     public String toString() {
-        return "OrderPublication [id="+ getId() + ", adSize=" + getAdSize()
-                +", adType=" + getAdType() + ", note=" + getNote() 
-                + ", publicationId=" + getPublicationId() +"]]";
+        return "OrderPublication [id=" + getId() + ", adSize=" + getAdSize()
+                + ", adType=" + getAdType() + ", note=" + getNote()
+                + ", publicationId=" + getPublicationId() + "]]";
     }
 }

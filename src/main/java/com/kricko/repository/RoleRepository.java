@@ -1,8 +1,7 @@
 package com.kricko.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.kricko.domain.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 }

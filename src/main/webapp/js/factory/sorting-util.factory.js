@@ -113,5 +113,5 @@
 			sortCurrencyNumbers: sortCurrencyNumbers,
 			sortFloatString: sortFloatString
 		}
-	};
+    }
 })(window);

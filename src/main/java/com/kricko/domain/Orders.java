@@ -1,21 +1,12 @@
 package com.kricko.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "orders")
@@ -33,11 +24,11 @@ public class Orders {
     private List<OrderPart> orderParts = new ArrayList<>(0);
 
     public Orders() {
-    	
+
     }
-    
-    public Orders(Long businessId, Long userId, double priceExVat, double priceIncVat, 
-                double deposit, String customerSignature, String userSignature){
+
+    public Orders(Long businessId, Long userId, double priceExVat, double priceIncVat,
+                  double deposit, String customerSignature, String userSignature) {
         this.businessId = businessId;
         this.userId = userId;
         this.priceExVat = priceExVat;
@@ -52,6 +43,7 @@ public class Orders {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -64,7 +56,7 @@ public class Orders {
     public void setBusinessId(Long businessId) {
         this.businessId = businessId;
     }
-    
+
     @NotNull
     private Long getUserId() {
         return userId;
@@ -74,7 +66,7 @@ public class Orders {
         this.userId = userId;
     }
 
-    @Column(name="price_inc_vat", nullable=false, columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "price_inc_vat", nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
     public double getPriceIncVat() {
         return priceIncVat;
     }
@@ -83,7 +75,7 @@ public class Orders {
         this.priceIncVat = priceIncVat;
     }
 
-    @Column(name="price_ex_vat", nullable=false, columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "price_ex_vat", nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
     public double getPriceExVat() {
         return priceExVat;
     }
@@ -92,7 +84,7 @@ public class Orders {
         this.priceExVat = priceExVat;
     }
 
-    @Column(name="deposit", nullable=false, columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "deposit", nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
     public double getDeposit() {
         return deposit;
     }
@@ -120,22 +112,22 @@ public class Orders {
     }
 
     public Date getCreated() {
-		return created;
-	}
+        return created;
+    }
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public Date getUpdated() {
-		return updated;
-	}
+    public Date getUpdated() {
+        return updated;
+    }
 
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
     @JsonManagedReference
     public List<OrderPart> getOrderParts() {
         return orderParts;
@@ -144,12 +136,12 @@ public class Orders {
     public void setOrderParts(List<OrderPart> orderParts) {
         this.orderParts = orderParts;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder value = new StringBuilder("Orders [id=" + getId() + ", businessId=" + getBusinessId()
                 + ", userId=" + getUserId() + ",orderParts=[");
-        for(OrderPart orderPart : getOrderParts()) {
+        for (OrderPart orderPart : getOrderParts()) {
             value.append(orderPart.toString());
         }
         value.append("]]");

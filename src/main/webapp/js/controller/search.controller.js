@@ -203,7 +203,7 @@
                         priceExVat: order.priceExVat.toFixed(2),
                         priceIncVat: order.priceIncVat.toFixed(2),
                         deposit: order.deposit.toFixed(2)
-                }
+                };
                 angular.forEach(order.orderParts, function(orderPart){
                     var part = angular.copy(orderItems);
                     part.month = orderPart.month;
@@ -238,7 +238,7 @@
             	name = item[0].name;
             }
             return name;
-        }
+        };
         
         var getLabelByValue = function (arrayItems , value) {
         	var label;
@@ -249,7 +249,7 @@
             	label = item[0].label;
             }
             return label;
-        }
+        };
         
         var isActivePart = function(month, year) {
         	var now = new Date();
@@ -261,5 +261,5 @@
         	}
         	return isActive;
         }
-    };
+    }
 })(window);

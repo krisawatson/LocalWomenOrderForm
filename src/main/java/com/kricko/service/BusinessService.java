@@ -1,18 +1,16 @@
 package com.kricko.service;
 
-import java.util.List;
-
+import com.kricko.domain.Business;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kricko.domain.Business;
+import java.util.List;
 
-public interface BusinessService
-{
+public interface BusinessService {
 
     List<Business> getBusinesses();
-    
+
     Business getBusiness(Long id);
-    
+
     @Transactional
     void updateBusiness(Long id, Business business);
 }

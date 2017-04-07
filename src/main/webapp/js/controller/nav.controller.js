@@ -11,6 +11,6 @@
         
         function isSet(tabName){
           return NavFactory.getTab() === tabName;
-        };
-	}
+        }
+    }
 })(window);

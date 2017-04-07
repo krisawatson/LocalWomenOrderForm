@@ -92,7 +92,7 @@
                 "deposit": self.deposit,
                 "customerSignature": self.customerSignature,
                 "userSignature": self.userSignature
-            }
+            };
             OrderService.create(order).then(function(orderNumber){
                 processingDialog.close();
                 self.orderNumber = orderNumber;
@@ -111,8 +111,7 @@
         
         function goToPreviousStep () {
             self.steps.step = --self.steps.step;
-        };
-        
+        }
         function removeOrder(id) {
             self.orderParts = self.orderParts.filter(function(order) {
                 return order.id !== id;
@@ -139,8 +138,7 @@
                 "advertContentStep": 2,
                 "maxSteps": 2
             };
-        };
-        
+        }
         function getResources() {
             DetailsService.publications().then(function(data){
                 self.publications = data.filter(function(publication) {
@@ -168,7 +166,7 @@
         function fixOrderDetails() {
             angular.forEach(self.orderParts,function(order){
                 delete order.id;
-                var publications = []
+                var publications = [];
                 angular.forEach(order.publications, function(publication, index){
                 	if(publication && publication.selected) {
 	                    publication.publicationId = index;

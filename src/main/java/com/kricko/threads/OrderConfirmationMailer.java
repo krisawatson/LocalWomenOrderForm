@@ -1,15 +1,13 @@
 package com.kricko.threads;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.kricko.constants.EmailType;
 import com.kricko.domain.Business;
 import com.kricko.domain.Orders;
 import com.kricko.mail.SmtpMailer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class OrderConfirmationMailer implements Runnable
-{
+public class OrderConfirmationMailer implements Runnable {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private final Business business;
@@ -27,11 +25,11 @@ public class OrderConfirmationMailer implements Runnable
         this.cc = cc;
         this.type = type;
     }
+
     @Override
-    public void run ()
-    {
+    public void run() {
         try {
-            mailer.sendOrderConfirmation(email, cc, type, business, orders); 
+            mailer.sendOrderConfirmation(email, cc, type, business, orders);
         } catch (Exception e) {
             LOGGER.error("Failed to send email", e);
         }
