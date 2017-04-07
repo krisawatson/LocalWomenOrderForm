@@ -1,4 +1,8 @@
 /*
+ * Kris Watson Copyright (c) 2017.
+ */
+
+/*
  * ngDialog - easy modals and popup windows
  * http://github.com/likeastore/ngDialog
  * (c) 2013-2015 MIT License, https://likeastore.com

@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 (function(window){
     angular.module('localWomenApp').controller('EditOrderController', [
         '$http',

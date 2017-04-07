@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
 <Configuration monitorInterval="60">
 	<Properties>
 		<Property name="log-path">logs</Property>

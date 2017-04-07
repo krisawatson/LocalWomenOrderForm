@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 package com.kricko.model.email;
 
 import java.util.List;

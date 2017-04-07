@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 /*!
  * State-based routing for AngularJS
  * @version v1.0.0-alpha.3

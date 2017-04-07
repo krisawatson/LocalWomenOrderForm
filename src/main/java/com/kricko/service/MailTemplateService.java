@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 package com.kricko.service;
 
 import com.kricko.constants.EmailType;

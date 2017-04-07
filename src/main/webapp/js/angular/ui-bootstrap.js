@@ -1,4 +1,8 @@
 /*
+ * Kris Watson Copyright (c) 2017.
+ */
+
+/*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
