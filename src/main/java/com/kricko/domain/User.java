@@ -82,6 +82,33 @@ public class User {
         this.enabled = enabled;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                ", roleId=" + roleId +
+                '}';
+    }
+
+    public String toJSON() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                ", roleId=" + roleId +
+                '}';
+    }
+
     @NotNull
     public Long getRoleId() {
         return roleId;
