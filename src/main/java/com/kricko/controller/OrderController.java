@@ -52,11 +52,11 @@ public class OrderController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> updateOrder(@PathVariable(value = "id") Long id, @RequestBody Orders webUpdateOrder) {
         orderService.updateOrder(webUpdateOrder, getUser());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{orderId}/orderpart/{orderPartId}", method = RequestMethod.DELETE)
-    public void getOrder(@PathVariable(value = "orderId") Long orderId, @PathVariable(value = "orderPartId") Long orderPartId) {
+    public void removeOrder(@PathVariable(value = "orderId") Long orderId, @PathVariable(value = "orderPartId") Long orderPartId) {
         orderService.removeOrderPart(orderId, orderPartId);
     }
 
