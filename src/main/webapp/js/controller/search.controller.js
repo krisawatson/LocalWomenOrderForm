@@ -75,6 +75,24 @@
             appScopeProvider: self,
             autoResize: true,
             enableColumnMenus: false,
+            enableGridMenu: true,
+            exporterCsvFilename: 'orders.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Orders", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 500,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             enableFiltering: true,
             excludeProperties: '__metadata',
             onRegisterApi: function(gridApi){
@@ -142,7 +160,8 @@
                            enableFiltering: false,
                            visible: false
                          },
-                         { field: 'userId', 
+                {
+                    field: 'userId',
                            displayName: '',
                              cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-times acc-inactive" style="font-size:18px;" title="Delete Order" data-ng-if="grid.appScope.canDelete(row.entity.userId)" data-ng-click="grid.appScope.deleteOrder(row.entity.orderId)"></i>' +
                              '<br/><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-if="grid.appScope.canEdit(row.entity.userId)" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',

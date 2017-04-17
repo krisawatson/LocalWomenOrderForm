@@ -26,6 +26,7 @@
     "bootstrap": "^3.3.7",
     "ng-dialog": "^0.6.6",
     "ng-table": "^3.0.1",
+    "pdfmake": "^0.1.27",
     "signature_pad": "^1.5.3"
   }
 }
