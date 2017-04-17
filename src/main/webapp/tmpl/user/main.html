@@ -2,7 +2,7 @@
   ~ Kris Watson Copyright (c) 2017.
   -->
 
-<div class="user-list" data-ng-if="mainCtrl.role == 'ADMIN'">
+<div class="user-list" data-ng-if="mainCtrl.role !== 'USER'">
     <user-create></user-create>
     <user-list></user-list>
 </div>

@@ -23,4 +23,6 @@ public interface OrderService {
     void updateOrder(Orders webOrder, User user);
 
     void removeOrderPart(Long orderId, Long orderPartId);
+
+    void deleteOrder(Long orderId);
 }

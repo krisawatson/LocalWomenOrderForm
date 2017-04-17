@@ -140,6 +140,14 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.saveAndFlush(orders);
     }
 
+    @Override
+    public void deleteOrder(Long orderId) {
+        Orders orders = orderRepo.findOne(orderId);
+        removeOrderParts(orders);
+        orderRepo.delete(orders);
+        businessRepo.delete(orders.getBusinessId());
+    }
+
     private User getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -200,5 +208,18 @@ public class OrderServiceImpl implements OrderService {
             executorPool.execute(mail);
         }
         executorPool.shutdown();
+    }
+
+    private void removeOrderParts(Orders orders) {
+        List<OrderPart> orderParts = orderPartRepo.findByOrdersId(orders.getId());
+        for (OrderPart orderPart : orderParts) {
+            removeOrderPublications(orderPart);
+        }
+        orderPartRepo.delete(orderParts);
+    }
+
+    private void removeOrderPublications(OrderPart orderPart) {
+        List<OrderPublication> orderPublications = orderPublicationRepo.findByOrderPartId(orderPart.getId());
+        orderPublicationRepo.delete(orderPublications);
     }
 }

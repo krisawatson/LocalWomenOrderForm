@@ -60,6 +60,11 @@ public class OrderController {
         orderService.removeOrderPart(orderId, orderPartId);
     }
 
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
+    public void deleteOrder(@PathVariable(value = "id") Long id) {
+        orderService.deleteOrder(id);
+    }
+
     private User getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();

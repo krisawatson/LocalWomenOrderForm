@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/user/**", "/publication/**").hasAnyAuthority(Roles.ADMIN.toString())
+                .antMatchers("/order/**/delete").hasAnyAuthority(Roles.SUPER_USER.toString())
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

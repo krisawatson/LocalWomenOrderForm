@@ -34,11 +34,12 @@
                             class="fa fa-clipboard" aria-hidden="true"></i> Order</a></li>
                     <li class="navlinks" data-ng-class="{ active: navCtrl.isSet('search') }"><a href="/#!/search"><i
                             class="fa fa-search" aria-hidden="true"></i> Search</a></li>
-                    <li class="navlinks" data-ng-class="{ active: navCtrl.isSet('users') }" data-ng-if="mainCtrl.role === 'ADMIN'"><a
+                    <li class="navlinks" data-ng-class="{ active: navCtrl.isSet('users') }"
+                        data-ng-if="mainCtrl.role !== 'USER'"><a
                         href="/#!/user"><i class="fa fa-users" aria-hidden="true"></i> Users</a></li>
                     <li class="navlinks" data-ng-class="{ active: navCtrl.isSet('publications') }"
-                        data-ng-if="mainCtrl.role === 'ADMIN'"><a href="/#!/publication"><i class="fa fa-newspaper-o"
-                            aria-hidden="true"></i> Publications</a></li>
+                        data-ng-if="mainCtrl.role !== 'USER'"><a href="/#!/publication"><i class="fa fa-newspaper-o"
+                                                                                           aria-hidden="true"></i> Publications</a></li>
                 </ul>
             </div>
             <div class="col-md-9">

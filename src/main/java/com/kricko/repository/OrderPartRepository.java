@@ -7,6 +7,8 @@ package com.kricko.repository;
 import com.kricko.domain.OrderPart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderPartRepository extends JpaRepository<OrderPart, Long> {
+import java.util.List;
 
+public interface OrderPartRepository extends JpaRepository<OrderPart, Long> {
+    List<OrderPart> findByOrdersId(Long id);
 }

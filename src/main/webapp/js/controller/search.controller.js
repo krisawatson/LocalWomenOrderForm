@@ -6,16 +6,14 @@
     'use strict';
 
     angular.module('localWomenApp').controller('SearchController', [
-        '$filter','$http','$location', '$q','$scope',
+        '$filter', '$location', '$q',
         'BusinessService','DetailsService','OrderService',
         'SortingUtilsFactory','uiGridConstants','NavFactory',
         'UserService',Search]);
     
     function Search($filter,
-                    $http,
                     $location,
                     $q,
-                    $scope,
                     BusinessService,
                     DetailsService,
                     OrderService,
@@ -66,7 +64,9 @@
         self.filter = 1;
         self.editBusiness = editBusiness;
         self.editOrder = editOrder;
+        self.deleteOrder = deleteOrder;
         self.canEdit = canEdit;
+        self.canDelete = canDelete;
         self.getMonthByInt = getMonthByInt;
         self.filterOrderList = filterOrderList;
         self.filterTooltip = "You can filter the list of orders by it's current status";
@@ -144,7 +144,8 @@
                          },
                          { field: 'userId', 
                            displayName: '',
-                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-if="grid.appScope.canEdit(row.entity.userId)" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
+                             cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-times acc-inactive" style="font-size:18px;" title="Delete Order" data-ng-if="grid.appScope.canDelete(row.entity.userId)" data-ng-click="grid.appScope.deleteOrder(row.entity.orderId)"></i>' +
+                             '<br/><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-if="grid.appScope.canEdit(row.entity.userId)" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
                            enableFiltering: false,
                            width: 50
                          }]
@@ -165,7 +166,7 @@
                 fillOrderListDetails(data[4]);
                 self.user = data[5];
                 self.user.id = data[6];
-                if(self.user.authorities[0].authority === 'ADMIN') {
+                if (self.user.authorities[0].authority !== 'USER') {
                 	self.gridOptions.columnDefs[8].visible = true;
                     self.gridOptions.columnDefs[9].visible = true;
                 }
@@ -178,13 +179,29 @@
         function editOrder(orderId) {
         	$location.path('/order/' + orderId + '/edit');
         }
-        
+
+        function deleteOrder(orderId) {
+            OrderService.doDelete(orderId).then(function (data) {
+                self.orderList = [];
+                OrderService.list().then(function (data) {
+                    fillOrderListDetails(data);
+                });
+            }, function () {
+                self.errorMsg = "Failed to remove the order";
+            });
+        }
+
         function getMonthByInt(monthValue) {
             return getLabelByValue(months, monthValue);
         }
         
         function canEdit(userId) {
-        	return self.user.authorities[0].authority === 'ADMIN' || self.user.id === userId;
+            return self.user.authorities[0].authority !== 'USER' || self.user.id === userId;
+
+        }
+
+        function canDelete(userId) {
+            return self.user.authorities[0].authority === 'SUPER_USER' || self.user.id === userId;
 
         }
         function filterOrderList() {

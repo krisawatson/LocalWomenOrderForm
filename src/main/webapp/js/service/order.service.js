@@ -16,7 +16,8 @@ angular
 			getInProgress: getInProgress,
 			getFinished: getFinished,
 	        update: update,
-	        remove: remove
+            remove: remove,
+            doDelete: doDelete
 	    };
 	 
 	    return services;
@@ -90,5 +91,15 @@ angular
             });
 	        return deferred.promise;
 	    }
+
+        function doDelete(orderId) {
+            var deferred = $q.defer();
+            $http.delete('/order/' + orderId + '/delete').then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function (errResponse) {
+                deferred.reject(errResponse);
+            });
+            return deferred.promise;
+        }
 	}
 ]);

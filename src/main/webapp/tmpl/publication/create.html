@@ -2,7 +2,7 @@
   ~ Kris Watson Copyright (c) 2017.
   -->
 
-<div data-ng-if="mainCtrl.role == 'ADMIN'">
+<div data-ng-if="mainCtrl.role !== 'USER'">
     <div class="section-header">Create Publication</div>
     <form name="createPublicationForm" class="createPublicationForm" data-ng-submit="pubCtrl.create(createPublicationForm.$valid)"
         novalidate>
@@ -36,6 +36,6 @@
         </div>
     </form>
 </div>
-<div data-ng-if="mainCtrl.role != 'ADMIN'" class="permission-denied">
+<div data-ng-if="mainCtrl.role === 'USER'" class="permission-denied">
     <img src="img/denied.png" alt="PERMISSION DENIED" />
 </div>
