@@ -152,13 +152,13 @@
                            headerTooltip:'Price Excluding / Including VAT',
                            cellTemplate: '<div class="ui-grid-cell-contents">{{row.entity.priceExVat}}<br/>{{row.entity.priceIncVat}}</div>',
                            enableFiltering: false,
-                           visible: false
+                             visible: true
                          },
                          { field: 'deposit', 
                            displayName: 'Deposit',
                            headerTooltip:'Deposit',
                            enableFiltering: false,
-                           visible: false
+                             visible: true
                          },
                 {
                     field: 'userId',
@@ -185,9 +185,9 @@
                 fillOrderListDetails(data[4]);
                 self.user = data[5];
                 self.user.id = data[6];
-                if (self.user.authorities[0].authority !== 'USER') {
-                	self.gridOptions.columnDefs[8].visible = true;
-                    self.gridOptions.columnDefs[9].visible = true;
+                if (self.user.authorities[0].authority === 'USER') {
+                    delete self.gridOptions.columnDefs[8];
+                    delete self.gridOptions.columnDefs[9];
                 }
             });
         
