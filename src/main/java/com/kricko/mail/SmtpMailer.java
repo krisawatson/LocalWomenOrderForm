@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -65,7 +66,22 @@ public class SmtpMailer {
                 if (null != body) {
                     LOGGER.info(String.format("Sending order confirmation for %s %s", pub.getName(), type.getValue()));
                     String email = EmailType.PUBLICATION == type ? pub.getEmail() : pub.getPhotoshootEmail();
-                    send(email, null, subject, body);
+                    List<String> ccEmails = null;
+                    if(null != email && email.contains(",")) {
+                        ccEmails = new ArrayList<>();
+                        String[] extraEmails = email.split(",");
+                        boolean notFirst = false;
+                        for(String extraEmail : extraEmails){
+                            if(notFirst) {
+                                ccEmails.add(extraEmail);
+                            } else {
+                                email = extraEmail;
+                                notFirst = true;
+                            }
+                        }
+                    }
+                    cc = (null != ccEmails) ? ccEmails.toArray(new String[ccEmails.size()]) : null;
+                    send(email, cc, subject, body);
                 }
             }
         } else {

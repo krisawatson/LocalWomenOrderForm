@@ -98,6 +98,9 @@ public class OrderServiceImpl implements OrderService {
         String businessEmail = business.getEmail();
         List<OrderConfirmationMailer> mails = new ArrayList<>(0);
         LOGGER.debug("Order after getOrder is " + getOrder(orderId).toString());
+        LOGGER.debug("Sending to business email " + businessEmail);
+        LOGGER.debug("Sending to orders email " + ordersEmail);
+        LOGGER.debug("Sending to accounts email " + accountsEmail);
         mails.add(new OrderConfirmationMailer(mailer, business, orders, businessEmail, new String[]{ordersEmail, accountsEmail}, EmailType.BUSINESS));
         mails.add(new OrderConfirmationMailer(mailer, business, orders, user.getEmail(), null, EmailType.USER));
         mails.add(new OrderConfirmationMailer(mailer, business, orders, null, null, EmailType.PUBLICATION));
