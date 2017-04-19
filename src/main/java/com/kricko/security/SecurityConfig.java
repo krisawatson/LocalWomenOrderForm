@@ -4,7 +4,8 @@
 
 package com.kricko.security;
 
-import com.kricko.constants.Roles;
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
+import com.kricko.constants.Roles;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -50,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/img/**").permitAll()
-                .antMatchers("/user/**", "/publication/**").hasAnyAuthority(Roles.ADMIN.toString())
+                .antMatchers("/user/**", "/publication/**").hasAnyAuthority(Roles.SUPER_USER.toString(), Roles.ADMIN.toString())
                 .antMatchers("/order/**/delete").hasAnyAuthority(Roles.SUPER_USER.toString())
                 .anyRequest().authenticated()
                 .and()
