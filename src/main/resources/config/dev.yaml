@@ -52,5 +52,4 @@ spring:
 orders:
     email:
         account:
-            orders: treble00_01@hotmail.com
-            accounts: krisawatson@yahoo.co.uk
+            orders: treble2001@gmail.com,krisawatson@yahoo.co.uk

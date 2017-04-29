@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -43,8 +44,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Value("${orders.email.account.orders}")
     private String ordersEmail;
-    @Value("${orders.email.account.accounts}")
-    private String accountsEmail;
 
     @Autowired
     public OrderServiceImpl(BusinessRepository businessRepo, OrderRepository orderRepo,
@@ -100,8 +99,8 @@ public class OrderServiceImpl implements OrderService {
         LOGGER.debug("Order after getOrder is " + getOrder(orderId).toString());
         LOGGER.debug("Sending to business email " + businessEmail);
         LOGGER.debug("Sending to orders email " + ordersEmail);
-        LOGGER.debug("Sending to accounts email " + accountsEmail);
-        mails.add(new OrderConfirmationMailer(mailer, business, orders, businessEmail, new String[]{ordersEmail, accountsEmail}, EmailType.BUSINESS));
+        List<String> emailAddresses = Arrays.asList(ordersEmail.split(","));
+        mails.add(new OrderConfirmationMailer(mailer, business, orders, businessEmail, emailAddresses.toArray(new String[0]), EmailType.BUSINESS));
         mails.add(new OrderConfirmationMailer(mailer, business, orders, user.getEmail(), null, EmailType.USER));
         mails.add(new OrderConfirmationMailer(mailer, business, orders, null, null, EmailType.PUBLICATION));
         if (hasPhotoshoot) {

@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kricko</groupId>
     <artifactId>LocalWomen</artifactId>
-    <version>1.3.6</version>
+    <version>1.3.7</version>
     <name>LocalWomen Webapp</name>
     <parent>
         <groupId>org.springframework.boot</groupId>

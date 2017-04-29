@@ -25,7 +25,10 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("mailTemplateService")
 public class MailTemplateServiceImpl implements MailTemplateService {
@@ -127,14 +130,15 @@ public class MailTemplateServiceImpl implements MailTemplateService {
         LOGGER.debug("Publications size is " + orderPublications.size());
         List<TemplateOrderPublication> tmplOrderPubs = new ArrayList<>(0);
         for (OrderPublication orderPub : orderPublications) {
-            if (null == pubId || Objects.equals(pubId, orderPub.getPublicationId())) {
+            // Removing the surrounding if as all publications can see the whole order
+//            if (null == pubId || Objects.equals(pubId, orderPub.getPublicationId())) {
                 TemplateOrderPublication tmplOrderPub = new TemplateOrderPublication();
                 tmplOrderPub.setAdSize(adSizeRepo.findOne(orderPub.getAdSize()).getName());
                 tmplOrderPub.setAdType(adTypeRepo.findOne(orderPub.getAdType()).getName());
                 tmplOrderPub.setNote(orderPub.getNote());
                 tmplOrderPub.setPublication(pubRepo.findOne(orderPub.getPublicationId()));
                 tmplOrderPubs.add(tmplOrderPub);
-            }
+//            }
         }
         return tmplOrderPubs;
     }
