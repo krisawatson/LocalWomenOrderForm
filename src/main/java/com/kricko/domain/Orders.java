@@ -5,6 +5,7 @@
 package com.kricko.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,16 +16,27 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Orders {
+    @JsonProperty
     private Long id;
+    @JsonProperty
     private Long businessId;
+    @JsonProperty
     private Long userId;
+    @JsonProperty
     private double priceIncVat;
+    @JsonProperty
     private double priceExVat;
+    @JsonProperty
     private double deposit;
+    @JsonProperty
     private String customerSignature;
+    @JsonProperty
     private String userSignature;
+    @JsonProperty
     private Date created;
+    @JsonProperty
     private Date updated;
+    @JsonProperty
     private List<OrderPart> orderParts = new ArrayList<>(0);
 
     public Orders() {

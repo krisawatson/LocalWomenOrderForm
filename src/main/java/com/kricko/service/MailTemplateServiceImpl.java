@@ -40,8 +40,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     private final Logger LOGGER = LogManager.getLogger();
 
-    private Long pubId;
-
     @Autowired
     public MailTemplateServiceImpl(VelocityEngine velocityEngine, AdvertSizeRepository adSizeRepo,
                                    AdvertTypeRepository adTypeRepo, PublicationRepository pubRepo) {
@@ -59,14 +57,13 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     @Override
     public String buildTemplate(EmailType type, Business business, Orders orders, Long pubId) {
         LOGGER.info("Building template for publication " + pubId);
-        this.pubId = pubId;
         Map<String, Object> model = new HashMap<>();
         model.put("orderNumber", orders.getId());
         LOGGER.info("Business ID is " + business.getId());
         model.put("business", business);
         model.put("customerSignature", orders.getCustomerSignature());
         model.put("userSignature", orders.getUserSignature());
-        TemplateOrder order = buildEmailOrder(type, orders);
+        TemplateOrder order = buildEmailOrder(orders);
         if (null == order) {
             return null;
         }
@@ -93,7 +90,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 termsAndConditionsTemplate, StandardCharsets.UTF_8.toString(), model));
     }
 
-    private TemplateOrder buildEmailOrder(EmailType type, Orders orders) {
+    private TemplateOrder buildEmailOrder(Orders orders) {
         LOGGER.info("Building Email Order");
         TemplateOrder order = new TemplateOrder();
         List<OrderPart> orderParts = orders.getOrderParts();
