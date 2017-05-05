@@ -80,7 +80,7 @@ public class SmtpMailer {
                             }
                         }
                     }
-                    cc = (null != ccEmails) ? ccEmails.toArray(new String[ccEmails.size()]) : null;
+                    cc = (null != ccEmails) ? ccEmails.toArray(new String[0]) : null;
                     send(email, cc, subject, body);
                 }
             }
