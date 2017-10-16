@@ -1,33 +1,39 @@
-package com.kricko.model;
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
 
-import java.util.List;
+package com.kricko.model;
 
 import com.kricko.domain.Business;
 import com.kricko.domain.OrderPart;
 
+import java.util.List;
+
 public class WebOrder {
 
-	private Business business;
-	private List<OrderPart> orderParts;
-	private Double priceExVat;
-	private Double priceIncVat;
-	private Double deposit;
-	
-	public Business getBusiness() {
-		return business;
-	}
+    private Business business;
+    private List<OrderPart> orderParts;
+    private Double priceExVat;
+    private Double priceIncVat;
+    private Double deposit;
+    private String customerSignature;
+    private String userSignature;
 
-	public void setBusiness(Business business) {
-		this.business = business;
-	}
+    public Business getBusiness() {
+        return business;
+    }
 
-	public List<OrderPart> getOrderParts() {
-		return orderParts;
-	}
-	
-	public void setOrderParts(List<OrderPart> orderParts) {
-		this.orderParts = orderParts;
-	}
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+
+    public List<OrderPart> getOrderParts() {
+        return orderParts;
+    }
+
+    public void setOrderParts(List<OrderPart> orderParts) {
+        this.orderParts = orderParts;
+    }
 
     public Double getPriceExVat() {
         return priceExVat;
@@ -51,5 +57,21 @@ public class WebOrder {
 
     public void setDeposit(Double deposit) {
         this.deposit = deposit;
+    }
+
+    public String getCustomerSignature() {
+        return customerSignature;
+    }
+
+    public void setCustomerSignature(String customerSignature) {
+        this.customerSignature = customerSignature;
+    }
+
+    public String getUserSignature() {
+        return userSignature;
+    }
+
+    public void setUserSignature(String userSignature) {
+        this.userSignature = userSignature;
     }
 }

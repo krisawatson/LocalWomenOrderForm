@@ -1,24 +1,28 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 package com.kricko.service;
-
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
 
 import com.kricko.domain.Orders;
 import com.kricko.domain.User;
 import com.kricko.model.WebOrder;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface OrderService
-{
+import java.util.List;
 
-	public Orders getOrder(Long id);
+public interface OrderService {
 
-    public Long createOrder(WebOrder webOrder, User user);
+    Orders getOrder(Long id);
 
-    public List<Orders> getOrders();
-    
+    Long createOrder(WebOrder webOrder, User user);
+
+    List<Orders> getOrders();
+
     @Transactional
-    public void updateOrder(Orders webOrder, User user);
-    
-    public void removeOrderPart(Long orderId, Long orderPartId);
+    void updateOrder(Orders webOrder, User user);
+
+    void removeOrderPart(Long orderId, Long orderPartId);
+
+    void deleteOrder(Long orderId);
 }

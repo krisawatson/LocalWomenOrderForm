@@ -1,18 +1,20 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 package com.kricko.service;
+
+import com.kricko.domain.Business;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
+public interface BusinessService {
 
-import com.kricko.domain.Business;
+    List<Business> getBusinesses();
 
-public interface BusinessService
-{
+    Business getBusiness(Long id);
 
-    public List<Business> getBusinesses();
-    
-    public Business getBusiness(Long id);
-    
     @Transactional
-    public void updateBusiness(Long id, Business business);
+    void updateBusiness(Long id, Business business);
 }

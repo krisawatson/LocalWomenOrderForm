@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 /**
  * @license AngularJS v1.6.1
  * (c) 2010-2016 Google, Inc. http://angularjs.org

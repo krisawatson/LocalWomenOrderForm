@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 (function(window){
     'use strict';
 
@@ -113,5 +117,5 @@
 			sortCurrencyNumbers: sortCurrencyNumbers,
 			sortFloatString: sortFloatString
 		}
-	};
+    }
 })(window);

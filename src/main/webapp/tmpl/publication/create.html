@@ -1,4 +1,8 @@
-<div data-ng-if="mainCtrl.role == 'ADMIN'">
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
+<div data-ng-if="mainCtrl.role !== 'USER'">
     <div class="section-header">Create Publication</div>
     <form name="createPublicationForm" class="createPublicationForm" data-ng-submit="pubCtrl.create(createPublicationForm.$valid)"
         novalidate>
@@ -10,10 +14,17 @@
                 <td><input type="text" class="publication-large"
                     data-ng-class="!pubCtrl.successMsg && createPublicationForm.$submitted && createPublicationForm.name.$invalid ? 'validation-error' : ''"
                     name="name" data-ng-model="pubCtrl.publication.name" required /></td>
+            </tr>
+            <tr>
                 <td><label for="email" class="publication-label">Email:</label></td>
                 <td><input type="email" class="publication-large"
                     data-ng-class="!pubCtrl.successMsg && createPublicationForm.$submitted && createPublicationForm.email.$invalid ? 'validation-error' : ''"
                     name="email" data-ng-model="pubCtrl.publication.email" required /></td>
+            </tr>
+            <tr>
+                <td><label for="photoshootEmail" class="publication-label">Photoshoot Email:</label></td>
+                <td><input type="email" class="publication-large"
+                    name="photoshootEmail" data-ng-model="pubCtrl.publication.photoshootEmail" /></td>
             </tr>
         </table>
         <div class="buttons" data-ng-if="!pubCtrl.publication.id">
@@ -25,6 +36,6 @@
         </div>
     </form>
 </div>
-<div data-ng-if="mainCtrl.role != 'ADMIN'" class="permission-denied">
+<div data-ng-if="mainCtrl.role === 'USER'" class="permission-denied">
     <img src="img/denied.png" alt="PERMISSION DENIED" />
 </div>

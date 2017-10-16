@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 (function(window){
     angular.module('localWomenApp').controller('EditOrderController', [
         '$http',
@@ -68,7 +72,7 @@
             delete self.successMsg;
             delete self.errorMsg;
             if(!valid) return;
-            self.updateOrder = angular.copy(self.order)
+            self.updateOrder = angular.copy(self.order);
             fixOrderDetails();
             console.log(self.updateOrder);
             OrderService.update(self.updateOrder.id, self.updateOrder).then(function(){
@@ -136,7 +140,7 @@
                     delete orderPart.id;
                 }
                 orderPart.ordersId = self.order.id;
-                var pubs = []
+                var pubs = [];
                 angular.forEach(orderPart.publications, function(publication, index){
                     if(publication && publication.selected) {
                         publication.publicationId = ++index;

@@ -1,8 +1,12 @@
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
 <div>
     <div class="filterOrders">
         Show: <select data-ng-options="orderFilter.id as orderFilter.name for orderFilter in searchCtrl.orderFilters"
             	data-ng-model="searchCtrl.filter" data-ng-change="searchCtrl.filterOrderList()"></select>
         <i class="fa fa-question-circle icon-tooltip" aria-hidden="true" title="{{searchCtrl.filterTooltip}}" data-toggle="tooltip" data-placement="top" tooltip></i>
     </div>
-    <div ui-grid="searchCtrl.gridOptions" ui-grid-pagination class="grid"></div>
+    <div ui-grid="searchCtrl.gridOptions" ui-grid-exporter ui-grid-pagination class="grid"></div>
 </div>

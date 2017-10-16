@@ -1,9 +1,14 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 .createUserForm {
 	padding-left: 200px;
 }
 
 .cardListItem {
-	height: 140px;
+	word-wrap: break-word;
+	width: 360px;
 }
 
 .card {
@@ -31,25 +36,23 @@
 	float: right;
 }
 
-.cardContainer {
-	width: 85%;
-}
-
 .cardBody {
 	padding-left: 5px;
 }
 
 .cardBodyLeft {
 	margin-top: -5px;
+	width:15%;
 }
 
 .cardBodyRight {
 	margin-left: 20px;
 	margin-top: 2px;
+
 }
 
 .cardBodyContent {
-	width: 190px;
+	width: 250px;
 }
 
 .cardImage {
@@ -77,6 +80,7 @@ button.edit {
 	.col-sm-6 {
 		float: left;
 		width: 50%;
+		margin-bottom: 20px;
 	}
 }
 
@@ -106,15 +110,13 @@ button.edit {
 
 @media ( min-width : 768px) {
 	.container {
-		width: 750px;
+		width: 800px;
 	}
 }
 
 .container {
 	padding-right: 15px;
 	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
 }
 
 .container .row {

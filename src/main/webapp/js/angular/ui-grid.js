@@ -1,6 +1,5 @@
-/*!
- * ui-grid - v4.0.2 - 2016-12-30
- * Copyright (c) 2016 ; License: MIT 
+/*
+ * Kris Watson Copyright (c) 2017.
  */
 
 (function () {

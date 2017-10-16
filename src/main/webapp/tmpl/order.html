@@ -1,7 +1,11 @@
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
 <div>
     <div data-ng-if="orderCtrl.steps.step == 1" class="mainDetails" main-details></div>
     <form name="orderDetailsForm" data-ng-submit="orderCtrl.submitOrder(orderDetailsForm.$valid)" novalidate>
-    	<div data-ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep">
+    	<div data-ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep" class="order-pricing">
             <label>Price (Ex. VAT):</label><input type="text" class="vsmall" data-ng-model="orderCtrl.priceExVat" data-ng-change="orderCtrl.updatePriceIncVat()"/>
             <label>Price (Inc. VAT):</label><input type="text" class="vsmall" data-ng-model="orderCtrl.priceIncVat" data-ng-change="orderCtrl.updatePriceExVat()"/>
             <label>Deposit:</label><input type="text" class="vsmall" data-ng-model="orderCtrl.deposit"/>
@@ -10,6 +14,14 @@
             data-ng-repeat="order in orderCtrl.orderParts track by order.id">
             <div order-details class="orderDetails"></div>
         </div>
+        <fieldset data-ng-if="orderCtrl.steps.step == orderCtrl.steps.advertContentStep" 
+            style="height:160px;">
+            <legend>Signatures</legend>
+            <div>
+                <signature-pad type="Customer" accept="accept" clear="clear" width="340" height="100" dataurl="orderCtrl.customerSignature"></signature-pad>
+                <signature-pad type="User" accept="accept" clear="clear" width="340" height="100" dataurl="orderCtrl.userSignature"></signature-pad>
+            </div>
+        </fieldset>
         <div class="error" data-ng-if="orderCtrl.orderError">{{orderError}}</div>
         <div class="buttons" data-ng-if="orderCtrl.steps.step == 2">
             <button class="formButton" type="button" data-ng-click="orderCtrl.goToPreviousStep()">Back</button>

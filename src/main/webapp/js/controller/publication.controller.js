@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 (function(window){
     'use strict';
 
@@ -47,6 +51,9 @@
                              },
                              { field: 'email', 
                                displayName: 'Email Address'
+                             },
+                             { field: 'photoshootEmail', 
+                               displayName: 'Photoshoot Email'
                              },
                              { field: 'id', 
 	                           displayName: 'Edit',

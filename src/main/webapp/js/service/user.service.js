@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 'use strict';
  
 angular
@@ -6,6 +10,7 @@ angular
     function($http, $q){
 		var services = {
 	        get: get,
+	        getId: getId,
 	        list: list,
 	        roles: roles,
 	        create: create,
@@ -17,6 +22,16 @@ angular
 	    function get() {
 	    	var deferred = $q.defer();
 	    	$http.get('/auth').then(function successCallback(response) {
+	    		deferred.resolve(response.data);
+	    	}, function(errResponse){
+                deferred.reject(errResponse);
+            });
+	        return deferred.promise;
+	    }
+	    
+	    function getId() {
+	    	var deferred = $q.defer();
+	    	$http.get('/auth/id').then(function successCallback(response) {
 	    		deferred.resolve(response.data);
 	    	}, function(errResponse){
                 deferred.reject(errResponse);

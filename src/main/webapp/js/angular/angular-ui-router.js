@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 /*!
  * State-based routing for AngularJS
  * @version v1.0.0-alpha.3
@@ -3241,8 +3245,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return common_1.extend({}, inherited, newParams);
 	    };
-	    ;
-	    return StateParams;
+        return StateParams;
 	}());
 	exports.StateParams = StateParams;
 
@@ -4070,8 +4073,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            notify: false
 	        });
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc function
 	     * @name ui.router.state.$state#go
 	     * @methodOf ui.router.state.$state
@@ -4142,8 +4144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var transOpts = common_1.defaults(options, defautGoOpts, transitionService_1.defaultTransOpts);
 	        return this.transitionTo(to, params, transOpts);
 	    };
-	    ;
-	    /** Factory method for creating a TargetState */
+        /** Factory method for creating a TargetState */
 	    StateService.prototype.target = function (identifier, params, options) {
 	        if (options === void 0) { options = {}; }
 	        // If we're reloading, find the state object to reload from
@@ -4155,8 +4156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var stateDefinition = this.stateRegistry.matcher.find(identifier, options.relative);
 	        return new targetState_1.TargetState(identifier, stateDefinition, params, options);
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc function
 	     * @name ui.router.state.$state#transitionTo
 	     * @methodOf ui.router.state.$state
@@ -4215,8 +4215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Return a promise for the transition, which also has the transition object on it.
 	        return common_1.extend(transitionPromise, { transition: transition });
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc function
 	     * @name ui.router.state.$state#is
 	     * @methodOf ui.router.state.$state
@@ -4259,8 +4258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return false;
 	        return predicates_1.isDefined(params) && params !== null ? param_1.Param.equals(state.parameters(), this.params, params) : true;
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc function
 	     * @name ui.router.state.$state#includes
 	     * @methodOf ui.router.state.$state
@@ -4327,8 +4325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // @TODO Replace with Param.equals() ?
 	        return params ? common_2.equalForKeys(param_1.Param.values(state.parameters(), params), this.params, Object.keys(params)) : true;
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc function
 	     * @name ui.router.state.$state#href
 	     * @methodOf ui.router.state.$state
@@ -4376,8 +4373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            absolute: options.absolute
 	        });
 	    };
-	    ;
-	    StateService.prototype.get = function (stateOrName, base) {
+        StateService.prototype.get = function (stateOrName, base) {
 	        if (arguments.length === 0)
 	            return this.stateRegistry.get();
 	        return this.stateRegistry.get(stateOrName, base || this.$current);
@@ -5418,8 +5414,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	        return result;
 	    };
-	    ;
-	    /**
+        /**
 	     * Registers a custom [[Type]] object that can be used to generate URLs with typed parameters.
 	     *
 	     * @param name  The type name.
@@ -5474,15 +5469,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var type = module_2.paramTypes.type(name, definition, definitionFn);
 	        return !predicates_1.isDefined(definition) ? type : this;
 	    };
-	    ;
-	    /** @hidden */
+        /** @hidden */
 	    UrlMatcherFactory.prototype.$get = function () {
 	        module_2.paramTypes.enqueue = false;
 	        module_2.paramTypes._flushTypeQueue();
 	        return this;
 	    };
-	    ;
-	    return UrlMatcherFactory;
+        return UrlMatcherFactory;
 	}());
 	exports.UrlMatcherFactory = UrlMatcherFactory;
 
@@ -5611,8 +5604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.rules.push(rule);
 	        return this;
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc object
 	     * @name ui.router.router.$urlRouterProvider#otherwise
 	     * @methodOf ui.router.router.$urlRouterProvider
@@ -5649,8 +5641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.otherwiseFn = predicates_1.isString(rule) ? function () { return rule; } : rule;
 	        return this;
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc function
 	     * @name ui.router.router.$urlRouterProvider#when
 	     * @methodOf ui.router.router.$urlRouterProvider
@@ -5733,8 +5724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        throw new Error("invalid 'what' in when()");
 	    };
-	    ;
-	    /**
+        /**
 	     * @ngdoc function
 	     * @name ui.router.router.$urlRouterProvider#deferIntercept
 	     * @methodOf ui.router.router.$urlRouterProvider
@@ -5787,8 +5777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            defer = true;
 	        this.interceptDeferred = defer;
 	    };
-	    ;
-	    return UrlRouterProvider;
+        return UrlRouterProvider;
 	}());
 	exports.UrlRouterProvider = UrlRouterProvider;
 	var UrlRouter = (function () {
@@ -6033,8 +6022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ViewService.prototype.rootContext = function (context) {
 	        return this._rootContext = context || this._rootContext;
 	    };
-	    ;
-	    ViewService.prototype.viewConfigFactory = function (viewType, factory) {
+        ViewService.prototype.viewConfigFactory = function (viewType, factory) {
 	        this._viewConfigFactories[viewType] = factory;
 	    };
 	    ViewService.prototype.createViewConfig = function (node, decl) {
@@ -6052,13 +6040,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        module_1.trace.traceViewServiceEvent("<- Removing", viewConfig);
 	        common_1.removeFrom(this.viewConfigs, viewConfig);
 	    };
-	    ;
-	    ViewService.prototype.activateViewConfig = function (viewConfig) {
+        ViewService.prototype.activateViewConfig = function (viewConfig) {
 	        module_1.trace.traceViewServiceEvent("-> Registering", viewConfig);
 	        this.viewConfigs.push(viewConfig);
 	    };
-	    ;
-	    /**
+        /**
 	     * Allows a `ui-view` element to register its canonical name with a callback that allows it to
 	     * be updated with a template, controller, and local variables.
 	     *
@@ -6085,8 +6071,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            common_1.removeFrom(uiViews)(uiView);
 	        };
 	    };
-	    ;
-	    /**
+        /**
 	     * Returns the list of views currently available on the page, by fully-qualified name.
 	     *
 	     * @return {Array} Returns an array of fully-qualified view names.
@@ -6699,8 +6684,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                predicates_1.isDefined(config.templateProvider) ? this.fromProvider(config.templateProvider, params, injectFn) :
 	                    null);
 	    };
-	    ;
-	    /**
+        /**
 	     * Creates a template from a string or a function returning a string.
 	     *
 	     * @param template html template as a string or function that returns an html template as a string.
@@ -6712,8 +6696,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    TemplateFactory.prototype.fromString = function (template, params) {
 	        return predicates_1.isFunction(template) ? template(params) : template;
 	    };
-	    ;
-	    /**
+        /**
 	     * Loads a template from the a URL via `$http` and `$templateCache`.
 	     *
 	     * @param {string|Function} url url of the template to load, or a function
@@ -6729,8 +6712,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return null;
 	        return coreservices_1.services.template.get(url);
 	    };
-	    ;
-	    /**
+        /**
 	     * Creates a template by invoking an injectable provider function.
 	     *
 	     * @param provider Function to invoke via `locals`
@@ -6741,8 +6723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    TemplateFactory.prototype.fromProvider = function (provider, params, injectFn) {
 	        return injectFn(provider);
 	    };
-	    ;
-	    return TemplateFactory;
+        return TemplateFactory;
 	}());
 	exports.TemplateFactory = TemplateFactory;
 
@@ -7628,5 +7609,4 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ }
 /******/ ])
 });
-;
 //# sourceMappingURL=angular-ui-router.js.map

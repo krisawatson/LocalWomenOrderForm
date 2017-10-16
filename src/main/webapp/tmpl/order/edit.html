@@ -1,7 +1,11 @@
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
 <form name="editOrderForm" data-ng-submit="editOrderCtrl.update(editOrderForm.$valid)" novalidate>
     <div class="success" data-ng-if="editOrderCtrl.successMsg">{{editOrderCtrl.successMsg}}</div>
     <div class="error" data-ng-if="editOrderCtrl.errorMsg">{{editOrderCtrl.errorMsg}}</div>
-    <div data-ng-if="mainCtrl.role === 'ADMIN'">
+    <div data-ng-if="mainCtrl.role !== 'USER'" class="order-pricing">
         <label>Price (Ex. VAT):</label><input type="text" class="vsmall" data-ng-model="editOrderCtrl.order.priceExVat" data-ng-change="editOrderCtrl.updatePriceIncVat()"/>
         <label>Price (Inc. VAT):</label><input type="text" class="vsmall" data-ng-model="editOrderCtrl.order.priceIncVat" data-ng-change="editOrderCtrl.updatePriceExVat()"/>
         <label>Deposit:</label><input type="text" class="vsmall" data-ng-model="editOrderCtrl.order.deposit"/>
@@ -46,6 +50,11 @@
             </fieldset>
         </div>
     </div>
+    <fieldset style="height:160px;">
+        <legend>Signatures</legend>
+        <div class="signature signatureCustomer"><img src="{{editOrderCtrl.order.customerSignature}}"/><div>Customer Signature</div></div>
+        <div class="signature signatureUser"><img src="{{editOrderCtrl.order.userSignature}}"/><div>User Signature</div></div>
+    </fieldset> 
     <div class="buttons">
         <button class="formButton" type="button" data-ng-click="editOrderCtrl.addMoreDetails()">Add More</button>
         <button class="formButton" type="submit">Update</button>

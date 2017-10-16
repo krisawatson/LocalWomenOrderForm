@@ -1,8 +1,13 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 package com.kricko.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import com.kricko.domain.Role;
+import com.kricko.domain.User;
+import com.kricko.repository.RoleRepository;
+import com.kricko.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,18 +17,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kricko.domain.Role;
-import com.kricko.domain.User;
-import com.kricko.repository.RoleRepository;
-import com.kricko.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service("userDetailsService")
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
+
     @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private RoleRepository roleRepository;
+    public UserDetailsServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -34,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(userRole.getName()));
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), 
-        		user.getEnabled(), true, true, true, grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                user.getEnabled(), true, true, true, grantedAuthorities);
     }
 }

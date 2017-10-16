@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 (function(window){
     'use strict';
 
@@ -11,6 +15,6 @@
         
         function isSet(tabName){
           return NavFactory.getTab() === tabName;
-        };
-	}
+        }
+    }
 })(window);

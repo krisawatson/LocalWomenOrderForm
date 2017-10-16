@@ -1,4 +1,8 @@
 /*
+ * Kris Watson Copyright (c) 2017.
+ */
+
+/*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
@@ -2487,11 +2491,7 @@ angular.module('ui.bootstrap.position', [])
           placement[1] = 'center';
         }
 
-        if (autoPlace) {
-          placement[2] = true;
-        } else {
-          placement[2] = false;
-        }
+        placement[2] = autoPlace;
 
         return placement;
       },

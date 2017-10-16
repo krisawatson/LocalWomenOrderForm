@@ -1,4 +1,8 @@
-<div data-ng-if="mainCtrl.role == 'ADMIN'">
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
+<div data-ng-if="mainCtrl.role !== 'USER'">
     <div class="section-header">Create User</div>
     <form name="createUserForm" class="createUserForm" data-ng-submit="userCtrl.create(createUserForm.$valid)" novalidate>
         <div class="success" data-ng-if="userCtrl.successMsg">{{userCtrl.createSuccessMsg}}</div>
@@ -61,6 +65,6 @@
         </div>
     </form>
 </div>
-<div data-ng-if="mainCtrl.role != 'ADMIN'" class="permission-denied">
+<div data-ng-if="mainCtrl.role === 'USER'" class="permission-denied">
     <img src="img/denied.png" alt="PERMISSION DENIED" />
 </div>

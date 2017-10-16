@@ -1,10 +1,14 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 form {
 	padding-left: 5%;
 	padding-right: 5%;
 }
 
 body {
-	background: pink;
+	background: #cccccc;
 }
 
 h2 {
@@ -13,7 +17,7 @@ h2 {
 
 div.content {
 	background: white;
-	width: 700px;
+	width: 850px;
 	border: 2px solid;
 	margin: 0 auto;
 }
@@ -186,4 +190,8 @@ div.permission-denied {
 
 .icon-tooltip {
 	color: #fb03c3;
+}
+
+.order-pricing {
+	padding: 10px;
 }

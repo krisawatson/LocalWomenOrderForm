@@ -1,9 +1,15 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 'use strict';
 angular.module('localWomenApp', [
     'ngDialog',
     'ngRoute',
     'ui.grid',
-    'ui.grid.pagination'])
+    'ui.grid.pagination',
+    'ui.grid.selection',
+    'ui.grid.exporter'])
     .config(['$routeProvider',
         function($routeProvider) {
             

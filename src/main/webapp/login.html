@@ -1,6 +1,11 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
+<html xmlns:tiles="http://www.thymeleaf.org">
 <head>
 <title tiles:fragment="title">Local Women Order Form</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body data-ng-controller="AuthController as ctrl">
@@ -8,12 +13,12 @@
         <h2>Login</h2>
         <form data-ng-submit="submit" method="post">
             <div class="login-username">
-                <label for="username">Username</label> <input type="text" id="username" name="username"
-                    data-ng-model="user.username" />
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" data-ng-model="user.username" />
             </div>
             <div class="login-password">
-                <label for="password">Password</label> <input type="password" id="password" name="password"
-                    data-ng-model="user.password" />
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" data-ng-model="user.password" />
             </div>
             <div class="buttons">
                 <button class="formButton" type="submit" class="btn">Log in</button>

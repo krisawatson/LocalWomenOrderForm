@@ -1,3 +1,7 @@
+<!--
+  ~ Kris Watson Copyright (c) 2017.
+  -->
+
 <form name="editBusinessForm" data-ng-submit="editBusinessCtrl.update(editBusinessForm.$valid)" novalidate>
     <div class="success" data-ng-if="editBusinessCtrl.successMsg">{{editBusinessCtrl.successMsg}}</div>
     <div class="error" data-ng-if="editBusinessCtrl.errorMsg">{{editBusinessCtrl.errorMsg}}</div>
@@ -34,11 +38,11 @@
     <div>
         <input type="text" class="small"
             data-ng-class="editBusinessForm.$submitted && editBusinessForm.city.$invalid ? 'validation-error' : ''"
-            placeholder="City" name="city" data-ng-model="editBusinessCtrl.business.city" required /> <input type="text"
-            class="small" placeholder="County" name="county" data-ng-model="editBusinessCtrl.business.county" /> <input
-            type="text" class="small"
-            data-ng-class="editBusinessForm.$submitted && editBusinessForm.postcode.$invalid ? 'validation-error' : ''"
-            placeholder="Postcode" name="postcode" data-ng-model="editBusinessCtrl.business.postcode" required />
+            placeholder="City" name="city" data-ng-model="editBusinessCtrl.business.city" required />
+        <input type="text" class="small" 
+            placeholder="County" name="county" data-ng-model="editBusinessCtrl.business.county" />
+        <input type="text" class="small"
+            placeholder="Postcode" name="postcode" data-ng-model="editBusinessCtrl.business.postcode" />
     </div>
     <div>
         <table class="large">

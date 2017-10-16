@@ -1,44 +1,57 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 package com.kricko.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "orders")
 public class Orders {
+    @JsonProperty
     private Long id;
+    @JsonProperty
     private Long businessId;
+    @JsonProperty
     private Long userId;
+    @JsonProperty
     private double priceIncVat;
+    @JsonProperty
     private double priceExVat;
+    @JsonProperty
     private double deposit;
+    @JsonProperty
+    private String customerSignature;
+    @JsonProperty
+    private String userSignature;
+    @JsonProperty
     private Date created;
+    @JsonProperty
     private Date updated;
+    @JsonProperty
     private List<OrderPart> orderParts = new ArrayList<>(0);
 
     public Orders() {
-    	
+
     }
-    
-    public Orders(Long businessId, Long userId, double priceExVat, double priceIncVat, double deposit){
+
+    public Orders(Long businessId, Long userId, double priceExVat, double priceIncVat,
+                  double deposit, String customerSignature, String userSignature) {
         this.businessId = businessId;
         this.userId = userId;
         this.priceExVat = priceExVat;
         this.priceIncVat = priceIncVat;
         this.deposit = deposit;
+        this.customerSignature = customerSignature;
+        this.userSignature = userSignature;
     }
 
     @Id
@@ -46,6 +59,7 @@ public class Orders {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -58,9 +72,9 @@ public class Orders {
     public void setBusinessId(Long businessId) {
         this.businessId = businessId;
     }
-    
+
     @NotNull
-    public Long getUserId() {
+    private Long getUserId() {
         return userId;
     }
 
@@ -68,7 +82,7 @@ public class Orders {
         this.userId = userId;
     }
 
-    @Column(name="price_inc_vat", nullable=false, columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "price_inc_vat", nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
     public double getPriceIncVat() {
         return priceIncVat;
     }
@@ -77,7 +91,7 @@ public class Orders {
         this.priceIncVat = priceIncVat;
     }
 
-    @Column(name="price_ex_vat", nullable=false, columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "price_ex_vat", nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
     public double getPriceExVat() {
         return priceExVat;
     }
@@ -86,7 +100,7 @@ public class Orders {
         this.priceExVat = priceExVat;
     }
 
-    @Column(name="deposit", nullable=false, columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "deposit", nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
     public double getDeposit() {
         return deposit;
     }
@@ -95,23 +109,41 @@ public class Orders {
         this.deposit = deposit;
     }
 
+    @Lob
+    public String getCustomerSignature() {
+        return customerSignature;
+    }
+
+    public void setCustomerSignature(String customerSignature) {
+        this.customerSignature = customerSignature;
+    }
+
+    @Lob
+    public String getUserSignature() {
+        return userSignature;
+    }
+
+    public void setUserSignature(String userSignature) {
+        this.userSignature = userSignature;
+    }
+
     public Date getCreated() {
-		return created;
-	}
+        return created;
+    }
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public Date getUpdated() {
-		return updated;
-	}
+    public Date getUpdated() {
+        return updated;
+    }
 
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
     @JsonManagedReference
     public List<OrderPart> getOrderParts() {
         return orderParts;
@@ -120,15 +152,15 @@ public class Orders {
     public void setOrderParts(List<OrderPart> orderParts) {
         this.orderParts = orderParts;
     }
-    
+
     @Override
     public String toString() {
-        String value = "Orders [id="+ getId() + ", businessId="+getBusinessId()
-                        +", userId="+getUserId()+ ",orderParts=[";
-        for(OrderPart orderPart : getOrderParts()) {
-            value += orderPart.toString();
+        StringBuilder value = new StringBuilder("Orders [id=" + getId() + ", businessId=" + getBusinessId()
+                + ", userId=" + getUserId() + ",orderParts=[");
+        for (OrderPart orderPart : getOrderParts()) {
+            value.append(orderPart.toString());
         }
-        value += "]]";
-        return value;
+        value.append("]]");
+        return value.toString();
     }
 }

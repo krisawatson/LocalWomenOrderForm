@@ -52,5 +52,4 @@ spring:
 orders:
     email:
         account:
-            orders: anelis1982@hotmail.com
-            accounts: aidannelis@gmail.com
+            orders: orders@localwomensnews.com,accounts@localwomensnews.com,editor@localwomensnews.com,editorcol@localwomensnews.com,journalist@localwomensnews.com,editormid@localwomensnews.com

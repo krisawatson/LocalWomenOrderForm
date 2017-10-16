@@ -1,7 +1,11 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 package com.kricko.constants;
 
-public enum Roles
-{
+public enum Roles {
     USER,
-    ADMIN
+    ADMIN,
+    SUPER_USER
 }

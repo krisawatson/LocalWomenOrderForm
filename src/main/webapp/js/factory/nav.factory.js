@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 (function(window){
     'use strict';
 
@@ -19,5 +23,5 @@
 			getTab: getTab,
 			setTab: setTab
 		}
-	};
+    }
 })(window);

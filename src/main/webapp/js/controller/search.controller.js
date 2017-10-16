@@ -1,17 +1,19 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 (function(window){
     'use strict';
 
     angular.module('localWomenApp').controller('SearchController', [
-        '$filter','$http','$location', '$q','$scope',
+        '$filter', '$location', '$q',
         'BusinessService','DetailsService','OrderService',
         'SortingUtilsFactory','uiGridConstants','NavFactory',
         'UserService',Search]);
     
     function Search($filter,
-                    $http,
                     $location,
                     $q,
-                    $scope,
                     BusinessService,
                     DetailsService,
                     OrderService,
@@ -62,6 +64,9 @@
         self.filter = 1;
         self.editBusiness = editBusiness;
         self.editOrder = editOrder;
+        self.deleteOrder = deleteOrder;
+        self.canEdit = canEdit;
+        self.canDelete = canDelete;
         self.getMonthByInt = getMonthByInt;
         self.filterOrderList = filterOrderList;
         self.filterTooltip = "You can filter the list of orders by it's current status";
@@ -70,6 +75,24 @@
             appScopeProvider: self,
             autoResize: true,
             enableColumnMenus: false,
+            enableGridMenu: true,
+            exporterCsvFilename: 'orders.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Orders", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 500,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             enableFiltering: true,
             excludeProperties: '__metadata',
             onRegisterApi: function(gridApi){
@@ -87,7 +110,7 @@
                          { field: 'businessName', 
                            displayName: 'Business Name',
                            headerTooltip:'Business Name',
-                           cellTemplate: '<div class="tbl-cell-business">{{row.entity.businessName}}<i class="fa fa-pencil right" title="Edit {{row.entity.businessName}}" data-ng-click="grid.appScope.editBusiness(row.entity.businessId)"></i></div>',
+                           cellTemplate: '<div class="tbl-cell-business">{{row.entity.businessName}}<i class="fa fa-pencil right" title="Edit {{row.entity.businessName}}" data-ng-if="grid.appScope.canEdit(row.entity.userId)" data-ng-click="grid.appScope.editBusiness(row.entity.businessId)"></i></div>',
                            width: 150
                          },
                          { field: 'name', 
@@ -110,28 +133,38 @@
                            filter: {
                         	   type: uiGridConstants.filter.SELECT,
                         	   selectOptions: months
-                           }
+                           },
+                           sort: {direction: 'asc', priority: 0}
                          },
                          { field: 'year', 
                            displayName: 'Year',
-                           headerTooltip:'Year'
+                           headerTooltip:'Year',
+                           sort: {direction: 'asc', priority: 1}
+                         },
+                         { field: 'userId', 
+                           displayName: 'User ID',
+                           headerTooltip:'User ID',
+                           width: 50,
+                           sortingAlgorithm: SortingUtilsFactory.sortNumbers
                          },
                          { field: 'priceExVat', 
                            displayName: 'Price',
                            headerTooltip:'Price Excluding / Including VAT',
                            cellTemplate: '<div class="ui-grid-cell-contents">{{row.entity.priceExVat}}<br/>{{row.entity.priceIncVat}}</div>',
                            enableFiltering: false,
-                           visible: false
+                             visible: true
                          },
                          { field: 'deposit', 
                            displayName: 'Deposit',
                            headerTooltip:'Deposit',
                            enableFiltering: false,
-                           visible: false
+                             visible: true
                          },
-                         { field: 'orderId', 
+                {
+                    field: 'userId',
                            displayName: '',
-                           cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
+                             cellTemplate: '<div class="tbl-cell-order center"><i class="fa fa-times acc-inactive" style="font-size:18px;" title="Delete Order" data-ng-if="grid.appScope.canDelete(row.entity.userId)" data-ng-click="grid.appScope.deleteOrder(row.entity.orderId)"></i>' +
+                             '<br/><i class="fa fa-pencil" style="font-size:18px;" title="Edit Order" data-ng-if="grid.appScope.canEdit(row.entity.userId)" data-ng-click="grid.appScope.editOrder(row.entity.orderId)"></i></div>',
                            enableFiltering: false,
                            width: 50
                          }]
@@ -142,16 +175,19 @@
             DetailsService.adtypes(), 
             DetailsService.adsizes(),
             OrderService.list(),
-            UserService.get()])
+            UserService.get(),
+            UserService.getId()])
             .then(function(data) {
                 self.businesses = data[0];
                 self.publications = data[1];
                 self.adverts = data[2];
                 self.advertSizes = data[3];
                 fillOrderListDetails(data[4]);
-                if(data[5].authorities[0].authority === 'ADMIN') {
-                	self.gridOptions.columnDefs[7].visible = true;
-                    self.gridOptions.columnDefs[8].visible = true;
+                self.user = data[5];
+                self.user.id = data[6];
+                if (self.user.authorities[0].authority === 'USER') {
+                    delete self.gridOptions.columnDefs[8];
+                    delete self.gridOptions.columnDefs[9];
                 }
             });
         
@@ -162,11 +198,31 @@
         function editOrder(orderId) {
         	$location.path('/order/' + orderId + '/edit');
         }
-        
+
+        function deleteOrder(orderId) {
+            OrderService.doDelete(orderId).then(function (data) {
+                self.orderList = [];
+                OrderService.list().then(function (data) {
+                    fillOrderListDetails(data);
+                });
+            }, function () {
+                self.errorMsg = "Failed to remove the order";
+            });
+        }
+
         function getMonthByInt(monthValue) {
             return getLabelByValue(months, monthValue);
         }
         
+        function canEdit(userId) {
+            return self.user.authorities[0].authority !== 'USER' || self.user.id === userId;
+
+        }
+
+        function canDelete(userId) {
+            return self.user.authorities[0].authority === 'SUPER_USER' || self.user.id === userId;
+
+        }
         function filterOrderList() {
         	if(self.filter === 2) {
         		self.gridOptions.data = angular.copy(self.inProgressOrders);
@@ -187,7 +243,7 @@
                         priceExVat: order.priceExVat.toFixed(2),
                         priceIncVat: order.priceIncVat.toFixed(2),
                         deposit: order.deposit.toFixed(2)
-                }
+                };
                 angular.forEach(order.orderParts, function(orderPart){
                     var part = angular.copy(orderItems);
                     part.month = orderPart.month;
@@ -222,7 +278,7 @@
             	name = item[0].name;
             }
             return name;
-        }
+        };
         
         var getLabelByValue = function (arrayItems , value) {
         	var label;
@@ -233,7 +289,7 @@
             	label = item[0].label;
             }
             return label;
-        }
+        };
         
         var isActivePart = function(month, year) {
         	var now = new Date();
@@ -245,5 +301,5 @@
         	}
         	return isActive;
         }
-    };
+    }
 })(window);

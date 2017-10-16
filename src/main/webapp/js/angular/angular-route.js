@@ -1,3 +1,7 @@
+/*
+ * Kris Watson Copyright (c) 2017.
+ */
+
 /**
  * @license AngularJS v1.6.1
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -965,137 +969,7 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
  *                  - If the attribute is set without value, enable scrolling.
  *                  - Otherwise enable scrolling only if the `autoscroll` attribute value evaluated
  *                    as an expression yields a truthy value.
- * @example
-    <example name="ngView-directive" module="ngViewExample"
-             deps="angular-route.js;angular-animate.js"
-             animations="true" fixBase="true">
-      <file name="index.html">
-        <div ng-controller="MainCtrl as main">
-          Choose:
-          <a href="Book/Moby">Moby</a> |
-          <a href="Book/Moby/ch/1">Moby: Ch1</a> |
-          <a href="Book/Gatsby">Gatsby</a> |
-          <a href="Book/Gatsby/ch/4?key=value">Gatsby: Ch4</a> |
-          <a href="Book/Scarlet">Scarlet Letter</a><br/>
-
-          <div class="view-animate-container">
-            <div ng-view class="view-animate"></div>
-          </div>
-          <hr />
-
-          <pre>$location.path() = {{main.$location.path()}}</pre>
-          <pre>$route.current.templateUrl = {{main.$route.current.templateUrl}}</pre>
-          <pre>$route.current.params = {{main.$route.current.params}}</pre>
-          <pre>$routeParams = {{main.$routeParams}}</pre>
-        </div>
-      </file>
-
-      <file name="book.html">
-        <div>
-          controller: {{book.name}}<br />
-          Book Id: {{book.params.bookId}}<br />
-        </div>
-      </file>
-
-      <file name="chapter.html">
-        <div>
-          controller: {{chapter.name}}<br />
-          Book Id: {{chapter.params.bookId}}<br />
-          Chapter Id: {{chapter.params.chapterId}}
-        </div>
-      </file>
-
-      <file name="animations.css">
-        .view-animate-container {
-          position:relative;
-          height:100px!important;
-          background:white;
-          border:1px solid black;
-          height:40px;
-          overflow:hidden;
-        }
-
-        .view-animate {
-          padding:10px;
-        }
-
-        .view-animate.ng-enter, .view-animate.ng-leave {
-          transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
-
-          display:block;
-          width:100%;
-          border-left:1px solid black;
-
-          position:absolute;
-          top:0;
-          left:0;
-          right:0;
-          bottom:0;
-          padding:10px;
-        }
-
-        .view-animate.ng-enter {
-          left:100%;
-        }
-        .view-animate.ng-enter.ng-enter-active {
-          left:0;
-        }
-        .view-animate.ng-leave.ng-leave-active {
-          left:-100%;
-        }
-      </file>
-
-      <file name="script.js">
-        angular.module('ngViewExample', ['ngRoute', 'ngAnimate'])
-          .config(['$routeProvider', '$locationProvider',
-            function($routeProvider, $locationProvider) {
-              $routeProvider
-                .when('/Book/:bookId', {
-                  templateUrl: 'book.html',
-                  controller: 'BookCtrl',
-                  controllerAs: 'book'
-                })
-                .when('/Book/:bookId/ch/:chapterId', {
-                  templateUrl: 'chapter.html',
-                  controller: 'ChapterCtrl',
-                  controllerAs: 'chapter'
-                });
-
-              $locationProvider.html5Mode(true);
-          }])
-          .controller('MainCtrl', ['$route', '$routeParams', '$location',
-            function MainCtrl($route, $routeParams, $location) {
-              this.$route = $route;
-              this.$location = $location;
-              this.$routeParams = $routeParams;
-          }])
-          .controller('BookCtrl', ['$routeParams', function BookCtrl($routeParams) {
-            this.name = 'BookCtrl';
-            this.params = $routeParams;
-          }])
-          .controller('ChapterCtrl', ['$routeParams', function ChapterCtrl($routeParams) {
-            this.name = 'ChapterCtrl';
-            this.params = $routeParams;
-          }]);
-
-      </file>
-
-      <file name="protractor.js" type="protractor">
-        it('should load and compile correct template', function() {
-          element(by.linkText('Moby: Ch1')).click();
-          var content = element(by.css('[ng-view]')).getText();
-          expect(content).toMatch(/controller: ChapterCtrl/);
-          expect(content).toMatch(/Book Id: Moby/);
-          expect(content).toMatch(/Chapter Id: 1/);
-
-          element(by.partialLinkText('Scarlet')).click();
-
-          content = element(by.css('[ng-view]')).getText();
-          expect(content).toMatch(/controller: BookCtrl/);
-          expect(content).toMatch(/Book Id: Scarlet/);
-        });
-      </file>
-    </example>
+ *
  */
 
 
