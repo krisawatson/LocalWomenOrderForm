@@ -1,9 +1,11 @@
 /target/
 .DS_Store
 .classpath
+.idea/
 .settings/
 logs/
 /bin/
+*.iml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
